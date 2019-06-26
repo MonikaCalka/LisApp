@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LisApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,12 @@ namespace LisApp.Controllers
     {
         public ActionResult Index()
         {
+            List<OrderModel> orderList = DB.OrderDAO.ReadOrdersList(1, "pl");
+            JsonResult js = Json(orderList, JsonRequestBehavior.AllowGet);
+
+            List<StudyModel> studyList = DB.StudiesDAO.ReadStudiesList("pl");
+            JsonResult js2 = Json(studyList, JsonRequestBehavior.AllowGet);
+
             return View();
         }
 
@@ -25,6 +32,20 @@ namespace LisApp.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult Doctor()
+        {
+            ViewBag.Message = "Your doctor page.";
+
+            return View();
+        }
+
+        public JsonResult GetUser()
+        {
+            List<UserModel> users = DB.UserDAO.ReadUsersList();
+            JsonResult js = Json(users, JsonRequestBehavior.AllowGet);
+            return js;
         }
     }
 }

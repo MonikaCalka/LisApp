@@ -5,7 +5,8 @@ namespace LisApp.IDAO
 {
     public interface IStudiesDAO
     {
-        List<StudyModel> ReadStudiesList();
+        List<StudyModel> ReadStudiesList(string lang);
+        List<StudyModel> ReadStudiesListForDoctors(long idEmployee, string lang);
         StudyModel ReadStudyById(long? id);
         List<StudyModel> ReadStudiesListByOrderId(long? id);
     }

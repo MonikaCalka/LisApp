@@ -5,7 +5,7 @@ namespace LisApp.IDAO
 {
     public interface IOrdersDAO
     {
-        List<OrderModel> ReadOrdersList();
-        OrderModel ReadOrderById(long id);
+        List<OrderModel> ReadOrdersList(long idEmployee, string idLang);
+        OrderModel ReadOrderById(long id, string lang);
     }
 }

@@ -16,13 +16,19 @@ namespace LisApp.Models
 
         public long IdEmployee { get; set; }
 
+        public string EmployeeName { get; set; }
+
         public EmployeeModel Employee { get; set; }
 
         public long IdOrder { get; set; }
 
         public long IdStatus { get; set; }
 
-        public DictionaryModel Status { get; set; }
+        public string Status { get; set; }
+
+        public long? IdPriority { get; set; }
+
+        public string Priority { get; set; }
 
         public DateTime DateOfStudy { get; set; }
 
@@ -31,5 +37,9 @@ namespace LisApp.Models
         public SampleModel Sample { get; set; }
 
         public ResultModel Result { get; set; }
+
+        public string Patient { get; set; }
+
+        public long? IdPatient { get; set; }
     }
 }

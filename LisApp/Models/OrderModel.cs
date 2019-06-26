@@ -19,7 +19,7 @@ namespace LisApp.Models
 
         public long? IdWard { get; set; }
 
-        public DictionaryModel Ward { get; set; }
+        public string Ward { get; set; }
 
         public string Institution { get; set; }
 
@@ -31,14 +31,16 @@ namespace LisApp.Models
 
         public long IdStatus { get; set; }
 
-        public DictionaryModel Status { get; set; }
+        public string Status { get; set; }
 
         public long IdPriority { get; set; }
 
-        public DictionaryModel Priority { get; set; }
+        public string Priority { get; set; }
 
         public List<EmployeeModel> Consultants { get; set; }
 
         public List<StudyModel> Studies { get; set; }
+
+        public String PatientName { get; set; }
     }
 }
