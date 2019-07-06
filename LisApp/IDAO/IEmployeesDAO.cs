@@ -5,9 +5,11 @@ namespace LisApp.IDAO
 {
     public interface IEmployeesDAO
     {
-        List<EmployeeModel> ReadEmployeesList();
-        EmployeeModel ReadEmployeeById(long id);
+        List<EmployeeModel> ReadEmployeesList(string lang);
+        EmployeeModel ReadEmployeeById(long id, string lang);
 
-        List<EmployeeModel> ReadConsultantsList(long idOrder);
+        List<EmployeeModel> ReadConsultantsList(long idOrder, string lang);
+
+        List<EmployeeModel> ReadEmployeesListForAdmin(string lang);
     }
 }

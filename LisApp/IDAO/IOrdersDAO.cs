@@ -7,5 +7,6 @@ namespace LisApp.IDAO
     {
         List<OrderModel> ReadOrdersList(long idEmployee, string idLang);
         OrderModel ReadOrderById(long id, string lang);
+        List<OrderModel> ReadOrdersListForNurse(string lang);
     }
 }

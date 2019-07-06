@@ -26,20 +26,13 @@ namespace LisApp.DAO
                 select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,
                     e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname
                 from Studies s
-                join Orders o
-                on s.IdOrder = o.IdOrder
-                join Patients p
-                on o.IdPatient = p.IdPatient
-                join Employees e
-                on o.IdEmployee = e.IdEmployee
-                join Status st
-                on s.IdStatus = st.IdStatus
-                join StatusTranslations stt
-                on st.IdStatus = stt.IdStatus
-                join Priorities pr
-                on o.IdPriority = pr.IdPriority
-                join PriorityTranslations prt
-                on pr.IdPriority = prt.IdPriority
+                join Orders o on s.IdOrder = o.IdOrder
+                join Patients p on o.IdPatient = p.IdPatient
+                join Employees e on o.IdEmployee = e.IdEmployee
+                join Status st on s.IdStatus = st.IdStatus
+                join StatusTranslations stt on st.IdStatus = stt.IdStatus
+                join Priorities pr on o.IdPriority = pr.IdPriority
+                join PriorityTranslations prt on pr.IdPriority = prt.IdPriority
                 where ({idEmployee} = o.IdEmployee or {idEmployee} in (select con.IdEmployee from Consultants con where con.IdOrder = o.IdOrder))
                     and st.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}') 
                     and prt.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
@@ -48,28 +41,45 @@ namespace LisApp.DAO
             return BaseDAO.Select(query, ReadStudyModel);
         }
 
-        public List<StudyModel> ReadStudiesList(String lang)
+        public List<StudyModel> ReadStudiesListForNurse(String lang)
         {
             string query = $@"
                 select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,
                     e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname
                 from Studies s
-                join Orders o
-                on s.IdOrder = o.IdOrder
-                join Patients p
-                on o.IdPatient = p.IdPatient
-                join Employees e
-                on o.IdEmployee = e.IdEmployee
-                join Status st
-                on s.IdStatus = st.IdStatus
-                join StatusTranslations stt
-                on st.IdStatus = stt.IdStatus
-                join Priorities pr
-                on o.IdPriority = pr.IdPriority
-                join PriorityTranslations prt
-                on pr.IdPriority = prt.IdPriority
-                where stt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}') 
-                    and prt.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
+                join Orders o on s.IdOrder = o.IdOrder
+                join Patients p on o.IdPatient = p.IdPatient
+                join Employees e on o.IdEmployee = e.IdEmployee
+                join Status st on s.IdStatus = st.IdStatus
+                join StatusTranslations stt on st.IdStatus = stt.IdStatus
+                join Priorities pr on o.IdPriority = pr.IdPriority
+                join PriorityTranslations prt on pr.IdPriority = prt.IdPriority
+                where stt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
+                    and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
+                    and IdStatus in (1)
+            ";
+
+            return BaseDAO.Select(query, ReadStudyModel);
+        }
+
+        public List<StudyModel> ReadStudiesListForLab(String lang)
+        {
+            string query = $@"
+                select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,
+                    e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, pft.Name as Profile
+                from Studies s
+                join Orders o on s.IdOrder = o.IdOrder
+                join Patients p on o.IdPatient = p.IdPatient
+                join Employees e on o.IdEmployee = e.IdEmployee
+                join Status st on s.IdStatus = st.IdStatus
+                join StatusTranslations stt on st.IdStatus = stt.IdStatus
+                join Priorities pr on o.IdPriority = pr.IdPriority
+                join PriorityTranslations prt on pr.IdPriority = prt.IdPriority
+                join Profiles pf on s.IdProfile = pf.IdProfile
+                join ProfileTranslations pft on pf.IdProfile = pft.IdProfile
+                where stt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
+                    and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
+                    and s.IdStatus in (7, 3, 4)
             ";
 
             return BaseDAO.Select(query, ReadStudyModel);
@@ -114,7 +124,9 @@ namespace LisApp.DAO
                 Priority = reader.GetNullableString("Priority"),
                 IdPatient = reader.GetNullableLong("IdPatient"),
                 Patient = reader.GetNullableString("PatientName") + " " + reader.GetNullableString("PatientSurname"),
-                EmployeeName = reader.GetNullableString("DoctorName") + " " + reader.GetNullableString("DoctorSurname")
+                EmployeeName = reader.GetNullableString("DoctorName") + " " + reader.GetNullableString("DoctorSurname"),
+                Profile = reader.GetNullableString("Profile"),
+                DateOfOrder = reader.GetDate("DateOfOrder")
             };
         }
     }

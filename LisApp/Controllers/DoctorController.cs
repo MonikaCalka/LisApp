@@ -7,8 +7,10 @@ using System.Web.Mvc;
 
 namespace LisApp.Controllers
 {
+
     public class DoctorController : CustomController
     {
+        [HttpGet]
         public JsonResult GetOrderList()
         {
             // get User !!!
@@ -17,8 +19,7 @@ namespace LisApp.Controllers
             string langId = "pl";
             List<OrderModel> orderList = DB.OrderDAO.ReadOrdersList(userId, langId);
 
-            JsonResult js = Json(orderList, JsonRequestBehavior.AllowGet);
-            return js;
+            return Json(orderList, JsonRequestBehavior.AllowGet);
         }
     }
 }

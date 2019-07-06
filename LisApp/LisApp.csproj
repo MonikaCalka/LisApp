@@ -211,8 +211,10 @@
     <Compile Include="Controllers\CustomController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LabController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NurseController.cs" />
+    <Compile Include="Controllers\RegistrarController.cs" />
     <Compile Include="DAO\BaseDAO.cs" />
     <Compile Include="DAO\CustomReader.cs" />
     <Compile Include="DAO\DictionaryDAO.cs" />
@@ -340,6 +342,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Doctor\" />
+    <Folder Include="Views\Lab\" />
     <Folder Include="Views\Nurse\" />
   </ItemGroup>
   <ItemGroup>

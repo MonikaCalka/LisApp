@@ -12,7 +12,7 @@ namespace LisApp.Models
 
         public long IdPosition { get; set; }
 
-        public DictionaryModel Position { get; set; }
+        public string Position { get; set; }
 
         public string FirstName { get; set; }
 
@@ -42,6 +42,12 @@ namespace LisApp.Models
 
         public string LicenseNumber { get; set; }
 
-        public DictionaryModel Ward { get; set; }
+        public long? IdWard { get; set; }
+
+        public string Ward { get; set; }
+
+        public string Login { get; set; }
+
+        public string FullAddress { get; set; }
     }
 }

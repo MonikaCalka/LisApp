@@ -1,17 +1,11 @@
 ﻿using LisApp.Common;
 using LisApp.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Results;
+using System.Web.Mvc;
 
 namespace LisApp.Controllers
 {
-    [Route("api/[controller]")]
-    public class AdminController : ApiController
+    public class AdminController : CustomController
     {
         protected IDatabaseFacade DB;
         public AdminController()
@@ -20,11 +14,19 @@ namespace LisApp.Controllers
         }
 
         [HttpGet]
-        [Route("GetList")]
-        public IHttpActionResult Get()
+        public ActionResult GetUserList()
         {
             List<UserModel> users = DB.UserDAO.ReadUsersList();
-            return Json(users);
+            return Json(users, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetEmployeeList()
+        {
+            //get Lang !!!!
+            string langId = "pl";
+            List<EmployeeModel> users = DB.EmployeesDAO.ReadEmployeesListForAdmin(langId);
+            return Json(users, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -11,12 +11,6 @@ namespace LisApp.Controllers
     {
         public ActionResult Index()
         {
-            List<OrderModel> orderList = DB.OrderDAO.ReadOrdersList(1, "pl");
-            JsonResult js = Json(orderList, JsonRequestBehavior.AllowGet);
-
-            List<StudyModel> studyList = DB.StudiesDAO.ReadStudiesList("pl");
-            JsonResult js2 = Json(studyList, JsonRequestBehavior.AllowGet);
-
             return View();
         }
 

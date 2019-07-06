@@ -22,7 +22,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        getJson("api/Admin/GetList", response => this.setState({ data: response }));
+        getJson("Admin/GetUserList", response => this.setState({ data: response }));
     }
 
     onlChange = () => {

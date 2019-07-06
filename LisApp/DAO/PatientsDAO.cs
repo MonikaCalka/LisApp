@@ -58,6 +58,7 @@ namespace LisApp.DAO
                 ContactPersonSurname = reader.GetNullableString("ContactPersonSurname"),
                 ContactPersonPesel = reader.GetNullableString("ContactPersonPesel"),
                 ContactPersonPhone = reader.GetNullableString("ContactPersonPhone"),
+                FullAddress = reader.GetString("Street") + " " + reader.GetString("HouseNumber") + ", " + reader.GetString("PostalCode") + " " + reader.GetString("City") + ", " + reader.GetString("Country")
             };
         }
     }

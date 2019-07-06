@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LisApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,13 +9,13 @@ namespace LisApp.Controllers
 {
     public class NurseController : CustomController
     {
-
-
-
-        // GET: Nurse
-        public ActionResult Index()
+        [HttpGet]
+        public JsonResult GetOrderList()
         {
-            return View();
+            string langId = "pl";
+            List<OrderModel> orderList = DB.OrderDAO.ReadOrdersListForNurse(langId);
+
+            return Json(orderList, JsonRequestBehavior.AllowGet);
         }
     }
 }

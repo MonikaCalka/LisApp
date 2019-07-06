@@ -40,5 +40,7 @@ namespace LisApp.Models
         public string ContactPersonPesel { get; set; }
 
         public string ContactPersonPhone { get; set; }
+
+        public string FullAddress { get; set; }
     }
 }
