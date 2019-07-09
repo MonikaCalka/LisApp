@@ -22,3 +22,42 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.button {
+    color: #26d5fe;
+    background: #ffffff;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 3px solid #26d5fe;
+    border-radius: 20px;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    position: relative;
+    width: 150px;
+    margin-top: 30px;
+    display: inline-block;
+    margin-right: 15px;
+    word-wrap: break-word;
+}
+
+    .button:hover {
+        color: #ffffff !important;
+        background: #26d5fe;
+        border-color: #26d5fe;
+        transition: all 0.3s ease 0s;
+    }
+
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.image-button {
+    position:absolute;
+    top: -20px;
+    left: calc(50% - 23px);
+    text-align:center;
+}

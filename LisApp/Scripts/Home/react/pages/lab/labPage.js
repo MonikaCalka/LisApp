@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import { Trans } from 'react-i18next';
 import CustomModal from '../../components/customModal';
-import DataTable from 'react-data-table-component';
+import CustomTable from '../../components/customTable';
 import { getJson } from '../../services/rests';
 
 class LabPage extends React.Component {
@@ -58,7 +58,7 @@ class LabPage extends React.Component {
             <div>
                 Trust me I'm Lab :3
 
-                <DataTable
+                <CustomTable
                     title={titleOfTable}
                     columns={columns}
                     data={this.state.data}

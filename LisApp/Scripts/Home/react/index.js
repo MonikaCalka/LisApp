@@ -1,8 +1,5 @@
 ﻿import React from 'react';
 import { render } from 'react-dom';
-import Table from './table';
-import Add from './add';
-import DataTable from 'react-data-table-component';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import DoctorPage from './pages/doctor/doctorPage';
 import NursePage from './pages/nurse/nursePage';
@@ -97,17 +94,6 @@ class App extends React.Component {
                     </div>
                 </Router>
                 <button onClick={this.onlChange}>en</button>
-                <h1>React in ASP.NET MVC!</h1>
-                <div>Hello React World</div>
-                <div>Hello HEJOOOOOOOOOOOOOOOOOOOOOOOOO World</div>
-                <Table tableData={dataxxx} />
-                <Add />
-
-                <DataTable
-                    title="Użytkownicy"
-                    columns={columns}
-                    data={this.state.data}
-                />
             </>
             );
     }

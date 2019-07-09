@@ -25,7 +25,10 @@ const resources = {
             "PESEL": "PESEL",
             "IdPatient": "Patient ID",
             "StudyId": "Study ID",
-            "Studies": "Badania"
+            "Studies": "Badania",
+            "AddPatient": "Add patient",
+            "EditPatient": "Edit patient",
+            "Details": "Details"
         }
     },
     pl: {
@@ -49,7 +52,10 @@ const resources = {
             "PESEL": "PESEL",
             "IdPatient": "ID pacjenta",
             "StudyId": "ID badania",
-            "Studies": "Badania"
+            "Studies": "Badania",
+            "AddPatient": "Dodaj pacjenta",
+            "EditPatient": "Edytuj pacjenta",
+            "Details": "Szczegóły"
         }
     }
 };

@@ -36,6 +36,7 @@ namespace LisApp.DAO
                 where ({idEmployee} = o.IdEmployee or {idEmployee} in (select con.IdEmployee from Consultants con where con.IdOrder = o.IdOrder))
                     and st.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}') 
                     and prt.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
+                    and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
             ";
 
             return BaseDAO.Select(query, ReadStudyModel);
@@ -56,6 +57,7 @@ namespace LisApp.DAO
                 join PriorityTranslations prt on pr.IdPriority = prt.IdPriority
                 where stt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
                     and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
+                    and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
                     and IdStatus in (1)
             ";
 
@@ -79,6 +81,7 @@ namespace LisApp.DAO
                 join ProfileTranslations pft on pf.IdProfile = pft.IdProfile
                 where stt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
                     and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
+                    and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
                     and s.IdStatus in (7, 3, 4)
             ";
 

@@ -1,7 +1,8 @@
 ﻿import React from 'react';
 import { Trans } from 'react-i18next';
 import CustomModal from '../../components/customModal';
-import DataTable from 'react-data-table-component';
+import CustomTable from '../../components/customTable';
+import CustomButton from '../../components/customButton';
 import { getJson } from '../../services/rests';
 
 class RegistrarPage extends React.Component {
@@ -14,8 +15,20 @@ class RegistrarPage extends React.Component {
     }
 
     componentDidMount() {
-        getJson("Admin/GetPatientList", response => this.setState({ data: response }));
+        getJson("Registrar/GetPatientList", response => this.setState({ data: response }));
     }
+
+    addNewPatient = () => {
+        
+    };
+
+    editPatient = () => {
+
+    };
+
+    showPatient = () => {
+
+    };
 
     render() {
         const columns = [
@@ -43,7 +56,8 @@ class RegistrarPage extends React.Component {
             {
                 name: <Trans>Address</Trans>,
                 selector: 'FullAddress',
-                sortable: true
+                sortable: true,
+                wrap: true
             },
             {
                 name: <Trans>Phone</Trans>,
@@ -56,9 +70,11 @@ class RegistrarPage extends React.Component {
 
         return (
             <div>
-                Trust me I'm Registrar czy coś :3
-
-                <DataTable
+                <CustomButton onClick={this.addNewPatient} text={<Trans>AddPatient</Trans>} />
+                <CustomButton onClick={this.editPatient} text={<Trans>EditPatient</Trans>} />
+                <CustomButton onClick={this.showPatient} text={<Trans>Details</Trans>} />
+                <br/>
+                <CustomTable
                     title={titleOfTable}
                     columns={columns}
                     data={this.state.data}

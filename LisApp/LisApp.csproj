@@ -269,6 +269,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\menu.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -280,8 +281,9 @@
     </Content>
     <Content Include="package.json" />
     <Content Include=".babelrc" />
-    <Content Include="Scripts\Home\react\add.js" />
+    <Content Include="Scripts\Home\react\components\customButton.js" />
     <Content Include="Scripts\Home\react\components\customModal.js" />
+    <Content Include="Scripts\Home\react\components\customTable.js" />
     <Content Include="Scripts\Home\react\i18n.js" />
     <Content Include="Scripts\Home\react\index.js" />
     <Content Include="Scripts\Home\react\pages\admin\adminPage.js" />
@@ -290,7 +292,6 @@
     <Content Include="Scripts\Home\react\pages\nurse\nursePage.js" />
     <Content Include="Scripts\Home\react\pages\registrar\registrarPage.js" />
     <Content Include="Scripts\Home\react\services\rests.js" />
-    <Content Include="Scripts\Home\react\table.js" />
     <Content Include="webpack.config.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
