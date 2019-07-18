@@ -54,7 +54,7 @@ class NursePage extends React.Component {
                 Trust me I'm Nurse :3
 
                 <CustomTable
-                    title={titleOfTable}
+                    titleOfTable={titleOfTable}
                     columns={columns}
                     data={this.state.data}
                 />

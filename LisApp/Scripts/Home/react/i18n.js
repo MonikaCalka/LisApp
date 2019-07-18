@@ -28,7 +28,17 @@ const resources = {
             "Studies": "Badania",
             "AddPatient": "Add patient",
             "EditPatient": "Edit patient",
-            "Details": "Details"
+            "Details": "Details",
+            "Sex": "Sex",
+            "IdCardNumber": "NFZ Card ID",
+            "Insurance": "Insurance",
+            "ContactData": "Contact data",
+            "ContactPerson": "Contact person",
+            "Street": "Street",
+            "HouseNumber": "House number",
+            "City": "City",
+            "PostalCode": "Postal code",
+            "Country": "Country" 
         }
     },
     pl: {
@@ -55,7 +65,17 @@ const resources = {
             "Studies": "Badania",
             "AddPatient": "Dodaj pacjenta",
             "EditPatient": "Edytuj pacjenta",
-            "Details": "Szczegóły"
+            "Details": "Szczegóły",
+            "Sex": "Płeć",
+            "IdCardNumber": "ID karty NFZ",
+            "Insurance": "Ubezpieczenie",
+            "ContactData": "Dane kontaktowe",
+            "ContactPerson": "Osoba kontaktowa",
+            "Street": "Ulica",
+            "HouseNumber": "Numer domu",
+            "City": "Miasto",
+            "PostalCode": "Kod pocztowy",
+            "Country": "Kraj" 
         }
     }
 };

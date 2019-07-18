@@ -65,7 +65,7 @@ class AdminPage extends React.Component {
                 Trust me I'm Admin :3
 
                 <CustomTable
-                    title={titleOfTable}
+                    titleOfTable={titleOfTable}
                     columns={columns}
                     data={this.state.data}
                 />

@@ -59,7 +59,7 @@ class LabPage extends React.Component {
                 Trust me I'm Lab :3
 
                 <CustomTable
-                    title={titleOfTable}
+                    titleOfTable={titleOfTable}
                     columns={columns}
                     data={this.state.data}
                 />

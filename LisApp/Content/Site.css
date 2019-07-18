@@ -61,3 +61,9 @@ textarea {
     left: calc(50% - 23px);
     text-align:center;
 }
+
+.modal-div {
+    overflow: scroll;
+    max-height: 800px;
+    max-width: 900px;
+}

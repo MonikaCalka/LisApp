@@ -4,13 +4,18 @@ import CustomModal from '../../components/customModal';
 import CustomTable from '../../components/customTable';
 import CustomButton from '../../components/customButton';
 import { getJson } from '../../services/rests';
+import RegistrarForm from './registrarForm';
 
 class RegistrarPage extends React.Component {
 
     constructor(props) {
         super(props);
+        this.addModalRef = React.createRef();
+        this.editModalRef = React.createRef();
+        this.showModalRef = React.createRef();
         this.state = {
-            data: []
+            data: [],
+            actualRow: null
         };
     }
 
@@ -18,16 +23,30 @@ class RegistrarPage extends React.Component {
         getJson("Registrar/GetPatientList", response => this.setState({ data: response }));
     }
 
+    rowClick = (row) => {
+        console.log('Selected Rows: ', row);
+        this.setState({ actualRow: row });
+    };
+
+    openAdd = () => {
+        this.addModalRef.current.openModal();
+    };
+
+    openEdit = () => {
+        this.editModalRef.current.openModal();
+    };
+
+    openShow = () => {
+        this.showModalRef.current.openModal();
+    };
+
     addNewPatient = () => {
-        
     };
 
     editPatient = () => {
-
     };
 
     showPatient = () => {
-
     };
 
     render() {
@@ -70,14 +89,38 @@ class RegistrarPage extends React.Component {
 
         return (
             <div>
-                <CustomButton onClick={this.addNewPatient} text={<Trans>AddPatient</Trans>} />
-                <CustomButton onClick={this.editPatient} text={<Trans>EditPatient</Trans>} />
-                <CustomButton onClick={this.showPatient} text={<Trans>Details</Trans>} />
-                <br/>
+                <CustomButton onClick={this.openAdd} text={<Trans>AddPatient</Trans>} />
+                <CustomModal onAccept={this.addNewPatient} ref={this.addModalRef}>
+                    <RegistrarForm
+                        title="AddPatient"
+                        mode="add"
+                        data={null}
+                    />
+                </CustomModal>
+
+                <CustomButton onClick={this.openEdit} text={<Trans>EditPatient</Trans>} />
+                <CustomModal onAccept={this.editPatient} ref={this.editModalRef}>
+                    <RegistrarForm
+                        title="EditPatient"
+                        mode="edit"
+                        data={this.state.actualRow}
+                    />
+                </CustomModal>
+
+                <CustomButton onClick={this.openShow} text={<Trans>Details</Trans>} />
+                <CustomModal onAccept={this.showPatient} ref={this.showModalRef}>
+                    <RegistrarForm
+                        title="Details"
+                        mode="show"
+                        data={this.state.actualRow}
+                    />
+                </CustomModal>
+                <br />
                 <CustomTable
-                    title={titleOfTable}
+                    titleOfTable={titleOfTable}
                     columns={columns}
                     data={this.state.data}
+                    onRowClicked={this.rowClick}
                 />
             </div>
         );

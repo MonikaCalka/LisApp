@@ -47,6 +47,7 @@ class CustomModal extends React.Component {
                 onRequestClose={this.closeModal}
                 style={customStyles}
                 contentLabel="Example Modal"
+                width="200px"
             >
                 {this.props.children}
                 <button onClick={this.onAccept}>X</button>

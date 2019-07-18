@@ -1,7 +1,6 @@
 ﻿import React from 'react';
 import { Trans } from 'react-i18next';
 import CustomModal from '../../components/customModal';
-import DataTable from 'react-data-table-component';
 import { getJson } from '../../services/rests';
 import CustomTable from '../../components/customTable';
 
@@ -69,7 +68,7 @@ class DoctorPage extends React.Component {
                 <CustomModal onAccept={this.openModal} ref={this.modalRef}>Piszę ja</CustomModal>
 
                 <CustomTable
-                    title={titleOfTable}
+                    titleOfTable={titleOfTable}
                     columns={columns}
                     data={this.state.data}
                     onRowClicked={this.rowClick}
