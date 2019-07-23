@@ -5,4 +5,11 @@
         .then(callback);
 };
 
-export { getJson };
+const postJson = (url, callback) => {
+    fetch("http://localhost:2096/" + url, {
+        method: 'POST'
+    }).then(response => response.json())
+        .then(callback);
+};
+
+export { getJson, postJson };

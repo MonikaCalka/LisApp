@@ -39,7 +39,7 @@ class CustomModal extends React.Component {
     }
 
     render() {
-        const { onAccept, onAcceptText } = this.props;
+        const { onAccept, onAcceptText, onCancelText} = this.props;
         return (
             <Modal
                 isOpen={this.state.modalIsOpen}
@@ -50,8 +50,8 @@ class CustomModal extends React.Component {
                 width="200px"
             >
                 {this.props.children}
-                <button onClick={this.onAccept}>X</button>
-                {!!onAccept && <button onClick={this.closeModal}>Accept</button>}
+                {!!onAccept && <button onClick={this.onAccept} >{onAcceptText}</button>}
+                <button onClick={this.closeModal}>{onCancelText}</button>
             </Modal>
         );
     }

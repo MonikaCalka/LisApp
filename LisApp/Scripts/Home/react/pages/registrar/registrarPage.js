@@ -15,7 +15,8 @@ class RegistrarPage extends React.Component {
         this.showModalRef = React.createRef();
         this.state = {
             data: [],
-            actualRow: null
+            actualRow: null,
+            disableMode: true
         };
     }
 
@@ -24,8 +25,10 @@ class RegistrarPage extends React.Component {
     }
 
     rowClick = (row) => {
-        console.log('Selected Rows: ', row);
-        this.setState({ actualRow: row });
+        this.setState({
+            actualRow: row,
+            disableMode: row === null
+        });
     };
 
     openAdd = () => {
@@ -41,12 +44,11 @@ class RegistrarPage extends React.Component {
     };
 
     addNewPatient = () => {
+        console.log(this.addModalRef);
     };
 
     editPatient = () => {
-    };
-
-    showPatient = () => {
+        console.log(this.editModalRef);
     };
 
     render() {
@@ -90,7 +92,7 @@ class RegistrarPage extends React.Component {
         return (
             <div>
                 <CustomButton onClick={this.openAdd} text={<Trans>AddPatient</Trans>} />
-                <CustomModal onAccept={this.addNewPatient} ref={this.addModalRef}>
+                <CustomModal onAccept={this.addNewPatient} ref={this.addModalRef} onAcceptText={<Trans>Save</Trans>} onCancelText={<Trans>Cancel</Trans>} >
                     <RegistrarForm
                         title="AddPatient"
                         mode="add"
@@ -98,8 +100,8 @@ class RegistrarPage extends React.Component {
                     />
                 </CustomModal>
 
-                <CustomButton onClick={this.openEdit} text={<Trans>EditPatient</Trans>} />
-                <CustomModal onAccept={this.editPatient} ref={this.editModalRef}>
+                <CustomButton onClick={this.openEdit} text={<Trans>EditPatient</Trans>} disable={this.state.disableMode} />
+                <CustomModal onAccept={this.editPatient} ref={this.editModalRef} onAcceptText={<Trans>Save</Trans>} onCancelText={<Trans>Cancel</Trans>}>
                     <RegistrarForm
                         title="EditPatient"
                         mode="edit"
@@ -107,8 +109,8 @@ class RegistrarPage extends React.Component {
                     />
                 </CustomModal>
 
-                <CustomButton onClick={this.openShow} text={<Trans>Details</Trans>} />
-                <CustomModal onAccept={this.showPatient} ref={this.showModalRef}>
+                <CustomButton onClick={this.openShow} text={<Trans>Details</Trans>} disable={this.state.disableMode} />
+                <CustomModal ref={this.showModalRef} onCancelText={<Trans>Back</Trans>}>
                     <RegistrarForm
                         title="Details"
                         mode="show"

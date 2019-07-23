@@ -3,9 +3,9 @@
 class CustomButton extends React.Component {
 
     render() {
-        const { onClick, text }= this.props;
+        const { onClick, text, disable }= this.props;
         return (
-            <button onClick={onClick} className="button">
+            <button onClick={onClick} className="button" disabled={disable}>
                 <img src="/Content/Images/menu.png" width="45" height="45" className="image-button" /><br />
                 {text}
             </button>

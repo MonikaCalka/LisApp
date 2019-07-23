@@ -50,10 +50,10 @@ textarea {
         transition: all 0.3s ease 0s;
     }
 
-.disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
+    .button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
 
 .image-button {
     position:absolute;

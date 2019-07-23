@@ -38,7 +38,10 @@ const resources = {
             "HouseNumber": "House number",
             "City": "City",
             "PostalCode": "Postal code",
-            "Country": "Country" 
+            "Country": "Country",
+            "Save": "Save",
+            "Cancel": "Cancel",
+            "Back": "Back"
         }
     },
     pl: {
@@ -75,7 +78,10 @@ const resources = {
             "HouseNumber": "Numer domu",
             "City": "Miasto",
             "PostalCode": "Kod pocztowy",
-            "Country": "Kraj" 
+            "Country": "Kraj",
+            "Save": "Zapisz",
+            "Cancel": "Anuluj",
+            "Back": "Powrót"
         }
     }
 };

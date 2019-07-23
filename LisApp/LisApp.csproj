@@ -294,6 +294,7 @@
     <Content Include="Scripts\Home\react\pages\registrar\registrarForm.js" />
     <Content Include="Scripts\Home\react\pages\registrar\registrarPage.js" />
     <Content Include="Scripts\Home\react\services\rests.js" />
+    <Content Include="Scripts\Home\react\services\getStateFromPropsData.js" />
     <Content Include="webpack.config.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
