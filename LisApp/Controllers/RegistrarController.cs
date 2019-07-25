@@ -22,5 +22,31 @@ namespace LisApp.Controllers
             return Json(patients, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public ActionResult AddNewPatient(PatientModel patient)
+        {
+            if (patient != null)
+            {
+                return Json("Success");
+            }
+            else
+            {
+                return Json("Error");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditPatient(PatientModel patient)
+        {
+            if (patient != null)
+            {
+                return Json("Success");
+            }
+            else
+            {
+                return Json("Error");
+            }
+        }
+
     }
 }

@@ -3,20 +3,22 @@ import { Trans } from 'react-i18next';
 import CustomModal from '../../components/customModal';
 import CustomTable from '../../components/customTable';
 import CustomButton from '../../components/customButton';
-import { getJson } from '../../services/rests';
+import { getJson, postJson } from '../../services/rests';
 import RegistrarForm from './registrarForm';
 
 class RegistrarPage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.addModalRef = React.createRef();
-        this.editModalRef = React.createRef();
-        this.showModalRef = React.createRef();
+        this.modalRef = React.createRef();
+        this.formRef = React.createRef();
         this.state = {
             data: [],
             actualRow: null,
-            disableMode: true
+            disableMode: true,
+            titleOfModal: "",
+            mode: "",
+            postResult: ""
         };
     }
 
@@ -31,24 +33,51 @@ class RegistrarPage extends React.Component {
         });
     };
 
-    openAdd = () => {
-        this.addModalRef.current.openModal();
+    openAddModal = () => {
+        this.setState({
+            titleOfModal: "AddPatient",
+            mode: "add"
+        });
+        this.modalRef.current.openModal();
     };
 
-    openEdit = () => {
-        this.editModalRef.current.openModal();
+    openEditModal = () => {
+        this.setState({
+            titleOfModal: "EditPatient",
+            mode: "edit"
+        });
+        this.modalRef.current.openModal();
     };
 
-    openShow = () => {
-        this.showModalRef.current.openModal();
+    openShowModal = () => {
+        this.setState({
+            titleOfModal: "Details",
+            mode: "show"
+        });
+        this.modalRef.current.openModal();
     };
 
     addNewPatient = () => {
-        console.log(this.addModalRef);
+        console.log(this.formRef.current.getData());
+        postJson("Registrar/AddNewPatient", this.formRef.current.getData(), response => this.setState({ postResult: response }));
     };
 
     editPatient = () => {
-        console.log(this.editModalRef);
+        console.log(this.formRef.current.getData());
+        postJson("Registrar/EditPatient", this.formRef.current.getData(), response => this.setState({ postResult: response }));
+    };
+
+    onAccept = () => {
+        switch (this.state.mode) {
+            case 'add':
+                this.addNewPatient();
+                break;
+            case 'edit':
+                this.editPatient();
+                break;
+            case 'show':
+                return null;
+        }
     };
 
     render() {
@@ -91,30 +120,16 @@ class RegistrarPage extends React.Component {
 
         return (
             <div>
-                <CustomButton onClick={this.openAdd} text={<Trans>AddPatient</Trans>} />
-                <CustomModal onAccept={this.addNewPatient} ref={this.addModalRef} onAcceptText={<Trans>Save</Trans>} onCancelText={<Trans>Cancel</Trans>} >
-                    <RegistrarForm
-                        title="AddPatient"
-                        mode="add"
-                        data={null}
-                    />
-                </CustomModal>
+                <CustomButton onClick={this.openAddModal} text={<Trans>AddPatient</Trans>} />
+                <CustomButton onClick={this.openEditModal} text={<Trans>EditPatient</Trans>} disable={this.state.disableMode} />
+                <CustomButton onClick={this.openShowModal} text={<Trans>Details</Trans>} disable={this.state.disableMode} />
 
-                <CustomButton onClick={this.openEdit} text={<Trans>EditPatient</Trans>} disable={this.state.disableMode} />
-                <CustomModal onAccept={this.editPatient} ref={this.editModalRef} onAcceptText={<Trans>Save</Trans>} onCancelText={<Trans>Cancel</Trans>}>
+                <CustomModal onAccept={this.onAccept} ref={this.modalRef} onCancelText={<Trans>Back</Trans>}>
                     <RegistrarForm
-                        title="EditPatient"
-                        mode="edit"
+                        title={this.state.titleOfModal}
+                        mode={this.state.mode}
                         data={this.state.actualRow}
-                    />
-                </CustomModal>
-
-                <CustomButton onClick={this.openShow} text={<Trans>Details</Trans>} disable={this.state.disableMode} />
-                <CustomModal ref={this.showModalRef} onCancelText={<Trans>Back</Trans>}>
-                    <RegistrarForm
-                        title="Details"
-                        mode="show"
-                        data={this.state.actualRow}
+                        ref={this.formRef}
                     />
                 </CustomModal>
                 <br />

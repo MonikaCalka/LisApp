@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import Modal from 'react-modal';
+import { Trans } from 'react-i18next';
 
 const customStyles = {
     content: {
@@ -39,7 +40,7 @@ class CustomModal extends React.Component {
     }
 
     render() {
-        const { onAccept, onAcceptText, onCancelText} = this.props;
+        const { onAccept, onCancelText} = this.props;
         return (
             <Modal
                 isOpen={this.state.modalIsOpen}
@@ -50,7 +51,7 @@ class CustomModal extends React.Component {
                 width="200px"
             >
                 {this.props.children}
-                {!!onAccept && <button onClick={this.onAccept} >{onAcceptText}</button>}
+                {!!onAccept && <button onClick={this.onAccept} >{<Trans>Save</Trans>}</button>}
                 <button onClick={this.closeModal}>{onCancelText}</button>
             </Modal>
         );

@@ -5,9 +5,11 @@
         .then(callback);
 };
 
-const postJson = (url, callback) => {
+const postJson = (url, data, callback) => {
     fetch("http://localhost:2096/" + url, {
-        method: 'POST'
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-type': 'application/json' }
     }).then(response => response.json())
         .then(callback);
 };

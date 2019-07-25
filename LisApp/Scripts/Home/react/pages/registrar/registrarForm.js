@@ -47,6 +47,10 @@ class RegistrarForm extends React.Component {
         });
     }
 
+    getData() {
+        return this.state;
+    }
+
     render() {
         const { title, mode } = this.props;
 
