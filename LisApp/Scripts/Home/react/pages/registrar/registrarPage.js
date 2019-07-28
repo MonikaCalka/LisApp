@@ -5,6 +5,7 @@ import CustomTable from '../../components/customTable';
 import CustomButton from '../../components/customButton';
 import { getJson, postJson } from '../../services/rests';
 import RegistrarForm from './registrarForm';
+import { withAlert } from 'react-alert'
 
 class RegistrarPage extends React.Component {
 
@@ -59,12 +60,26 @@ class RegistrarPage extends React.Component {
 
     addNewPatient = () => {
         console.log(this.formRef.current.getData());
-        postJson("Registrar/AddNewPatient", this.formRef.current.getData(), response => this.setState({ postResult: response }));
+        postJson("Registrar/AddNewPatient", this.formRef.current.getData(), response => {
+            if (response === "Success") {
+                getJson("Registrar/GetPatientList", response => this.setState({ data: response }));
+                this.props.alert.success(<Trans>AddPatientSuccess</Trans>);
+            } else {
+                this.props.alert.error(<Trans>AddPatientError</Trans>);
+            }
+        });   
     };
 
     editPatient = () => {
         console.log(this.formRef.current.getData());
-        postJson("Registrar/EditPatient", this.formRef.current.getData(), response => this.setState({ postResult: response }));
+        postJson("Registrar/EditPatient", this.formRef.current.getData(), response => {
+            if (response === "Success") {
+                getJson("Registrar/GetPatientList", response => this.setState({ data: response }));
+                this.props.alert.success(<Trans>EditPatientSuccess</Trans>);
+            } else {
+                this.props.alert.error(<Trans>EditPatientError</Trans>);
+            }
+        }); 
     };
 
     onAccept = () => {
@@ -144,4 +159,4 @@ class RegistrarPage extends React.Component {
     }
 }
 
-export default RegistrarPage;
+export default withAlert()(RegistrarPage);

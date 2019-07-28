@@ -67,3 +67,40 @@ textarea {
     max-height: 800px;
     max-width: 900px;
 }
+
+.custom-select {
+    min-height: 30px !important;
+    height: 30px !important;
+}
+
+.custom-select-div {
+    font-weight: bold;
+}
+
+.alert-div-info {
+    background-color: aliceblue;
+    border: 3px solid #26d5fe;
+}
+
+.alert-div-success {
+    background-color: #f1fff0;
+    border: 3px solid #26fe92;
+}
+
+.alert-div-error {
+    background-color: #fff0f2;
+    border: 3px solid #fc4964;
+}
+
+.alert-div {
+    border-radius: 20px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alert-span {
+    margin-left: 20px;
+    margin-right: 20px;
+}

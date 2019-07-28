@@ -7,7 +7,7 @@ namespace LisApp.Models
 {
     public class ResultUnitModel
     {
-        public long IdResultUnit { get; set; }
+        public long? IdResultUnit { get; set; }
 
         public long IdOrderedTest { get; set; }
 

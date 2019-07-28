@@ -41,7 +41,13 @@ const resources = {
             "Country": "Country",
             "Save": "Save",
             "Cancel": "Cancel",
-            "Back": "Back"
+            "Back": "Back",
+            "Female": "Female",
+            "Male": "Male",
+            "AddPatientSuccess": "A new patient has been added.",
+            "AddPatientError": "Patient adding failed.",
+            "EditPatientSuccess": "Patient data has been changed.",
+            "EditPatientError": "Editing the patient failed."
         }
     },
     pl: {
@@ -81,7 +87,13 @@ const resources = {
             "Country": "Kraj",
             "Save": "Zapisz",
             "Cancel": "Anuluj",
-            "Back": "Powrót"
+            "Back": "Powrót",
+            "Female": "Kobieta",
+            "Male": "Mężczyzna",
+            "AddPatientSuccess": "Dodano nowego pacjenta.",
+            "AddPatientError": "Dodawania pacjenta zakończone niepowodzeniem.",
+            "EditPatientSuccess": "Dane pacjenta zostały zmienione.",
+            "EditPatientError": "Edycja pacjenta zakończona niepowodzeniem."
         }
     }
 };

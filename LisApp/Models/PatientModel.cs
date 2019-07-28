@@ -7,7 +7,7 @@ namespace LisApp.Models
 {
     public class PatientModel
     {
-        public long IdPatient { get; set; }
+        public long? IdPatient { get; set; }
 
         public string FirstName { get; set; }
 

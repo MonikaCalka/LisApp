@@ -27,7 +27,15 @@ namespace LisApp.Controllers
         {
             if (patient != null)
             {
-                return Json("Success");
+                try
+                {
+                    DB.PatientsDAO.InsertPatient(patient);
+                    return Json("Success");
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error");
+                }
             }
             else
             {
@@ -38,9 +46,20 @@ namespace LisApp.Controllers
         [HttpPost]
         public ActionResult EditPatient(PatientModel patient)
         {
-            if (patient != null)
+            if (patient != null && patient.IdPatient != null)
             {
-                return Json("Success");
+                PatientModel oldData = DB.PatientsDAO.ReadPatientById(patient.IdPatient);
+
+                // TO DO: LOGGED USER
+                try
+                {
+                    DB.PatientsDAO.InsertHistoryDataOfPatient(oldData, "user");
+                    DB.PatientsDAO.UpdatePatient(patient);
+                    return Json("Success");
+                }
+                catch (Exception ex) {
+                    return Json("Error");
+                }
             }
             else
             {

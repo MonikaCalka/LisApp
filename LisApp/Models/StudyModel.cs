@@ -8,7 +8,7 @@ namespace LisApp.Models
 {
     public class StudyModel
     {
-        public long IdStudy { get; set; }
+        public long? IdStudy { get; set; }
 
         public long IdProfile { get; set; }
 

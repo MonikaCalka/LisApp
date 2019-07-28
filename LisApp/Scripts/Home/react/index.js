@@ -8,6 +8,15 @@ import AdminPage from './pages/admin/adminPage';
 import RegistrarPage from './pages/registrar/registrarPage';
 import i18n from './i18n';
 import { getJson } from './services/rests';
+import { Provider as AlertProvider } from 'react-alert';
+import AlertTemplate from './components/alertTemplate';
+
+const options = {
+    position: 'bottom center',
+    timeout: 5000,
+    offset: '30px',
+    transition: 'scale'
+};
 
 class App extends React.Component {
 
@@ -31,6 +40,7 @@ class App extends React.Component {
     }
 
     render() {
+
         var dataxxx = [
             "wiersz 1",
             "wiersz 2",
@@ -61,6 +71,7 @@ class App extends React.Component {
         return (
             <>
                 <Router>
+                    <AlertProvider template={AlertTemplate} {...options}>
                     <div>
                         <nav>
                             <ul>
@@ -91,7 +102,8 @@ class App extends React.Component {
                         <Route path="/lab/" component={LabPage} />
                         <Route path="/admin/" component={AdminPage} />
                         <Route path="/registrar/" component={RegistrarPage} />
-                    </div>
+                        </div>
+                    </AlertProvider>
                 </Router>
                 <button onClick={this.onlChange}>en</button>
             </>

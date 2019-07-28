@@ -7,7 +7,7 @@ namespace LisApp.Models
 {
     public class SampleModel
     {
-        public long IdSample { get; set; }
+        public long? IdSample { get; set; }
 
         public long IdEmployee { get; set; }
 

@@ -8,7 +8,7 @@ namespace LisApp.Models
 {
     public class EmployeeModel
     {
-        public long IdEmployee { get; set; }
+        public long? IdEmployee { get; set; }
 
         public long IdPosition { get; set; }
 

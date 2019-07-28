@@ -8,6 +8,11 @@ namespace LisApp.IDAO
         void CreatePatient(PatientModel patient);
 
         List<PatientModel> ReadPatientsList();
-        PatientModel ReadPatientById(long id);
+        PatientModel ReadPatientById(long? id);
+
+        void InsertPatient(PatientModel p);
+
+        void UpdatePatient(PatientModel p);
+        void InsertHistoryDataOfPatient(PatientModel p, string user);
     }
 }

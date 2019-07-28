@@ -281,9 +281,11 @@
     </Content>
     <Content Include="package.json" />
     <Content Include=".babelrc" />
+    <Content Include="Scripts\Home\react\components\alertTemplate.js" />
     <Content Include="Scripts\Home\react\components\customButton.js" />
-    <Content Include="Scripts\Home\react\components\CustomInput.js" />
+    <Content Include="Scripts\Home\react\components\customInput.js" />
     <Content Include="Scripts\Home\react\components\customModal.js" />
+    <Content Include="Scripts\Home\react\components\customSelect.js" />
     <Content Include="Scripts\Home\react\components\customTable.js" />
     <Content Include="Scripts\Home\react\i18n.js" />
     <Content Include="Scripts\Home\react\index.js" />

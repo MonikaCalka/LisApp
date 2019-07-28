@@ -42,5 +42,27 @@ namespace LisApp.DAO
             var list = Select<T>(query, readFunc);
             return list?.Count > 0 ? list[0] : default(T);
         }
+
+        public static void InsertOrUpdate(string query)
+        {
+            using (SqlConnection conn = new SqlConnection(cnnString))
+            {
+                using (SqlCommand command = new SqlCommand(query, conn))
+                {
+                    conn.Open();
+                    command.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+        }
+
+        public static string SetString(string value) {
+            return value != null && value != "" ? "'" + value + "'" : "NULL";
+        }
+
+        public static string SetDate(DateTime value)
+        {
+            return value != null ? "'" + value.ToString("yyyy'-'MM'-'dd HH:mm") + "'" : "NULL";
+        }
     }
 }

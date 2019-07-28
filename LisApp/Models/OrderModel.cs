@@ -7,7 +7,7 @@ namespace LisApp.Models
 {
     public class OrderModel
     {
-        public long IdOrder { get; set; }
+        public long? IdOrder { get; set; }
 
         public long IdPatient { get; set; }
 

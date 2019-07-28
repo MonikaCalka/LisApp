@@ -7,7 +7,7 @@ namespace LisApp.Models
 {
     public class VerificationModel
     {
-        public long IdVerification { get; set; }
+        public long? IdVerification { get; set; }
 
         public long IdResult { get; set; }
 
