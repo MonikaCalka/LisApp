@@ -47,7 +47,9 @@ const resources = {
             "AddPatientSuccess": "A new patient has been added.",
             "AddPatientError": "Patient adding failed.",
             "EditPatientSuccess": "Patient data has been changed.",
-            "EditPatientError": "Editing the patient failed."
+            "EditPatientError": "Editing the patient failed.",
+            "RowsPerPage": "Rows per page:",
+            "OfSeparator": "of"
         }
     },
     pl: {
@@ -93,7 +95,9 @@ const resources = {
             "AddPatientSuccess": "Dodano nowego pacjenta.",
             "AddPatientError": "Dodawania pacjenta zakończone niepowodzeniem.",
             "EditPatientSuccess": "Dane pacjenta zostały zmienione.",
-            "EditPatientError": "Edycja pacjenta zakończona niepowodzeniem."
+            "EditPatientError": "Edycja pacjenta zakończona niepowodzeniem.",
+            "RowsPerPage": "Wierszy na stronę:",
+            "OfSeparator": "z"
         }
     }
 };

@@ -27,11 +27,14 @@ class RegistrarPage extends React.Component {
         getJson("Registrar/GetPatientList", response => this.setState({ data: response }));
     }
 
-    rowClick = (row) => {
+    rowClick = (row, index) => {
         this.setState({
             actualRow: row,
             disableMode: row === null
         });
+
+        console.log(row);
+        console.log(index);
     };
 
     openAddModal = () => {

@@ -2,6 +2,7 @@
 using LisApp.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace LisApp.Controllers
@@ -25,7 +26,9 @@ namespace LisApp.Controllers
         [HttpPost]
         public ActionResult AddNewPatient(PatientModel patient)
         {
-            if (patient != null)
+            List<ValidationResult> results = new List<ValidationResult>();
+            ValidationContext context = new ValidationContext(patient, null, null);
+            if (patient != null && Validator.TryValidateObject(patient, context, results, true))
             {
                 try
                 {
@@ -46,7 +49,9 @@ namespace LisApp.Controllers
         [HttpPost]
         public ActionResult EditPatient(PatientModel patient)
         {
-            if (patient != null && patient.IdPatient != null)
+            List<ValidationResult> results = new List<ValidationResult>();
+            ValidationContext context = new ValidationContext(patient, null, null);
+            if (patient != null && patient.IdPatient != null && Validator.TryValidateObject(patient, context, results, true))
             {
                 PatientModel oldData = DB.PatientsDAO.ReadPatientById(patient.IdPatient);
 
