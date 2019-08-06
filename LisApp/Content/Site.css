@@ -75,6 +75,7 @@ textarea {
 
 .custom-select-div {
     font-weight: bold;
+    margin-bottom: 13px;
 }
 
 .alert-div-info {
@@ -103,4 +104,16 @@ textarea {
 .alert-span {
     margin-left: 20px;
     margin-right: 20px;
+}
+
+.save-cancel-buttons {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 40px;
+}
+
+.custom-form {
+    min-height: 38px;
+    max-height: 38px;
 }

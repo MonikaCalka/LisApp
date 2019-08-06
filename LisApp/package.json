@@ -25,6 +25,7 @@
     "react-alert": "^5.5.0",
     "react-data-table-component": "^1.6.1",
     "react-dom": "^16.8.6",
+    "react-form-validator-core": "^0.6.4",
     "react-i18next": "^10.11.2",
     "react-modal": "^3.8.1",
     "react-router-dom": "^5.0.1",

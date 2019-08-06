@@ -49,7 +49,7 @@ const resources = {
             "EditPatientSuccess": "Patient data has been changed.",
             "EditPatientError": "Editing the patient failed.",
             "RowsPerPage": "Rows per page:",
-            "OfSeparator": "of"
+            "RequiredField": "Field is required"
         }
     },
     pl: {
@@ -97,7 +97,7 @@ const resources = {
             "EditPatientSuccess": "Dane pacjenta zostały zmienione.",
             "EditPatientError": "Edycja pacjenta zakończona niepowodzeniem.",
             "RowsPerPage": "Wierszy na stronę:",
-            "OfSeparator": "z"
+            "RequiredField": "Pole jest wymagane"
         }
     }
 };

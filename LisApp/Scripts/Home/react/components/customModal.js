@@ -16,6 +16,7 @@ const customStyles = {
 Modal.setAppElement('#app');
 
 class CustomModal extends React.Component {
+
     state = {
         modalIsOpen: false
     }
@@ -40,7 +41,7 @@ class CustomModal extends React.Component {
     }
 
     render() {
-        const { onAccept, onCancelText} = this.props;
+        const { onCancelText} = this.props;
         return (
             <Modal
                 isOpen={this.state.modalIsOpen}
@@ -51,8 +52,6 @@ class CustomModal extends React.Component {
                 width="200px"
             >
                 {this.props.children}
-                {!!onAccept && <button onClick={this.onAccept} >{<Trans>Save</Trans>}</button>}
-                <button onClick={this.closeModal}>{onCancelText}</button>
             </Modal>
         );
     }

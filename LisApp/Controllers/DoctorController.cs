@@ -19,7 +19,10 @@ namespace LisApp.Controllers
             string langId = "pl";
             List<OrderModel> orderList = DB.OrderDAO.ReadOrdersList(userId, langId);
 
-            return Json(orderList, JsonRequestBehavior.AllowGet);
+            System.Web.Script.Serialization.JavaScriptSerializer js = new System.Web.Script.Serialization.JavaScriptSerializer();
+            var data = js.Serialize(orderList).Replace("\"\\/Date(", "").Replace(")\\/\"", "");
+
+            return js.DeserializeObject(data);
         }
     }
 }

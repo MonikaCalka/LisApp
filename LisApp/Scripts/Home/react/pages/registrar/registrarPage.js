@@ -5,7 +5,7 @@ import CustomTable from '../../components/customTable';
 import CustomButton from '../../components/customButton';
 import { getJson, postJson } from '../../services/rests';
 import RegistrarForm from './registrarForm';
-import { withAlert } from 'react-alert'
+import { withAlert } from 'react-alert';
 
 class RegistrarPage extends React.Component {
 
@@ -66,20 +66,30 @@ class RegistrarPage extends React.Component {
         postJson("Registrar/AddNewPatient", this.formRef.current.getData(), response => {
             if (response === "Success") {
                 getJson("Registrar/GetPatientList", response => this.setState({ data: response }));
+                this.modalRef.current.closeModal();
                 this.props.alert.success(<Trans>AddPatientSuccess</Trans>);
             } else {
+                this.modalRef.current.closeModal();
                 this.props.alert.error(<Trans>AddPatientError</Trans>);
             }
         });   
     };
 
+    closeModal = () => {
+        this.modalRef.current.closeModal();
+    }
+
     editPatient = () => {
         console.log(this.formRef.current.getData());
         postJson("Registrar/EditPatient", this.formRef.current.getData(), response => {
+
             if (response === "Success") {
                 getJson("Registrar/GetPatientList", response => this.setState({ data: response }));
+                this.modalRef.current.closeModal();
                 this.props.alert.success(<Trans>EditPatientSuccess</Trans>);
+
             } else {
+                this.modalRef.current.closeModal();
                 this.props.alert.error(<Trans>EditPatientError</Trans>);
             }
         }); 
@@ -142,12 +152,14 @@ class RegistrarPage extends React.Component {
                 <CustomButton onClick={this.openEditModal} text={<Trans>EditPatient</Trans>} disable={this.state.disableMode} />
                 <CustomButton onClick={this.openShowModal} text={<Trans>Details</Trans>} disable={this.state.disableMode} />
 
-                <CustomModal onAccept={this.onAccept} ref={this.modalRef} onCancelText={<Trans>Back</Trans>}>
+                <CustomModal ref={this.modalRef}>
                     <RegistrarForm
                         title={this.state.titleOfModal}
                         mode={this.state.mode}
                         data={this.state.actualRow}
                         ref={this.formRef}
+                        onAccept={this.onAccept}
+                        onCancel={this.closeModal}
                     />
                 </CustomModal>
                 <br />

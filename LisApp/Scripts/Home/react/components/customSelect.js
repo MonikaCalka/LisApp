@@ -1,17 +1,44 @@
 ﻿import React from 'react';
 import Select from 'react-select';
 import { Trans } from 'react-i18next';
+import { ValidatorComponent } from 'react-form-validator-core';
 
-const CustomInput = props => (
-    <div className="custom-select-div">
-        <Trans>{props.labeltext}</Trans>
-        <Select
-            options={props.selectOptions}
-            placeholder={""}
-            className="custom-select"
-            {...props} 
-        />
-    </div>
-);
+class CustomSelect extends ValidatorComponent {
 
-export default CustomInput;
+    render() {
+        const { errorMessages, validators, requiredError, validatorListener, requiredMark, labeltext, selectOptions,...rest } = this.props;
+        const requiredStar = requiredMark === true ? "*" : "";
+        return (
+
+            <div>
+                <div className="custom-select-div">
+                    {requiredStar}<Trans>{labeltext}</Trans>
+                    <Select
+                        options={selectOptions}
+                        placeholder={""}
+                        className="custom-select"
+                        {...rest}
+                        ref={(r) => { this.input = r; }}
+                    />
+                </div>
+                {this.errorText()}
+             </div>
+        );
+    }
+
+    errorText() {
+        const { isValid } = this.state;
+
+        if (isValid) {
+            return null;
+        }
+
+        return (
+            <div style={{ color: 'red' }}>
+                {this.getErrorMessage()}
+            </div>
+        );
+    }
+}
+
+export default CustomSelect;
