@@ -18,7 +18,7 @@ namespace LisApp.Controllers
         {
             string lang = "pl";
             List<StudyModel> studies = DB.StudiesDAO.ReadStudiesListForLab(lang);
-            return Json(studies, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = new { data = studies } };
         }
     }
 }

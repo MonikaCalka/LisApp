@@ -3,6 +3,7 @@ import { Trans } from 'react-i18next';
 import CustomModal from '../../components/customModal';
 import { getJson } from '../../services/rests';
 import CustomTable from '../../components/customTable';
+import i18n from '../../i18n';
 
 class DoctorPage extends React.Component {
     constructor(props) {
@@ -10,12 +11,24 @@ class DoctorPage extends React.Component {
         this.modalRef = React.createRef();
         this.state = {
             data: [],
-            actualRow: null
+            actualRow: null,
+            actualLang: "pl"
         };
     }
 
     componentDidMount() {
-        getJson("Doctor/GetOrderList", response => this.setState({ data: response }));
+        getJson("Doctor/GetOrderList", response => this.setState({ data: response.data }));
+    }
+    componentDidUpdate() {
+        
+        if (this.state.actualLang !== i18n.language) {
+            getJson("Doctor/GetOrderList", response => this.setState({ data: response.data }));
+            this.setLanguage();
+        }
+    }
+
+    setLanguage() {
+        this.setState({ actualLang: i18n.language });
     }
 
     rowClick = (row) => {
@@ -28,9 +41,7 @@ class DoctorPage extends React.Component {
     };
 
     render() {
-
-
-        const columns = [
+        var columns = [
             {
                 name: <Trans>OrderId</Trans>,
                 selector: 'IdOrder',

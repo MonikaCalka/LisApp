@@ -23,6 +23,13 @@ namespace LisApp.Controllers
             return Json(patients, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult GetPatient(long id)
+        {
+            PatientModel patient = DB.PatientsDAO.ReadPatientById(id);
+            return Json(patient, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public ActionResult AddNewPatient(PatientModel patient)
         {

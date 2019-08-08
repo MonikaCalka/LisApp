@@ -14,7 +14,7 @@ class NursePage extends React.Component {
     }
 
     componentDidMount() {
-        getJson("Nurse/GetOrderList", response => this.setState({ data: response }));
+        getJson("Nurse/GetOrderList", response => this.setState({ data: response.data }));
     }
 
     render() {

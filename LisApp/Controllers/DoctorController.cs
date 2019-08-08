@@ -1,4 +1,5 @@
-﻿using LisApp.Models;
+﻿using LisApp.Common;
+using LisApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +17,10 @@ namespace LisApp.Controllers
             // get User !!!
             long userId = 1;
             //get Lang !!!!
-            string langId = "pl";
+            string langId = Language.getLang(Request);
             List<OrderModel> orderList = DB.OrderDAO.ReadOrdersList(userId, langId);
 
-            System.Web.Script.Serialization.JavaScriptSerializer js = new System.Web.Script.Serialization.JavaScriptSerializer();
-            var data = js.Serialize(orderList).Replace("\"\\/Date(", "").Replace(")\\/\"", "");
-
-            return js.DeserializeObject(data);
+            return new CustomJsonResult { Data = new { data = orderList } };
         }
     }
 }

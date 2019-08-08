@@ -14,7 +14,7 @@ class LabPage extends React.Component {
     }
 
     componentDidMount() {
-        getJson("Lab/GetStudyList", response => this.setState({ data: response }));
+        getJson("Lab/GetStudyList", response => this.setState({ data: response.data }));
     }
 
     render() {

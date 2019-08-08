@@ -1,4 +1,5 @@
-﻿using LisApp.Models;
+﻿using LisApp.Common;
+using LisApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace LisApp.Controllers
             string langId = "pl";
             List<OrderModel> orderList = DB.OrderDAO.ReadOrdersListForNurse(langId);
 
-            return Json(orderList, JsonRequestBehavior.AllowGet);
+            return new CustomJsonResult { Data = new { data = orderList } };
         }
     }
 }

@@ -23,7 +23,8 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            disabledPl : true
         };
     }
 
@@ -31,11 +32,21 @@ class App extends React.Component {
         getJson("Admin/GetUserList", response => this.setState({ data: response }));
     }
 
-    onlChange = () => {
+    setEng = () => {
         i18n.changeLanguage('en', (err, t) => {
             if (err) return console.log('something went wrong loading', err);
-            t('key'); // -> same as i18next.t
+            t('key');
         });
+        this.setState({ disabledPl : false });
+        this.forceUpdate();
+    }
+
+    setPl = () => {
+        i18n.changeLanguage('pl', (err, t) => {
+            if (err) return console.log('something went wrong loading', err);
+            t('key');
+        });
+        this.setState({ disabledPl: true });
         this.forceUpdate();
     }
 
@@ -105,7 +116,8 @@ class App extends React.Component {
                         </div>
                     </AlertProvider>
                 </Router>
-                <button onClick={this.onlChange}>en</button>
+                <button onClick={this.setEng} disabled={!this.state.disabledPl}>en</button>
+                <button onClick={this.setPl} disabled={this.state.disabledPl}>pl</button>
             </>
             );
     }

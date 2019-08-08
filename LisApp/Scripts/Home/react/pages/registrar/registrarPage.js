@@ -6,6 +6,7 @@ import CustomButton from '../../components/customButton';
 import { getJson, postJson } from '../../services/rests';
 import RegistrarForm from './registrarForm';
 import { withAlert } from 'react-alert';
+import i18n from '../../i18n';
 
 class RegistrarPage extends React.Component {
 
@@ -19,7 +20,8 @@ class RegistrarPage extends React.Component {
             disableMode: true,
             titleOfModal: "",
             mode: "",
-            postResult: ""
+            postResult: "",
+            selectedData: null
         };
     }
 
@@ -33,8 +35,10 @@ class RegistrarPage extends React.Component {
             disableMode: row === null
         });
 
-        console.log(row);
-        console.log(index);
+   //     console.log(row);
+    //    console.log(index);
+        console.log(i18n.language);
+
     };
 
     openAddModal = () => {
@@ -45,12 +49,19 @@ class RegistrarPage extends React.Component {
         this.modalRef.current.openModal();
     };
 
+    getPatientAndOpenModal = () => {
+        getJson("Registrar/GetPatient?id=" + this.state.actualRow.IdPatient, response => {
+            this.setState({ selectedData: response });
+            this.modalRef.current.openModal();
+        });
+    }
+
     openEditModal = () => {
         this.setState({
             titleOfModal: "EditPatient",
             mode: "edit"
         });
-        this.modalRef.current.openModal();
+        this.getPatientAndOpenModal();
     };
 
     openShowModal = () => {
@@ -58,11 +69,10 @@ class RegistrarPage extends React.Component {
             titleOfModal: "Details",
             mode: "show"
         });
-        this.modalRef.current.openModal();
+        this.getPatientAndOpenModal();
     };
-
+    
     addNewPatient = () => {
-        console.log(this.formRef.current.getData());
         postJson("Registrar/AddNewPatient", this.formRef.current.getData(), response => {
             if (response === "Success") {
                 getJson("Registrar/GetPatientList", response => this.setState({ data: response }));
@@ -80,9 +90,7 @@ class RegistrarPage extends React.Component {
     }
 
     editPatient = () => {
-        console.log(this.formRef.current.getData());
         postJson("Registrar/EditPatient", this.formRef.current.getData(), response => {
-
             if (response === "Success") {
                 getJson("Registrar/GetPatientList", response => this.setState({ data: response }));
                 this.modalRef.current.closeModal();
@@ -109,7 +117,7 @@ class RegistrarPage extends React.Component {
     };
 
     render() {
-        const columns = [
+        var columns = [
             {
                 name: <Trans>IdPatient</Trans>,
                 selector: 'IdPatient',
@@ -156,7 +164,7 @@ class RegistrarPage extends React.Component {
                     <RegistrarForm
                         title={this.state.titleOfModal}
                         mode={this.state.mode}
-                        data={this.state.actualRow}
+                        data={this.state.selectedData}
                         ref={this.formRef}
                         onAccept={this.onAccept}
                         onCancel={this.closeModal}
