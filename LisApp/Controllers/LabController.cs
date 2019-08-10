@@ -16,8 +16,8 @@ namespace LisApp.Controllers
         [HttpGet]
         public ActionResult GetStudyList()
         {
-            string lang = "pl";
-            List<StudyModel> studies = DB.StudiesDAO.ReadStudiesListForLab(lang);
+            string langId = Language.getLang(Request);
+            List<StudyModel> studies = DB.StudiesDAO.ReadStudiesListForLab(langId);
             return new CustomJsonResult { Data = new { data = studies } };
         }
     }

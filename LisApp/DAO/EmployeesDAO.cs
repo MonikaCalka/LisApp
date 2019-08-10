@@ -10,13 +10,18 @@ namespace LisApp.DAO
         public EmployeeModel ReadEmployeeById(long id, string lang)
         {
             string query = $@"
-                select e.IdEmployee, e.IdPosition, e.FirstName, e.Surname, e.Pesel, e.Sex, e.Street, e.HouseNumber, e.City, e.PostalCode, e.Country, 
-                    e.Phone, e.Email, e.DateOfEmployment, e.DateOfLaying, e.LicenseNumber, e.IdWard, wt.Name as Ward
+                select e.IdEmployee, e.IdPosition, pt.Name as Position, e.FirstName, e.Surname, e.Pesel, e.Sex, e.Street, e.HouseNumber, e.City, e.PostalCode, e.Country, 
+                    e.Phone, e.Email, e.DateOfEmployment, e.DateOfLaying, e.LicenseNumber, e.IdWard, wt.Name as Ward, u.Login
                 from Employees e
+                join Users u
+                on e.IdEmployee = u.IdEmployee
                 join Wards w on e.IdWard = w.IdWard
                 join WardTranslations wt on w.IdWard = wt.Idward
-                where IdEmployee = {id} 
+                join Positions p on e.IdPosition = p.IdPosition
+                join PositionTranslations pt on p.IdPosition = pt.IdPosition
+                where e.IdEmployee = {id} 
                     and wt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}')
+                    and pt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
             ";
 
             return BaseDAO.SelectFirst(query, ReadEmployeeModel);

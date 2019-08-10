@@ -49,7 +49,12 @@ const resources = {
             "EditPatientSuccess": "Patient data has been changed.",
             "EditPatientError": "Editing the patient failed.",
             "RowsPerPage": "Rows per page:",
-            "RequiredField": "Field is required"
+            "RequiredField": "Field is required",
+            "Max30": "Maximum length: 50 characters",
+            "Max11": "Maximum length: 11 characters",
+            "Max9": "Maximum length: 9 characters",
+            "AddEmployee": "Add employee",
+            "EditEmployee": "Edit employee",
         }
     },
     pl: {
@@ -97,7 +102,12 @@ const resources = {
             "EditPatientSuccess": "Dane pacjenta zostały zmienione.",
             "EditPatientError": "Edycja pacjenta zakończona niepowodzeniem.",
             "RowsPerPage": "Wierszy na stronę:",
-            "RequiredField": "Pole jest wymagane"
+            "RequiredField": "Pole jest wymagane",
+            "Max50": "Maksymalna długość: 50 znaków",
+            "Max11": "Maksymalna długość: 11 znaków",
+            "Max9": "Maksymalna długość: 9 znaków",
+            "AddEmployee": "Dodaj pracownika",
+            "EditEmployee": "Edytuj pracownika",
         }
     }
 };

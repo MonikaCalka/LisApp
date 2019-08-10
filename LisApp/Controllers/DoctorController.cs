@@ -16,7 +16,7 @@ namespace LisApp.Controllers
         {
             // get User !!!
             long userId = 1;
-            //get Lang !!!!
+
             string langId = Language.getLang(Request);
             List<OrderModel> orderList = DB.OrderDAO.ReadOrdersList(userId, langId);
 

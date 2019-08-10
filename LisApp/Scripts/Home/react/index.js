@@ -52,32 +52,6 @@ class App extends React.Component {
 
     render() {
 
-        var dataxxx = [
-            "wiersz 1",
-            "wiersz 2",
-            "wiersz 3",
-            "wiersz 4"
-        ];
-
-
-
-        const data2 = [{ id: 1, title: 'Conan the Barbarian', year: '1982' }];
-
-        const columns = [
-            {
-                name: 'Login',
-                selector: 'Login',
-                sortable: true
-            },
-            {
-                name: 'Hasło',
-                selector: 'Password',
-                sortable: true,
-                right: true
-            }
-        ];
-
-
         const indexComponent = DoctorPage;
         return (
             <>

@@ -13,7 +13,7 @@ namespace LisApp.Controllers
         [HttpGet]
         public JsonResult GetOrderList()
         {
-            string langId = "pl";
+            string langId = Language.getLang(Request);
             List<OrderModel> orderList = DB.OrderDAO.ReadOrdersListForNurse(langId);
 
             return new CustomJsonResult { Data = new { data = orderList } };

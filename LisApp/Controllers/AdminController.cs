@@ -23,10 +23,18 @@ namespace LisApp.Controllers
         [HttpGet]
         public ActionResult GetEmployeeList()
         {
-            //get Lang !!!!
-            string langId = "pl";
+            string langId = Language.getLang(Request);
             List<EmployeeModel> users = DB.EmployeesDAO.ReadEmployeesListForAdmin(langId);
             return Json(users, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public ActionResult GetEmployee(long id)
+        {
+            string langId = Language.getLang(Request);
+            EmployeeModel user = DB.EmployeesDAO.ReadEmployeeById(id, langId);
+            return new CustomJsonResult { Data = new { data = user } };
+        }
+        
     }
 }

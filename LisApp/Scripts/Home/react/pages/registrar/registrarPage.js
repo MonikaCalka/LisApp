@@ -8,6 +8,43 @@ import RegistrarForm from './registrarForm';
 import { withAlert } from 'react-alert';
 import i18n from '../../i18n';
 
+var columns = [
+    {
+        name: <Trans>IdPatient</Trans>,
+        selector: 'IdPatient',
+        sortable: true
+    },
+    {
+        name: <Trans>FirstName</Trans>,
+        selector: 'FirstName',
+        sortable: true
+    },
+    {
+        name: <Trans>LastName</Trans>,
+        selector: 'Surname',
+        sortable: true
+    },
+    {
+        name: <Trans>PESEL</Trans>,
+        selector: 'Pesel',
+        sortable: true,
+        wrap: true
+    },
+    {
+        name: <Trans>Address</Trans>,
+        selector: 'FullAddress',
+        sortable: true,
+        wrap: true
+    },
+    {
+        name: <Trans>Phone</Trans>,
+        selector: 'Phone',
+        sortable: true
+    }
+];
+
+const titleOfTable = <Trans>Patients</Trans>;
+
 class RegistrarPage extends React.Component {
 
     constructor(props) {
@@ -27,6 +64,10 @@ class RegistrarPage extends React.Component {
 
     componentDidMount() {
         getJson("Registrar/GetPatientList", response => this.setState({ data: response }));
+    }
+
+    setLanguage() {
+        this.setState({ actualLang: i18n.language });
     }
 
     rowClick = (row, index) => {
@@ -117,43 +158,6 @@ class RegistrarPage extends React.Component {
     };
 
     render() {
-        var columns = [
-            {
-                name: <Trans>IdPatient</Trans>,
-                selector: 'IdPatient',
-                sortable: true
-            },
-            {
-                name: <Trans>FirstName</Trans>,
-                selector: 'FirstName',
-                sortable: true
-            },
-            {
-                name: <Trans>LastName</Trans>,
-                selector: 'Surname',
-                sortable: true
-            },
-            {
-                name: <Trans>PESEL</Trans>,
-                selector: 'Pesel',
-                sortable: true,
-                wrap: true
-            },
-            {
-                name: <Trans>Address</Trans>,
-                selector: 'FullAddress',
-                sortable: true,
-                wrap: true
-            },
-            {
-                name: <Trans>Phone</Trans>,
-                selector: 'Phone',
-                sortable: true
-            }
-        ];
-
-        var titleOfTable = <Trans>Patients</Trans>;
-
         return (
             <div>
                 <CustomButton onClick={this.openAddModal} text={<Trans>AddPatient</Trans>} />
@@ -171,7 +175,7 @@ class RegistrarPage extends React.Component {
                     />
                 </CustomModal>
                 <br />
-                <CustomTable
+                <CustomTable key={i18n.language}
                     titleOfTable={titleOfTable}
                     columns={columns}
                     data={this.state.data}
