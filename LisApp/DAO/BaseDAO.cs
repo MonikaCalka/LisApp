@@ -43,17 +43,23 @@ namespace LisApp.DAO
             return list?.Count > 0 ? list[0] : default(T);
         }
 
-        public static void InsertOrUpdate(string query)
+        public static long? InsertOrUpdate(string query, bool getId)
         {
+            long? id = null;
             using (SqlConnection conn = new SqlConnection(cnnString))
             {
                 using (SqlCommand command = new SqlCommand(query, conn))
                 {
                     conn.Open();
-                    command.ExecuteNonQuery();
+                    if (getId)
+                        id = (long)command.ExecuteScalar();
+                    else
+                        command.ExecuteNonQuery();
                     conn.Close();
                 }
+
             }
+            return id;
         }
 
         public static string SetString(string value) {
@@ -63,6 +69,16 @@ namespace LisApp.DAO
         public static string SetDate(DateTime value)
         {
             return value != null ? "'" + value.ToString("yyyy'-'MM'-'dd HH:mm") + "'" : "NULL";
+        }
+
+        public static string SetNullableLong(long? value)
+        {
+            return value != null ? value.ToString() : "NULL";
+        }
+
+        public static string SetBool(bool value)
+        {
+            return value  ? "1" : "0";
         }
     }
 }

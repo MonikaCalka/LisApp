@@ -113,8 +113,8 @@ namespace LisApp.DAO
         {
             return new DictionaryModel()
             {
-                Id = reader.GetLong("Id"),
-                Name = reader.GetString("Name")
+                value = reader.GetLong("Id"),
+                label = reader.GetString("Name")
             };
         }
     }

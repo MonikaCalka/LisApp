@@ -3,9 +3,10 @@ import { Trans } from 'react-i18next';
 import CustomModal from '../../components/customModal';
 import CustomTable from '../../components/customTable';
 import CustomButton from '../../components/customButton';
-import { getJson } from '../../services/rests';
+import { getJson, postJson } from '../../services/rests';
 import i18n from '../../i18n';
-import AdminForm from './adminForm';
+import EmployeeForm from './employeeForm';
+import { withAlert } from 'react-alert';
 
 const columns = [
     {
@@ -16,12 +17,14 @@ const columns = [
     {
         name: <Trans>FirstName</Trans>,
         selector: 'FirstName',
-        sortable: true
+        sortable: true,
+        wrap: true
     },
     {
         name: <Trans>LastName</Trans>,
         selector: 'Surname',
-        sortable: true
+        sortable: true,
+        wrap: true
     },
     {
         name: <Trans>Address</Trans>,
@@ -32,17 +35,20 @@ const columns = [
     {
         name: <Trans>Position</Trans>,
         selector: 'Position',
-        sortable: true
+        sortable: true,
+        wrap: true
     },
     {
         name: <Trans>Phone</Trans>,
         selector: 'Phone',
-        sortable: true
+        sortable: true,
+        wrap: true
     },
     {
         name: <Trans>Email</Trans>,
         selector: 'Email',
-        sortable: true
+        sortable: true,
+        wrap: true
     }
 ];
 
@@ -100,6 +106,7 @@ class AdminPage extends React.Component {
         getJson("Admin/GetEmployee?id=" + this.state.actualRow.IdEmployee, response => {
             this.setState({ selectedData: response });
             this.modalRef.current.openModal();
+            console.log(this.state.selectedData);
         });
     }
 
@@ -163,6 +170,20 @@ class AdminPage extends React.Component {
         }
     };
 
+    onFire = () => {
+        postJson("Admin/RemoveEmployee", this.formRef.current.getData(), response => {
+            if (response === "Success") {
+                getJson("Admin/GetEmployeeList", response => this.setState({ data: response }));
+                this.modalRef.current.closeModal();
+                this.props.alert.success(<Trans>RemoveEmployeeSuccess</Trans>);
+
+            } else {
+                this.modalRef.current.closeModal();
+                this.props.alert.error(<Trans>RemoveEmployeeError</Trans>);
+            }
+        });
+    }
+
 
     render() {
         return (
@@ -172,13 +193,14 @@ class AdminPage extends React.Component {
                 <CustomButton onClick={this.openShowModal} text={<Trans>Details</Trans>} disable={this.state.disableMode} />
 
                 <CustomModal ref={this.modalRef}>
-                    <AdminForm
+                    <EmployeeForm
                         title={this.state.titleOfModal}
                         mode={this.state.mode}
                         data={this.state.selectedData}
                         ref={this.formRef}
                         onAccept={this.onAccept}
                         onCancel={this.closeModal}
+                        onFire={this.onFire}
                     />
                 </CustomModal>
                 <br />
@@ -194,4 +216,4 @@ class AdminPage extends React.Component {
     }
 }
 
-export default AdminPage;
+export default withAlert()(AdminPage);

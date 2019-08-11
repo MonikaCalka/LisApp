@@ -20,5 +20,13 @@ namespace LisApp.Models
         public DateTime DateOfChange { get; set; }
 
         public bool InUse { get; set; }
+
+        public UserModel() { }
+
+        public UserModel(long idEmployee, string login, string password) {
+            this.IdEmployee = idEmployee;
+            this.Login = login;
+            this.Password = password;
+        }
     }
 }

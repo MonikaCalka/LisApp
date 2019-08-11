@@ -17,12 +17,14 @@ var columns = [
     {
         name: <Trans>FirstName</Trans>,
         selector: 'FirstName',
-        sortable: true
+        sortable: true,
+        wrap: true
     },
     {
         name: <Trans>LastName</Trans>,
         selector: 'Surname',
-        sortable: true
+        sortable: true,
+        wrap: true
     },
     {
         name: <Trans>PESEL</Trans>,
@@ -39,7 +41,8 @@ var columns = [
     {
         name: <Trans>Phone</Trans>,
         selector: 'Phone',
-        sortable: true
+        sortable: true,
+        wrap: true
     }
 ];
 

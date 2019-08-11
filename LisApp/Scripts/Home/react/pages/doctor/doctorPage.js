@@ -1,9 +1,13 @@
 ﻿import React from 'react';
 import { Trans } from 'react-i18next';
 import CustomModal from '../../components/customModal';
-import { getJson } from '../../services/rests';
 import CustomTable from '../../components/customTable';
+import CustomButton from '../../components/customButton';
+import { getJson, postJson } from '../../services/rests';
+import { withAlert } from 'react-alert';
 import i18n from '../../i18n';
+import OrderForm from './orderForm';
+
 
 const columns = [
     {
@@ -14,22 +18,26 @@ const columns = [
     {
         name: <Trans>Patient</Trans>,
         selector: 'PatientName',
-        sortable: true
+        sortable: true,
+        wrap: true
     },
     {
         name: <Trans>DateOfOrder</Trans>,
         selector: 'DateOfOrder',
-        sortable: true
+        sortable: true,
+        wrap: true
     },
     {
         name: <Trans>Status</Trans>,
         selector: 'Status',
-        sortable: true
+        sortable: true,
+        wrap: true
     },
     {
         name: <Trans>Priority</Trans>,
         selector: 'Priority',
-        sortable: true
+        sortable: true,
+        wrap: true
     }
 ];
 
@@ -39,10 +47,16 @@ class DoctorPage extends React.Component {
     constructor(props) {
         super(props);
         this.modalRef = React.createRef();
+        this.formRef = React.createRef();
         this.state = {
             data: [],
             actualRow: null,
-            actualLang: 'pl'
+            actualLang: 'pl',
+            disableMode: true,
+            titleOfModal: "",
+            mode: "",
+            postResult: "",
+            selectedData: null
         };
     }
 
@@ -61,21 +75,105 @@ class DoctorPage extends React.Component {
     }
 
     rowClick = (row) => {
-        console.log('Selected Rows: ', row);
-        this.setState({ actualRow: row });
+        this.setState({
+            actualRow: row,
+            disableMode: row === null
+        });
     };
 
-    openModal = () => {
+    openAddModal = () => {
+        this.setState({
+            titleOfModal: "AddOrder",
+            mode: "add"
+        });
         this.modalRef.current.openModal();
+    };
+
+    getOrderAndOpenModal = () => {
+        //getJson("Registrar/GetPatient?id=" + this.state.actualRow.IdPatient, response => {
+        //    this.setState({ selectedData: response });
+        //    this.modalRef.current.openModal();
+        //});
+    }
+
+    openEditModal = () => {
+        this.setState({
+            titleOfModal: "EditOrder",
+            mode: "edit"
+        });
+        this.getOrderAndOpenModal();
+    };
+
+    openShowModal = () => {
+        this.setState({
+            titleOfModal: "Details",
+            mode: "show"
+        });
+        this.getOrderAndOpenModal();
+    };
+
+    addNewOrder = () => {
+        //postJson("Registrar/AddNewPatient", this.formRef.current.getData(), response => {
+        //    if (response === "Success") {
+        //        getJson("Registrar/GetPatientList", response => this.setState({ data: response }));
+        //        this.modalRef.current.closeModal();
+        //        this.props.alert.success(<Trans>AddPatientSuccess</Trans>);
+        //    } else {
+        //        this.modalRef.current.closeModal();
+        //        this.props.alert.error(<Trans>AddPatientError</Trans>);
+        //    }
+        //});
+    };
+
+    closeModal = () => {
+        this.modalRef.current.closeModal();
+    }
+
+    editOrder = () => {
+        //postJson("Registrar/EditPatient", this.formRef.current.getData(), response => {
+        //    if (response === "Success") {
+        //        getJson("Registrar/GetPatientList", response => this.setState({ data: response }));
+        //        this.modalRef.current.closeModal();
+        //        this.props.alert.success(<Trans>EditPatientSuccess</Trans>);
+
+        //    } else {
+        //        this.modalRef.current.closeModal();
+        //        this.props.alert.error(<Trans>EditPatientError</Trans>);
+        //    }
+        //});
+    };
+
+    onAccept = () => {
+        switch (this.state.mode) {
+            case 'add':
+                this.addNewOrder();
+                break;
+            case 'edit':
+                this.editOrder();
+                break;
+            case 'show':
+                return null;
+        }
     };
 
     render() {
         return (
             <div>
-                Trust me I'm DOGTOR :3
-                <Trans>Welcome to React</Trans>
-                <button onClick={this.openModal}>Modal</button>
-                <CustomModal onAccept={this.openModal} ref={this.modalRef}>Piszę ja</CustomModal>
+                <CustomButton onClick={this.openAddModal} text={<Trans>AddOrder</Trans>} />
+                <CustomButton onClick={this.openEditModal} text={<Trans>EditOrder</Trans>} disable={this.state.disableMode} />
+                <CustomButton onClick={this.openShowModal} text={<Trans>Details</Trans>} disable={this.state.disableMode} />
+
+                <CustomModal ref={this.modalRef}>
+                    <OrderForm
+                        title={this.state.titleOfModal}
+                        mode={this.state.mode}
+                        data={this.state.selectedData}
+                        ref={this.formRef}
+                        onAccept={this.onAccept}
+                        onCancel={this.closeModal}
+                    />
+                </CustomModal>
+                <br />
 
                 <CustomTable key={i18n.language}
                     titleOfTable={titleOfTable}
@@ -88,4 +186,4 @@ class DoctorPage extends React.Component {
     }
 }
 
-export default DoctorPage;
+export default withAlert()(DoctorPage);

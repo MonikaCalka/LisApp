@@ -22,4 +22,21 @@ const postJson = (url, data, callback) => {
         .then(callback);
 };
 
-export { getJson, postJson };
+const getDic = (type, callback) => {
+    switch (type) {
+        case 'position':
+            getJson("Dictionary/GetPositionDic", callback);
+            break;
+        case 'ward':
+            getJson("Dictionary/GetWardDic", callback);
+            break;
+        case 'priority':
+            getJson("Dictionary/GetWardPriority", callback);
+            break;
+        case 'status':
+            getJson("Dictionary/GetWardStatus", callback);
+            break;
+    }
+};
+
+export { getJson, postJson, getDic };

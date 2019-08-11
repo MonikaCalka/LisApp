@@ -47,7 +47,7 @@ namespace LisApp.DAO
                     {BaseDAO.SetString(p.ContactPersonFirstName)},{BaseDAO.SetString(p.ContactPersonSurname)},{BaseDAO.SetString(p.ContactPersonPesel)},
                     {BaseDAO.SetString(p.ContactPersonPhone)});
             ";
-            BaseDAO.InsertOrUpdate(query);
+            BaseDAO.InsertOrUpdate(query, false);
         }
 
         public void UpdatePatient(PatientModel p)
@@ -60,10 +60,10 @@ namespace LisApp.DAO
                 ContactPersonPesel={BaseDAO.SetString(p.ContactPersonPesel)}, ContactPersonPhone={BaseDAO.SetString(p.ContactPersonPhone)}
                 where IdPatient={p.IdPatient}
             ";
-            BaseDAO.InsertOrUpdate(query);
+            BaseDAO.InsertOrUpdate(query, false);
         }
 
-        public void InsertHistoryDataOfPatient(PatientModel p, String user)
+        public void InsertHistoryDataOfPatient(PatientModel p, string user)
         {
             string query = $@"
                 insert into HistoryPersonalData(FirstName, Surname, Pesel, Sex, Street, HouseNumber, City, PostalCode, Country, Phone, IdCardNumber, Insurance, 
@@ -74,7 +74,7 @@ namespace LisApp.DAO
                     {BaseDAO.SetString(p.ContactPersonFirstName)},{BaseDAO.SetString(p.ContactPersonSurname)},{BaseDAO.SetString(p.ContactPersonPesel)},
                     {BaseDAO.SetString(p.ContactPersonPhone)},{p.IdPatient},{BaseDAO.SetDate(DateTime.Now)},{BaseDAO.SetString(user)});
             ";
-            BaseDAO.InsertOrUpdate(query);
+            BaseDAO.InsertOrUpdate(query, false);
         }
 
         private PatientModel ReadPatientModel(CustomReader reader)

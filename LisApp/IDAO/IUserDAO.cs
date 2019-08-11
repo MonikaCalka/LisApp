@@ -7,5 +7,11 @@ namespace LisApp.IDAO
     {
         List<UserModel> ReadUsersList();
         UserModel ReadUserById(long id);
+
+        UserModel ReadUserByEmployeeId(long employeeId);
+
+        void InsertUser(UserModel u);
+
+        void UpdateUser(UserModel u);
     }
 }
