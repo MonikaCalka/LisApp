@@ -72,7 +72,13 @@ const resources = {
             "RemoveEmployeeSuccess": "Dismissal was successful.",
             "RemoveEmployeeError": "The dismissal failed.",
             "AddOrder": "Add order",
-            "EditOrder": "Edit order"
+            "EditOrder": "Edit order",
+            "PatientName": "Patient name",
+            "Institution": "Institution",
+            "EmployeeNameOrdered": "Ordering doctor",
+            "DataOfOrder": "Data of order",
+            "OrderDetail": "Order detail",
+            "Comment": "Comment"
         }
     },
     pl: {
@@ -143,7 +149,13 @@ const resources = {
             "RemoveEmployeeSuccess": "Zwolnienie pracownika zakończone powodzeniem.",
             "RemoveEmployeeError": "Zwolnienie pracownika zakończone niepowodzeniem.",
             "AddOrder": "Dodaj zlecenie",
-            "EditOrder": "Edytuj zlecenie"
+            "EditOrder": "Edytuj zlecenie",
+            "PatientName": "Imię i nazwisko pacjenta",
+            "Institution": "Klinika",
+            "EmployeeNameOrdered": "Lekarz zlecający",
+            "DataOfOrder": "Dane zlecenia",
+            "OrderDetail": "Szczegóły zlecenia",
+            "Comment": "Komentarz"
 
         }
     }

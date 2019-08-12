@@ -31,10 +31,10 @@ const getDic = (type, callback) => {
             getJson("Dictionary/GetWardDic", callback);
             break;
         case 'priority':
-            getJson("Dictionary/GetWardPriority", callback);
+            getJson("Dictionary/GetPriorityDic", callback);
             break;
         case 'status':
-            getJson("Dictionary/GetWardStatus", callback);
+            getJson("Dictionary/GetStatusDic", callback);
             break;
     }
 };

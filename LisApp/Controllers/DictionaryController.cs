@@ -28,7 +28,7 @@ namespace LisApp.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetPrioritydDic()
+        public ActionResult GetPriorityDic()
         {
             string langId = Language.getLang(Request);
             List<DictionaryModel> positions = DB.DictionaryDAO.ReadDictionaryListByType(DictionaryTypesEnum.Priorities, langId);

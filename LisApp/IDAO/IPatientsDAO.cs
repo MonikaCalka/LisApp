@@ -1,4 +1,5 @@
-﻿using LisApp.Models;
+﻿using LisApp.Common;
+using LisApp.Models;
 using System.Collections.Generic;
 
 namespace LisApp.IDAO
@@ -14,5 +15,7 @@ namespace LisApp.IDAO
 
         void UpdatePatient(PatientModel p);
         void InsertHistoryDataOfPatient(PatientModel p, string user);
+
+        List<SelectOption> ReadPatientsSelect();
     }
 }

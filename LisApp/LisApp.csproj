@@ -211,6 +211,7 @@
     <Compile Include="Common\DatabaseFacade.cs" />
     <Compile Include="Common\IDatabaseFacade.cs" />
     <Compile Include="Common\Language.cs" />
+    <Compile Include="Common\SelectOption.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CustomController.cs" />
@@ -293,6 +294,7 @@
     <Content Include="Scripts\Home\react\components\customModal.js" />
     <Content Include="Scripts\Home\react\components\customSelect.js" />
     <Content Include="Scripts\Home\react\components\customTable.js" />
+    <Content Include="Scripts\Home\react\components\customTextArea.js" />
     <Content Include="Scripts\Home\react\i18n.js" />
     <Content Include="Scripts\Home\react\index.js" />
     <Content Include="Scripts\Home\react\pages\admin\employeeForm.js" />

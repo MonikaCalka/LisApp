@@ -1,9 +1,6 @@
 ﻿using LisApp.Common;
 using LisApp.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace LisApp.Controllers
@@ -21,6 +18,21 @@ namespace LisApp.Controllers
             List<OrderModel> orderList = DB.OrderDAO.ReadOrdersList(userId, langId);
 
             return new CustomJsonResult { Data = new { data = orderList } };
+        }
+
+        [HttpGet]
+        public ActionResult GetOrder(long id)
+        {
+            string langId = Language.getLang(Request);
+            OrderModel order = DB.OrderDAO.ReadOrderById(id, langId);
+            return new CustomJsonResult { Data = new { data = order } };
+        }
+
+        [HttpGet]
+        public ActionResult GetPatientSelect()
+        {
+            List<SelectOption> select = DB.PatientsDAO.ReadPatientsSelect();
+            return Json(select, JsonRequestBehavior.AllowGet);
         }
     }
 }

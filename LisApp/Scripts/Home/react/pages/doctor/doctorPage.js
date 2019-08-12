@@ -90,10 +90,10 @@ class DoctorPage extends React.Component {
     };
 
     getOrderAndOpenModal = () => {
-        //getJson("Registrar/GetPatient?id=" + this.state.actualRow.IdPatient, response => {
-        //    this.setState({ selectedData: response });
-        //    this.modalRef.current.openModal();
-        //});
+        getJson("Doctor/GetOrder?id=" + this.state.actualRow.IdOrder, response => {
+            this.setState({ selectedData: response });
+            this.modalRef.current.openModal();
+        });
     }
 
     openEditModal = () => {

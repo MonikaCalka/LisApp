@@ -10,10 +10,11 @@ namespace LisApp.DAO
         public OrderModel ReadOrderById(long id, string lang)
         {
             string query = $@"
-                select o.IdOrder, o.IdPatient, o.IdEmployee, o.IdWard, wt.Name as Ward, o.Institution, o.Comment, o.DateOfOrder, o.DateOfReceived, o.IdStatus, 
-                    st.Name as Status, o.IdPriority, prt.Name as Priority, p.FirstName, p.Surname
+                select o.IdOrder, o.IdPatient, o.IdEmployee, e.FirstName as DoctorFirstName, e.Surname as DoctorSurname, o.IdWard, wt.Name as Ward, o.Institution,
+                    o.Comment, o.DateOfOrder, o.DateOfReceived, o.IdStatus, st.Name as Status, o.IdPriority, prt.Name as Priority, p.FirstName, p.Surname
                 from Orders o
                 join Patients p on o.IdPatient = p.IdPatient
+                join Employees e on o.IdEmployee = e.IdEmployee
                 join Priorities pr  on o.IdPriority = pr.IdPriority
                 join PriorityTranslations prt on pr.IdPriority = prt.IdPriority
                 join Wards w on o.IdWard = w.IdWard
@@ -33,10 +34,11 @@ namespace LisApp.DAO
         {
             //Status: all
             string query = $@"
-                select o.IdOrder, o.IdPatient, o.IdEmployee, o.IdWard, wt.Name as Ward, o.Institution, o.Comment, o.DateOfOrder, o.DateOfReceived, o.IdStatus, 
+                select o.IdOrder, o.IdPatient, o.IdEmployee, e.FirstName as DoctorFirstName, e.Surname as DoctorSurname, o.IdWard, wt.Name as Ward, o.Institution, o.Comment, o.DateOfOrder, o.DateOfReceived, o.IdStatus, 
                     st.Name as Status, o.IdPriority, prt.Name as Priority, p.FirstName, p.Surname
                 from Orders o
                 join Patients p on o.IdPatient = p.IdPatient
+                join Employees e on o.IdEmployee = e.IdEmployee
                 join Priorities pr  on o.IdPriority = pr.IdPriority
                 join PriorityTranslations prt on pr.IdPriority = prt.IdPriority
                 join Wards w on o.IdWard = w.IdWard
@@ -57,10 +59,11 @@ namespace LisApp.DAO
         {
             //Status: Ordered
             string query = $@"
-                select o.IdOrder, o.IdPatient, o.IdEmployee, o.Comment, o.DateOfOrder, o.IdStatus, 
+                select o.IdOrder, o.IdPatient, o.IdEmployee, e.FirstName as DoctorFirstName, e.Surname as DoctorSurname, o.Comment, o.DateOfOrder, o.IdStatus, 
                     st.Name as Status, o.IdPriority, prt.Name as Priority, p.FirstName, p.Surname
                 from Orders o
                 join Patients p on o.IdPatient = p.IdPatient
+                join Employees e on o.IdEmployee = e.IdEmployee
                 join Priorities pr on o.IdPriority = pr.IdPriority
                 join PriorityTranslations prt on pr.IdPriority = prt.IdPriority
                 join Status s on o.IdStatus = s.IdStatus
@@ -80,6 +83,7 @@ namespace LisApp.DAO
                 IdOrder = reader.GetLong("IdOrder"),
                 IdPatient = reader.GetLong("IdPatient"),
                 IdEmployee = reader.GetLong("IdEmployee"),
+                EmployeeName = reader.GetString("DoctorFirstName") + " " + reader.GetString("DoctorSurname"),
                 IdWard = reader.GetNullableLong("IdWard"),
                 Ward = reader.GetString("Ward"),
                 Institution = reader.GetNullableString("Institution"),
@@ -101,6 +105,7 @@ namespace LisApp.DAO
                 IdOrder = reader.GetLong("IdOrder"),
                 IdPatient = reader.GetLong("IdPatient"),
                 IdEmployee = reader.GetLong("IdEmployee"),
+                EmployeeName = reader.GetString("DoctorFirstName") + " " + reader.GetString("DoctorSurname"),
                 Comment = reader.GetNullableString("Comment"),
                 DateOfOrder = reader.GetDate("DateOfOrder"),
                 IdStatus = reader.GetLong("IdStatus"),

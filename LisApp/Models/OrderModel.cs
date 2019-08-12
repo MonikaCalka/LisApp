@@ -15,7 +15,7 @@ namespace LisApp.Models
 
         public long IdEmployee { get; set; }
 
-        public EmployeeModel Employee { get; set; }
+        public String EmployeeName { get; set; }
 
         public long? IdWard { get; set; }
 

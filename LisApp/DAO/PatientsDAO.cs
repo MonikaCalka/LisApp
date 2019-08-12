@@ -1,4 +1,5 @@
-﻿using LisApp.IDAO;
+﻿using LisApp.Common;
+using LisApp.IDAO;
 using LisApp.Models;
 using System;
 using System.Collections.Generic;
@@ -77,6 +78,16 @@ namespace LisApp.DAO
             BaseDAO.InsertOrUpdate(query, false);
         }
 
+        public List<SelectOption> ReadPatientsSelect()
+        {
+            string query = @"
+                select IdPatient, FirstName, Surname, Pesel 
+                from Patients
+            ";
+
+            return BaseDAO.Select(query, ReadPatientSelect);
+        }
+
         private PatientModel ReadPatientModel(CustomReader reader)
         {
             return new PatientModel()
@@ -99,6 +110,15 @@ namespace LisApp.DAO
                 ContactPersonPesel = reader.GetNullableString("ContactPersonPesel"),
                 ContactPersonPhone = reader.GetNullableString("ContactPersonPhone"),
                 FullAddress = reader.GetString("Street") + " " + reader.GetString("HouseNumber") + ", " + reader.GetString("PostalCode") + " " + reader.GetString("City") + ", " + reader.GetString("Country")
+            };
+        }
+
+        private SelectOption ReadPatientSelect(CustomReader reader)
+        {
+            return new SelectOption()
+            {
+                value = reader.GetLong("IdPatient"),
+                label = reader.GetLong("IdPatient") + " - " + reader.GetString("FirstName") + " " + reader.GetString("Surname") + "\n" + reader.GetString("Pesel")
             };
         }
     }
