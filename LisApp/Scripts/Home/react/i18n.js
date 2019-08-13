@@ -78,7 +78,8 @@ const resources = {
             "EmployeeNameOrdered": "Ordering doctor",
             "DataOfOrder": "Data of order",
             "OrderDetail": "Order detail",
-            "Comment": "Comment"
+            "Comment": "Comment",
+            "OrderedStudies": "Ordered studies"
         }
     },
     pl: {
@@ -155,7 +156,8 @@ const resources = {
             "EmployeeNameOrdered": "Lekarz zlecający",
             "DataOfOrder": "Dane zlecenia",
             "OrderDetail": "Szczegóły zlecenia",
-            "Comment": "Komentarz"
+            "Comment": "Komentarz",
+            "OrderedStudies": "Zlecone badania"
 
         }
     }

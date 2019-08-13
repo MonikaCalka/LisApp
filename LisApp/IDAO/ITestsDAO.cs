@@ -5,7 +5,7 @@ namespace LisApp.IDAO
 {
     public interface ITestsDAO
     {
-        List<TestModel> ReadTestsList(string lang);
+        List<TestModel> ReadTestsList(long idProfile, string lang);
         TestModel ReadTestById(long id, string lang);
 
         List<TestModel> ReadOrderedTestsList(long idStudy, string lang);

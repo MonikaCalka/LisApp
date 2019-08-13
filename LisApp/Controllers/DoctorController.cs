@@ -34,5 +34,17 @@ namespace LisApp.Controllers
             List<SelectOption> select = DB.PatientsDAO.ReadPatientsSelect();
             return Json(select, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public ActionResult GetProfileSelect()
+        {
+            string langId = Language.getLang(Request);
+            List<ProfileModel> select = DB.ProfilesDAO.ReadProfilesList(langId);
+            foreach (ProfileModel profile in select) {
+                List<TestModel> test = DB.TestsDAO.ReadTestsList(profile.value, langId);
+                profile.tests = test;
+            }
+            return Json(select, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -35,10 +35,10 @@ namespace LisApp.DAO
         {
             return new ProfileModel()
             {
-                IdProfile = reader.GetLong("IdProfile"),
+                value = reader.GetLong("IdProfile"),
                 Code = reader.GetString("Code"),
                 Permament = reader.GetBool("Permament"),
-                Name = reader.GetString("Name")
+                label = reader.GetString("Name")
             };
         }
     }

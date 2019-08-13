@@ -7,7 +7,7 @@ namespace LisApp.Models
 {
     public class TestModel
     {
-        public long IdTest { get; set; }
+        public long value { get; set; } //IdTest
 
         public long IdProfile { get; set; }
 
@@ -23,6 +23,6 @@ namespace LisApp.Models
 
         public double NormMaxF { get; set; }
 
-        public string Name { get; set; }
+        public string label { get; set; } //Name
     }
 }

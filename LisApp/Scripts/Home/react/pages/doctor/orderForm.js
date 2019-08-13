@@ -24,7 +24,11 @@ const emptyState = {
     Studies: [],
     wardOptions: [],
     patientOptions: [],
-    priorityOptions: []
+    priorityOptions: [],
+    profileOptions: [],
+    testOptions: [],
+    IdProfile: "",
+    IdTests: []
 };
 
 const options = [
@@ -55,6 +59,9 @@ class OrderForm extends React.Component {
         });
         getJson("Doctor/GetPatientSelect", response => {
             this.setState({ patientOptions: response });
+        });
+        getJson("Doctor/GetProfileSelect", response => {
+            this.setState({ profileOptions: response });
         });
         if (this.state.IdPatient !== "") {
             this.getPatientById(this.state.IdPatient);
@@ -95,6 +102,20 @@ class OrderForm extends React.Component {
     handleSelectPriorityChanged = selectedOption => {
         this.setState({ IdPriority: selectedOption === null ? "" : selectedOption.value });
     };
+    handleSelectProfileChanged = selectedOption => {
+        this.setState({ IdProfile: selectedOption === null ? "" : selectedOption.value });
+        this.setState({ testOptions: selectedOption.tests });
+    };
+    handleSelectTestChanged = selectedOption => {
+        var arr = [];
+        if (selectedOption !== null) {
+            selectedOption.forEach(function (item) {
+                arr.push(item.value);
+            });
+        }
+        this.setState({ IdTests: selectedOption === null ? []: arr });
+        console.log(selectedOption);
+    }
 
     getData() {
         return this.state;
@@ -110,30 +131,39 @@ class OrderForm extends React.Component {
             <div className="modal-div">
                 <h2><Trans>{title}</Trans></h2>
                 <ValidatorForm id="modalform" onSubmit={onAccept} >
-                    <div className="col-sm-4">
-                        <h4><Trans>Patient</Trans></h4>
-                        <CustomSelect labeltext="IdPatient" onChange={this.handleSelectPatientChanged} value={this.state.patientOptions.filter(option => option.value === this.state.IdPatient)} selectOptions={this.state.patientOptions} name="IdPatient" isDisabled={disable} validators={['required']} errorMessages={[<Trans>RequiredField</Trans>]} requiredMark /> <br />
-                        <CustomInput labeltext="PatientName" onChange={this.handleChange} value={this.state.PatientName} name="PatientName" disabled /><br />
-                        <CustomSelect labeltext="Sex" onChange={this.handleSelectSexChanged} value={options.filter(option => option.value === this.state.Sex)} selectOptions={options} name="Sex" isDisabled /> <br />
-                        <CustomInput labeltext="PESEL" onChange={this.handleChange} value={this.state.Pesel} name="Pesel" disabled /><br />
-                        <CustomInput labeltext="Institution" onChange={this.handleChange} value={this.state.Institution} name="Institution" disabled={disable} /><br />
-                        <CustomSelect labeltext="Ward" onChange={this.handleSelectWardChanged} value={this.state.wardOptions.filter(option => option.value === this.state.IdWard)} selectOptions={this.state.wardOptions} name="IdWard" isDisabled={disable} isClearable /> <br />
-                    </div>
+                    <div>
+                        <div className="col-sm-4">
+                            <h4><Trans>Patient</Trans></h4>
+                            <CustomSelect labeltext="IdPatient" onChange={this.handleSelectPatientChanged} value={this.state.patientOptions.filter(option => option.value === this.state.IdPatient)} selectOptions={this.state.patientOptions} name="IdPatient" isDisabled={disable} validators={['required']} errorMessages={[<Trans>RequiredField</Trans>]} requiredMark /> <br />
+                            <CustomInput labeltext="PatientName" onChange={this.handleChange} value={this.state.PatientName} name="PatientName" disabled /><br />
+                            <CustomSelect labeltext="Sex" onChange={this.handleSelectSexChanged} value={options.filter(option => option.value === this.state.Sex)} selectOptions={options} name="Sex" isDisabled /> <br />
+                            <CustomInput labeltext="PESEL" onChange={this.handleChange} value={this.state.Pesel} name="Pesel" disabled /><br />
+                             </div>
 
-                    <div className="col-sm-4">
-                        <h4><Trans>DataOfOrder</Trans></h4>
-                        <CustomInput labeltext="DateOfOrder" onChange={this.handleChange} value={this.state.DateOfOrder} name="DateOfOrder" disabled /><br />
-                        <CustomInput labeltext="EmployeeNameOrdered" onChange={this.handleChange} value={this.state.EmployeeName} name="EmployeeName" disabled /><br />
-                        <CustomInput labeltext="OrderId" onChange={this.handleChange} value={this.state.IdOrder} name="IdOrder" disabled/><br />
-                        <CustomInput labeltext="Status" onChange={this.handleChange} value={this.state.Status} name="Status" disabled /><br />
-                    </div>
+                        <div className="col-sm-4">
+                            <h4><Trans>DataOfOrder</Trans></h4>
+                            <CustomInput labeltext="DateOfOrder" onChange={this.handleChange} value={this.state.DateOfOrder} name="DateOfOrder" disabled /><br />
+                            <CustomInput labeltext="EmployeeNameOrdered" onChange={this.handleChange} value={this.state.EmployeeName} name="EmployeeName" disabled /><br />
+                            <CustomSelect labeltext="Ward" onChange={this.handleSelectWardChanged} value={this.state.wardOptions.filter(option => option.value === this.state.IdWard)} selectOptions={this.state.wardOptions} name="IdWard" isDisabled={disable} isClearable /> <br />
+                            <CustomInput labeltext="Institution" onChange={this.handleChange} value={this.state.Institution} name="Institution" disabled={disable} /><br />
+                        </div>
 
-                    <div className="col-sm-4">
-                        <h4><Trans>OrderDetail</Trans></h4>
-                        <CustomTextArea rows="5" labeltext="Comment" onChange={this.handleChange} value={this.state.Comment} name="Comment" disabled={disable} /><br />
-                        <CustomSelect labeltext="Priority" onChange={this.handleSelectPriorityChanged} value={this.state.priorityOptions.filter(option => option.value === this.state.IdPriority)} selectOptions={this.state.priorityOptions} name="IdPriority" isDisabled={disable} /> <br />
-                        <CustomSelect />
-                        <CustomSelect />
+                        <div className="col-sm-4">
+                            <h4><Trans>OrderDetail</Trans></h4>
+                            <CustomInput labeltext="OrderId" onChange={this.handleChange} value={this.state.IdOrder} name="IdOrder" disabled /><br />
+                            <CustomInput labeltext="Status" onChange={this.handleChange} value={this.state.Status} name="Status" disabled /><br />
+                            <CustomSelect labeltext="Priority" onChange={this.handleSelectPriorityChanged} value={this.state.priorityOptions.filter(option => option.value === this.state.IdPriority)} selectOptions={this.state.priorityOptions} name="IdPriority" isDisabled={disable} validators={['required']} errorMessages={[<Trans>RequiredField</Trans>]} requiredMark /> <br />
+                            <CustomTextArea rows="3" labeltext="Comment" onChange={this.handleChange} value={this.state.Comment} name="Comment" disabled={disable} /><br />
+                        </div>
+                    </div>
+                    <div>
+                        <h4><Trans>OrderedStudies</Trans></h4>
+                        <div className="col-sm-4">
+                            <CustomSelect labeltext="Profile" onChange={this.handleSelectProfileChanged} value={this.state.profileOptions.filter(option => option.value === this.state.IdProfile)} selectOptions={this.state.profileOptions} name="IdProfile" isDisabled={disable} /> <br />
+                        </div>
+                        <div className="col-sm-8">
+                            <CustomSelect labeltext="Tests" onChange={this.handleSelectTestChanged} value={this.state.testOptions.filter(option => this.state.IdTests !== [] ? this.state.IdTests.includes(option.value) : false)} selectOptions={this.state.testOptions} name="IdTests" isDisabled={disable} isMulti /> <br />
+                        </div>
                     </div>
                 </ValidatorForm>
                 <div className="save-cancel-buttons">

@@ -7,12 +7,14 @@ namespace LisApp.Models
 {
     public class ProfileModel
     {
-        public long IdProfile { get; set; }
+        public long value { get; set; } //IdProfile
+
+        public string label { get; set; } //Name
 
         public string Code { get; set; }
 
         public bool Permament { get; set; }
 
-        public string Name { get; set; }
+        public List<TestModel> tests { get; set; }
     }
 }

@@ -22,14 +22,14 @@ namespace LisApp.DAO
             return BaseDAO.SelectFirst(query, ReadTestModel);
         }
 
-        public List<TestModel> ReadTestsList(string lang)
+        public List<TestModel> ReadTestsList(long idProfile, string lang)
         {
             string query = $@"
                 select t.IdTest, t.IdProfile, t.Code, t.NormMinM, t.NormMaxM, t.NormMinF, t.NormMaxF, tr.Name as Name
                 from Tests t
                 join TestTranslations tr on t.IdTest = tr.IdTest
                 join Languages l on tr.IdLanguage = l.IdLanguage
-                where l.code = '{lang}'
+                where l.code = '{lang}' and t.IdProfile = {idProfile}
             ";
 
             return BaseDAO.Select(query, ReadTestModel);
@@ -67,14 +67,14 @@ namespace LisApp.DAO
 
             return new TestModel
             {
-                IdTest = reader.GetLong("IdTest"),
+                value = reader.GetLong("IdTest"),
                 IdProfile = reader.GetLong("IdProfile"),
                 Code = reader.GetString("Code"),
                 NormMinM = reader.GetDouble("NormMinM"),
                 NormMaxM = reader.GetDouble("NormMaxM"),
                 NormMinF = reader.GetDouble("NormMinF"),
                 NormMaxF = reader.GetDouble("NormMaxF"),
-                Name = reader.GetString("Name")
+                label = reader.GetString("Name")
             };
         }
     }
