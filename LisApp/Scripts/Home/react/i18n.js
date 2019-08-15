@@ -80,7 +80,11 @@ const resources = {
             "OrderDetail": "Order detail",
             "Comment": "Comment",
             "OrderedStudies": "Ordered studies",
-            "Consultants": "Consultants"
+            "Consultants": "Consultants",
+            "AddOrderSuccess": "A new order has been added.",
+            "AddOrderError": "Order adding failed.",
+            "EditOrderSuccess": "Order data has been changed.",
+            "EditOrderError" : "Editing the order failed."
         }
     },
     pl: {
@@ -159,7 +163,11 @@ const resources = {
             "OrderDetail": "Szczegóły zlecenia",
             "Comment": "Komentarz",
             "OrderedStudies": "Zlecone badania",
-            "Consultants": "Konsultanci"
+            "Consultants": "Konsultanci",
+            "AddOrderSuccess": "Dodano nowe zlecenie.",
+            "AddOrderError": "Dodawanie zlecenia zakończone niepowodzeniem.",
+            "EditOrderSuccess": "Dane zlecenia zostały zmienione.",
+            "EditOrderError" : "Edycja zlecenia zakończona niepowodzeniem."
         }
     }
 };

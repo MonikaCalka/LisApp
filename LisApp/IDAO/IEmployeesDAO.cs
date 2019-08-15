@@ -20,5 +20,8 @@ namespace LisApp.IDAO
         void InsertHistoryDataOfEmployee(EmployeeModel e, string user);
 
         List<SelectOption> ReadConsultantsSelect();
+
+        long? InsertEmployee(long idEmployee, long idOrder);
+        void DeleteConsultantsByOrder(long idOrder);
     }
 }

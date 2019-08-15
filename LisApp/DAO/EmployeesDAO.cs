@@ -89,6 +89,24 @@ namespace LisApp.DAO
             return BaseDAO.Select(query, ReadSimpleEmployeeModel);
         }
 
+        public long? InsertEmployee(long idEmployee, long idOrder)
+        {
+            string query = $@"
+                insert into Consultants(IdEmployee, IdOrder) 
+                    output INSERTED.IdConsultant
+                    values({idEmployee},{idOrder})  ;
+            ";
+            return BaseDAO.InsertOrUpdate(query, true);
+        }
+
+        public void DeleteConsultantsByOrder(long idOrder) {
+            string query = $@"
+                delete Consultants where IdOrder = {idOrder}
+            ";
+            BaseDAO.InsertOrUpdate(query, false);
+        }
+
+
         public long? InsertEmployee(EmployeeModel e)
         {
             string query = $@"

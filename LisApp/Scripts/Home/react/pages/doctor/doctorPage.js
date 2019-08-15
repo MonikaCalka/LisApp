@@ -61,15 +61,18 @@ class DoctorPage extends React.Component {
     }
 
     componentDidMount() {
-        getJson("Doctor/GetOrderList", response => this.setState({ data: response.data }));
+        this.setOrderList();
     }
     componentDidUpdate() {
         if (this.state.actualLang !== i18n.language) {
-            getJson("Doctor/GetOrderList", response => this.setState({ data: response.data }));
+            this.setOrderList();
             this.setLanguage();
         }
     }
 
+    setOrderList(){
+        getJson("Doctor/GetOrderList", response => this.setState({ data: response.data }));
+    }
     setLanguage() {
         this.setState({ actualLang: i18n.language });
     }
@@ -113,16 +116,16 @@ class DoctorPage extends React.Component {
     };
 
     addNewOrder = () => {
-        //postJson("Registrar/AddNewPatient", this.formRef.current.getData(), response => {
-        //    if (response === "Success") {
-        //        getJson("Registrar/GetPatientList", response => this.setState({ data: response }));
-        //        this.modalRef.current.closeModal();
-        //        this.props.alert.success(<Trans>AddPatientSuccess</Trans>);
-        //    } else {
-        //        this.modalRef.current.closeModal();
-        //        this.props.alert.error(<Trans>AddPatientError</Trans>);
-        //    }
-        //});
+        postJson("Doctor/AddNewOrder", this.formRef.current.getData(), response => {
+            if (response === "Success") {
+                this.setOrderList();
+                this.modalRef.current.closeModal();
+                this.props.alert.success(<Trans>AddOrderSuccess</Trans>);
+            } else {
+                this.modalRef.current.closeModal();
+                this.props.alert.error(<Trans>AddOrderError</Trans>);
+            }
+        });
     };
 
     closeModal = () => {
@@ -130,17 +133,17 @@ class DoctorPage extends React.Component {
     }
 
     editOrder = () => {
-        //postJson("Registrar/EditPatient", this.formRef.current.getData(), response => {
-        //    if (response === "Success") {
-        //        getJson("Registrar/GetPatientList", response => this.setState({ data: response }));
-        //        this.modalRef.current.closeModal();
-        //        this.props.alert.success(<Trans>EditPatientSuccess</Trans>);
+        postJson("Doctor/EditOrder", this.formRef.current.getData(), response => {
+            if (response === "Success") {
+                this.setOrderList();
+                this.modalRef.current.closeModal();
+                this.props.alert.success(<Trans>EditOrderSuccess</Trans>);
 
-        //    } else {
-        //        this.modalRef.current.closeModal();
-        //        this.props.alert.error(<Trans>EditPatientError</Trans>);
-        //    }
-        //});
+            } else {
+                this.modalRef.current.closeModal();
+                this.props.alert.error(<Trans>EditOrderError</Trans>);
+            }
+        });
     };
 
     onAccept = () => {

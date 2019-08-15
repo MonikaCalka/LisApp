@@ -37,7 +37,7 @@ namespace LisApp.Models
 
         public string Priority { get; set; }
 
-        public List<EmployeeModel> Consultants { get; set; }
+        public List<long> IdConsultants { get; set; }
 
         public List<StudyModel> Studies { get; set; }
 

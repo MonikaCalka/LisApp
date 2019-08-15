@@ -159,7 +159,7 @@ class OrderForm extends React.Component {
                                     <CustomInput labeltext="Institution" onChange={this.handleChange} value={this.state.Institution} name="Institution" disabled={disable} /><br />
                                     </div>
                             </div>
-                            <div>
+                            <div className="padding-15-lr">
                                 <CustomSelect labeltext="Consultants" onChange={e => this.onMultiOptionChange("IdConsultants", e)} value={this.state.doctorOptions.filter(option => this.state.IdConsultants !== [] ? this.state.IdConsultants.includes(option.value) : false)} selectOptions={this.state.doctorOptions} name="IdConsultants" isDisabled={disable} isMulti /> <br />
                             </div>
                         </div>
@@ -169,7 +169,7 @@ class OrderForm extends React.Component {
                             <CustomInput labeltext="OrderId" onChange={this.handleChange} value={this.state.IdOrder} name="IdOrder" disabled /><br />
                             <CustomInput labeltext="Status" onChange={this.handleChange} value={this.state.Status} name="Status" disabled /><br />
                             <CustomSelect labeltext="Priority" onChange={e => this.onOptionChange("IdPriority", e)} value={this.state.priorityOptions.filter(option => option.value === this.state.IdPriority)} selectOptions={this.state.priorityOptions} name="IdPriority" isDisabled={disable} validators={['required']} errorMessages={[<Trans>RequiredField</Trans>]} requiredMark /> <br />
-                            <CustomTextArea rows="5" labeltext="Comment" onChange={this.handleChange} value={this.state.Comment} name="Comment" disabled={disable} /><br />
+                            <CustomTextArea rows="6" labeltext="Comment" onChange={this.handleChange} value={this.state.Comment} name="Comment" disabled={disable} /><br />
                         </div>
                     </div>
                     <div>

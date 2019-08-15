@@ -1,6 +1,8 @@
 ﻿using LisApp.Common;
 using LisApp.Models;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace LisApp.Controllers
@@ -25,7 +27,25 @@ namespace LisApp.Controllers
         {
             string langId = Language.getLang(Request);
             OrderModel order = DB.OrderDAO.ReadOrderById(id, langId);
+           
+            order = setConsultants(order, langId);
+
             return new CustomJsonResult { Data = new { data = order } };
+        }
+
+        public OrderModel setConsultants(OrderModel order, string langId)
+        {
+            List<EmployeeModel> consultants = DB.EmployeesDAO.ReadConsultantsList((long)order.IdOrder, langId);
+            if (consultants != null)
+            {
+                List<long> idConsultants = new List<long>();
+                foreach (EmployeeModel emp in consultants)
+                {
+                    idConsultants.Add((long)emp.IdEmployee);
+                }
+                order.IdConsultants = idConsultants;
+            }
+            return order;
         }
 
         [HttpGet]
@@ -52,6 +72,77 @@ namespace LisApp.Controllers
         {
             List<SelectOption> select = DB.EmployeesDAO.ReadConsultantsSelect();
             return Json(select, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult AddNewOrder(OrderModel order)
+        {
+            List<ValidationResult> results = new List<ValidationResult>();
+            ValidationContext context = new ValidationContext(order, null, null);
+            if (order != null && Validator.TryValidateObject(order, context, results, true))
+            {
+                try
+                {
+                    // get User !!!
+                    long employeeId = 1;
+                    order.IdEmployee = employeeId;
+
+                    long idOrder = (long)DB.OrderDAO.InsertOrder(order);
+                    if (order.IdConsultants != null)
+                    {
+                        foreach (long cons in order.IdConsultants)
+                        {
+                            DB.EmployeesDAO.InsertEmployee(cons, idOrder);
+                        }
+                    }
+                    return Json("Success");
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error");
+                }
+            }
+            else
+            {
+                return Json("Error");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditOrder(OrderModel order)
+        {
+            List<ValidationResult> results = new List<ValidationResult>();
+            ValidationContext context = new ValidationContext(order, null, null);
+            if (order != null && Validator.TryValidateObject(order, context, results, true))
+            {
+                try
+                {
+                    // get User !!!
+                    long employeeId = 1;
+                    order.IdEmployee = employeeId;
+
+                    DB.EmployeesDAO.DeleteConsultantsByOrder((long)order.IdOrder);
+
+                    DB.OrderDAO.UpdateOrder(order);
+
+                    if (order.IdConsultants != null)
+                    {
+                        foreach (long cons in order.IdConsultants)
+                        {
+                            DB.EmployeesDAO.InsertEmployee(cons, (long)order.IdOrder);
+                        }
+                    }
+                    return Json("Success");
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error");
+                }
+            }
+            else
+            {
+                return Json("Error");
+            }
         }
     }
 }

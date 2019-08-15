@@ -10,7 +10,7 @@ class CustomSelect extends ValidatorComponent {
         const requiredStar = requiredMark === true ? "*" : "";
         return (
 
-            <div>
+            <div className="div-input">
                 <div className="custom-select-div">
                     {requiredStar}<Trans>{labeltext}</Trans>
                     <Select
