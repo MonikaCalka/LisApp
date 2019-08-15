@@ -46,5 +46,12 @@ namespace LisApp.Controllers
             }
             return Json(select, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public ActionResult GetConsultantSelect()
+        {
+            List<SelectOption> select = DB.EmployeesDAO.ReadConsultantsSelect();
+            return Json(select, JsonRequestBehavior.AllowGet);
+        }
     }
 }

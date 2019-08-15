@@ -79,7 +79,8 @@ const resources = {
             "DataOfOrder": "Data of order",
             "OrderDetail": "Order detail",
             "Comment": "Comment",
-            "OrderedStudies": "Ordered studies"
+            "OrderedStudies": "Ordered studies",
+            "Consultants": "Consultants"
         }
     },
     pl: {
@@ -157,8 +158,8 @@ const resources = {
             "DataOfOrder": "Dane zlecenia",
             "OrderDetail": "Szczegóły zlecenia",
             "Comment": "Komentarz",
-            "OrderedStudies": "Zlecone badania"
-
+            "OrderedStudies": "Zlecone badania",
+            "Consultants": "Konsultanci"
         }
     }
 };

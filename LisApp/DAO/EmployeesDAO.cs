@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using LisApp.Enums;
 using LisApp.IDAO;
 using LisApp.Models;
+using LisApp.Common;
 
 namespace LisApp.DAO
 {
@@ -60,6 +61,18 @@ namespace LisApp.DAO
             ";
 
             return BaseDAO.Select(query, ReadEmployeeModelForAdmin);
+        }
+
+        public List<SelectOption> ReadConsultantsSelect()
+        {
+            string query = @"
+                select e.IdEmployee, e.FirstName, e.Surname
+                from Employees e
+                join Positions p on e.IdPosition = p.IdPosition
+                where p.IdPosition = 1;
+            ";
+
+            return BaseDAO.Select(query, ReadPatientSelect);
         }
 
         public List<EmployeeModel> ReadConsultantsList(long idOrder, string lang)
@@ -179,6 +192,15 @@ namespace LisApp.DAO
                 Email = reader.GetNullableString("Email"),
                 IdWard = reader.GetNullableLong("IdWard"),
                 Ward = reader.GetNullableString("Ward")
+            };
+        }
+
+        private SelectOption ReadPatientSelect(CustomReader reader)
+        {
+            return new SelectOption()
+            {
+                value = reader.GetLong("IdEmployee"),
+                label = reader.GetLong("IdEmployee") + " - " + reader.GetString("FirstName") + " " + reader.GetString("Surname")
             };
         }
     }

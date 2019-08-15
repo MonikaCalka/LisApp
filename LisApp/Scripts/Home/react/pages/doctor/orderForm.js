@@ -28,7 +28,9 @@ const emptyState = {
     profileOptions: [],
     testOptions: [],
     IdProfile: "",
-    IdTests: []
+    IdTests: [],
+    doctorOptions: [],
+    IdConsultants: []
 };
 
 const options = [
@@ -63,6 +65,9 @@ class OrderForm extends React.Component {
         getJson("Doctor/GetProfileSelect", response => {
             this.setState({ profileOptions: response });
         });
+        getJson("Doctor/GetConsultantSelect", response => {
+            this.setState({ doctorOptions: response });
+        });
         if (this.state.IdPatient !== "") {
             this.getPatientById(this.state.IdPatient);
         }
@@ -78,9 +83,20 @@ class OrderForm extends React.Component {
         });
     }
 
-    handleSelectSexChanged = selectedOption => {
-        this.setState({ Sex: selectedOption.value });
+    onOptionChange = (selectName, selectedOption) => {
+        this.setState({ [selectName]: selectedOption === null ? "" : selectedOption.value });
     };
+
+    onMultiOptionChange = (selectName, selectedOption) => {
+        var arr = [];
+        if (selectedOption !== null) {
+            selectedOption.forEach(function (item) {
+                arr.push(item.value);
+            });
+        }
+        this.setState({ [selectName]: selectedOption === null ? [] : arr });
+    };
+
     handleSelectPatientChanged = selectedOption => {
         this.setState({ IdPatient: selectedOption.value });
         this.getPatientById(selectedOption.value);
@@ -95,13 +111,6 @@ class OrderForm extends React.Component {
             });
         });
     }
-
-    handleSelectWardChanged = selectedOption => {
-        this.setState({ IdWard: selectedOption === null ? "" : selectedOption.value });
-    };
-    handleSelectPriorityChanged = selectedOption => {
-        this.setState({ IdPriority: selectedOption === null ? "" : selectedOption.value });
-    };
     handleSelectProfileChanged = selectedOption => {
         this.setState({ IdProfile: selectedOption === null ? "" : selectedOption.value });
         this.setState({ testOptions: selectedOption.tests });
@@ -132,28 +141,35 @@ class OrderForm extends React.Component {
                 <h2><Trans>{title}</Trans></h2>
                 <ValidatorForm id="modalform" onSubmit={onAccept} >
                     <div>
-                        <div className="col-sm-4">
-                            <h4><Trans>Patient</Trans></h4>
-                            <CustomSelect labeltext="IdPatient" onChange={this.handleSelectPatientChanged} value={this.state.patientOptions.filter(option => option.value === this.state.IdPatient)} selectOptions={this.state.patientOptions} name="IdPatient" isDisabled={disable} validators={['required']} errorMessages={[<Trans>RequiredField</Trans>]} requiredMark /> <br />
-                            <CustomInput labeltext="PatientName" onChange={this.handleChange} value={this.state.PatientName} name="PatientName" disabled /><br />
-                            <CustomSelect labeltext="Sex" onChange={this.handleSelectSexChanged} value={options.filter(option => option.value === this.state.Sex)} selectOptions={options} name="Sex" isDisabled /> <br />
-                            <CustomInput labeltext="PESEL" onChange={this.handleChange} value={this.state.Pesel} name="Pesel" disabled /><br />
-                             </div>
+                        <div className="col-sm-8">
+                            <div>
+                                <div className="col-sm-6">
+                                    <h4><Trans>Patient</Trans></h4>
+                                    <CustomSelect labeltext="IdPatient" onChange={this.handleSelectPatientChanged} value={this.state.patientOptions.filter(option => option.value === this.state.IdPatient)} selectOptions={this.state.patientOptions} name="IdPatient" isDisabled={disable} validators={['required']} errorMessages={[<Trans>RequiredField</Trans>]} requiredMark /> <br />
+                                    <CustomInput labeltext="PatientName" onChange={this.handleChange} value={this.state.PatientName} name="PatientName" disabled /><br />
+                                    <CustomSelect labeltext="Sex" onChange={e => this.onOptionChange("Sex", e)} value={options.filter(option => option.value === this.state.Sex)} selectOptions={options} name="Sex" isDisabled /> <br />
+                                    <CustomInput labeltext="PESEL" onChange={this.handleChange} value={this.state.Pesel} name="Pesel" disabled /><br />
+                                     </div>
 
-                        <div className="col-sm-4">
-                            <h4><Trans>DataOfOrder</Trans></h4>
-                            <CustomInput labeltext="DateOfOrder" onChange={this.handleChange} value={this.state.DateOfOrder} name="DateOfOrder" disabled /><br />
-                            <CustomInput labeltext="EmployeeNameOrdered" onChange={this.handleChange} value={this.state.EmployeeName} name="EmployeeName" disabled /><br />
-                            <CustomSelect labeltext="Ward" onChange={this.handleSelectWardChanged} value={this.state.wardOptions.filter(option => option.value === this.state.IdWard)} selectOptions={this.state.wardOptions} name="IdWard" isDisabled={disable} isClearable /> <br />
-                            <CustomInput labeltext="Institution" onChange={this.handleChange} value={this.state.Institution} name="Institution" disabled={disable} /><br />
+                                <div className="col-sm-6">
+                                    <h4><Trans>DataOfOrder</Trans></h4>
+                                    <CustomInput labeltext="DateOfOrder" onChange={this.handleChange} value={this.state.DateOfOrder} name="DateOfOrder" disabled /><br />
+                                    <CustomInput labeltext="EmployeeNameOrdered" onChange={this.handleChange} value={this.state.EmployeeName} name="EmployeeName" disabled /><br />
+                                    <CustomSelect labeltext="Ward" onChange={e => this.onOptionChange("IdWard", e)} value={this.state.wardOptions.filter(option => option.value === this.state.IdWard)} selectOptions={this.state.wardOptions} name="IdWard" isDisabled={disable} isClearable /> <br />
+                                    <CustomInput labeltext="Institution" onChange={this.handleChange} value={this.state.Institution} name="Institution" disabled={disable} /><br />
+                                    </div>
+                            </div>
+                            <div>
+                                <CustomSelect labeltext="Consultants" onChange={e => this.onMultiOptionChange("IdConsultants", e)} value={this.state.doctorOptions.filter(option => this.state.IdConsultants !== [] ? this.state.IdConsultants.includes(option.value) : false)} selectOptions={this.state.doctorOptions} name="IdConsultants" isDisabled={disable} isMulti /> <br />
+                            </div>
                         </div>
 
                         <div className="col-sm-4">
                             <h4><Trans>OrderDetail</Trans></h4>
                             <CustomInput labeltext="OrderId" onChange={this.handleChange} value={this.state.IdOrder} name="IdOrder" disabled /><br />
                             <CustomInput labeltext="Status" onChange={this.handleChange} value={this.state.Status} name="Status" disabled /><br />
-                            <CustomSelect labeltext="Priority" onChange={this.handleSelectPriorityChanged} value={this.state.priorityOptions.filter(option => option.value === this.state.IdPriority)} selectOptions={this.state.priorityOptions} name="IdPriority" isDisabled={disable} validators={['required']} errorMessages={[<Trans>RequiredField</Trans>]} requiredMark /> <br />
-                            <CustomTextArea rows="3" labeltext="Comment" onChange={this.handleChange} value={this.state.Comment} name="Comment" disabled={disable} /><br />
+                            <CustomSelect labeltext="Priority" onChange={e => this.onOptionChange("IdPriority", e)} value={this.state.priorityOptions.filter(option => option.value === this.state.IdPriority)} selectOptions={this.state.priorityOptions} name="IdPriority" isDisabled={disable} validators={['required']} errorMessages={[<Trans>RequiredField</Trans>]} requiredMark /> <br />
+                            <CustomTextArea rows="5" labeltext="Comment" onChange={this.handleChange} value={this.state.Comment} name="Comment" disabled={disable} /><br />
                         </div>
                     </div>
                     <div>

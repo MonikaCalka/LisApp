@@ -54,9 +54,8 @@ class RegistrarForm extends React.Component {
         });
     }
 
-    handleSelectChanged = selectedOption => {
-        this.setState({ Sex: selectedOption.value});
-        console.log(`Option selected:`, selectedOption.value);
+    onOptionChange = (selectName, selectedOption) => {
+        this.setState({ [selectName]: selectedOption === null ? "" : selectedOption.value });
     };
 
     getData() {
@@ -77,7 +76,7 @@ class RegistrarForm extends React.Component {
                         <h4><Trans>ContactData</Trans></h4>
                         <CustomInput labeltext="FirstName" onChange={this.handleChange} value={this.state.FirstName} name="FirstName" disabled={disable} validators={['required', 'maxStringLength:50']} errorMessages={[<Trans>RequiredFieldNN</Trans>, <Trans>Max50</Trans>]} requiredMark/><br />
                         <CustomInput labeltext="LastName" onChange={this.handleChange} value={this.state.Surname} name="Surname" disabled={disable} validators={['required', 'maxStringLength:50']} errorMessages={[<Trans>RequiredFieldNN</Trans>, <Trans>Max50</Trans>]} requiredMark/><br />
-                        <CustomSelect labeltext="Sex" onChange={this.handleSelectChanged} value={options.filter(option => option.value === this.state.Sex)} selectOptions={options} name="Sex" isDisabled={disable} validators={['required']} errorMessages={[<Trans>RequiredField</Trans>]} requiredMark /> <br />
+                        <CustomSelect labeltext="Sex" onChange={e => this.onOptionChange("Sex", e)} value={options.filter(option => option.value === this.state.Sex)} selectOptions={options} name="Sex" isDisabled={disable} validators={['required']} errorMessages={[<Trans>RequiredField</Trans>]} requiredMark /> <br />
                         <CustomInput labeltext="PESEL" onChange={this.handleChange} value={this.state.Pesel} name="Pesel" disabled={disable} validators={['required', 'maxStringLength:11', 'matchRegexp:^(([0-9]{2}[0-1][0-9][0-3][0-9]{6})|NN|([1-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]))$']} errorMessages={[<Trans>RequiredFieldNN</Trans>, <Trans>Max11</Trans>, <Trans>IsPeselNN</Trans>]} requiredMark/><br />
                         <CustomInput labeltext="Phone" onChange={this.handleChange} value={this.state.Phone} name="Phone" disabled={disable} validators={['required', 'maxStringLength:9', 'isNumber']} errorMessages={[<Trans>RequiredFieldNN</Trans>, <Trans>Max9</Trans>, <Trans>IsNumber</Trans>]} requiredMark/><br />
                         <CustomInput labeltext="IdCardNumber" onChange={this.handleChange} value={this.state.IdCardNumber} name="IdCardNumber" disabled={disable} validators={['maxStringLength:50']} errorMessages={[<Trans>Max50</Trans>]} /><br />

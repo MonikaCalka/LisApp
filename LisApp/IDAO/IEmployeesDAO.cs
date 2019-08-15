@@ -1,4 +1,5 @@
-﻿using LisApp.Models;
+﻿using LisApp.Common;
+using LisApp.Models;
 using System.Collections.Generic;
 
 namespace LisApp.IDAO
@@ -17,5 +18,7 @@ namespace LisApp.IDAO
         void UpdateEmployee(EmployeeModel e);
 
         void InsertHistoryDataOfEmployee(EmployeeModel e, string user);
+
+        List<SelectOption> ReadConsultantsSelect();
     }
 }
