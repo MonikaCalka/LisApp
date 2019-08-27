@@ -34,6 +34,8 @@ namespace LisApp.Models
 
         public List<TestModel> OrderedTest { get; set; }
 
+        public List<long> IdTests { get; set; }
+
         public SampleModel Sample { get; set; }
 
         public ResultModel Result { get; set; }

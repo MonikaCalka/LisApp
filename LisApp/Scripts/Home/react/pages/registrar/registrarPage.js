@@ -78,11 +78,6 @@ class RegistrarPage extends React.Component {
             actualRow: row,
             disableMode: row === null
         });
-
-   //     console.log(row);
-    //    console.log(index);
-        console.log(i18n.language);
-
     };
 
     openAddModal = () => {
@@ -183,6 +178,7 @@ class RegistrarPage extends React.Component {
                     columns={columns}
                     data={this.state.data}
                     onRowClicked={this.rowClick}
+                    idName="IdPatient"
                 />
             </div>
         );

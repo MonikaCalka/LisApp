@@ -106,7 +106,6 @@ class AdminPage extends React.Component {
         getJson("Admin/GetEmployee?id=" + this.state.actualRow.IdEmployee, response => {
             this.setState({ selectedData: response });
             this.modalRef.current.openModal();
-            console.log(this.state.selectedData);
         });
     }
 
@@ -209,6 +208,7 @@ class AdminPage extends React.Component {
                     columns={columns}
                     data={this.state.data}
                     onRowClicked={this.rowClick}
+                    idName="IdEmployee"
                 />
             </div>
 

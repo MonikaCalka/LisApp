@@ -112,6 +112,7 @@ class LabPage extends React.Component {
                     columns={columns}
                     data={this.state.data}
                     onRowClicked={this.rowClick}
+                    idName="IdOrder"
                 />
             </div>
         );

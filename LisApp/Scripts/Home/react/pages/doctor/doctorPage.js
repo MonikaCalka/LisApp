@@ -70,7 +70,7 @@ class DoctorPage extends React.Component {
         }
     }
 
-    setOrderList(){
+    setOrderList() {
         getJson("Doctor/GetOrderList", response => this.setState({ data: response.data }));
     }
     setLanguage() {
@@ -133,6 +133,7 @@ class DoctorPage extends React.Component {
     }
 
     editOrder = () => {
+        console.log(this.formRef.current.getData());
         postJson("Doctor/EditOrder", this.formRef.current.getData(), response => {
             if (response === "Success") {
                 this.setOrderList();
@@ -183,6 +184,7 @@ class DoctorPage extends React.Component {
                     columns={columns}
                     data={this.state.data}
                     onRowClicked={this.rowClick}
+                    idName="IdOrder"
                 />
             </div>
         );

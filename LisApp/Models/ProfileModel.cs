@@ -16,5 +16,6 @@ namespace LisApp.Models
         public bool Permament { get; set; }
 
         public List<TestModel> tests { get; set; }
+        
     }
 }

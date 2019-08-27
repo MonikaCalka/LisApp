@@ -7,6 +7,8 @@ import CustomSelect from '../../components/customSelect';
 import { ValidatorForm } from 'react-form-validator-core';
 import { getDic } from '../../services/rests';
 import CustomTextArea from '../../components/customTextArea';
+import StudiesTab from './studiesTab';
+import StudyModel from './studyModel';
 
 const emptyState = {
     IdPatient: "",
@@ -21,7 +23,7 @@ const emptyState = {
     Status: "",
     IdOrder: "",
     Comment: "",
-    Studies: [],
+    Studies: [new StudyModel()],
     wardOptions: [],
     patientOptions: [],
     priorityOptions: [],
@@ -88,12 +90,13 @@ class OrderForm extends React.Component {
     };
 
     onMultiOptionChange = (selectName, selectedOption) => {
-        var arr = [];
-        if (selectedOption !== null) {
-            selectedOption.forEach(function (item) {
-                arr.push(item.value);
-            });
-        }
+        var arr = !!selectedOption ? selectedOption.map(item => item.value) : [];
+        //SPRAWDZ SOBIE :D <3
+        // if (selectedOption !== null) {
+        //     selectedOption.forEach(function (item) {
+        //         arr.push(item.value);
+        //     });
+        // }
         this.setState({ [selectName]: selectedOption === null ? [] : arr });
     };
 
@@ -122,16 +125,20 @@ class OrderForm extends React.Component {
                 arr.push(item.value);
             });
         }
-        this.setState({ IdTests: selectedOption === null ? []: arr });
+        this.setState({ IdTests: selectedOption === null ? [] : arr });
         console.log(selectedOption);
     }
 
-    getData() {
+    getData = () => {
         return this.state;
     }
 
+    onStudiesChange = studies => {
+        this.setState({ Studies: studies });
+    }
+
     render() {
-        const { title, mode, onAccept, onCancel, onFire } = this.props;
+        const { title, mode, onAccept, onCancel } = this.props;
 
         var disable = mode === 'show' ? true : false;
         var cancelText = mode === 'show' ? <Trans>Back</Trans> : <Trans>Cancel</Trans>;
@@ -149,7 +156,7 @@ class OrderForm extends React.Component {
                                     <CustomInput labeltext="PatientName" onChange={this.handleChange} value={this.state.PatientName} name="PatientName" disabled /><br />
                                     <CustomSelect labeltext="Sex" onChange={e => this.onOptionChange("Sex", e)} value={options.filter(option => option.value === this.state.Sex)} selectOptions={options} name="Sex" isDisabled /> <br />
                                     <CustomInput labeltext="PESEL" onChange={this.handleChange} value={this.state.Pesel} name="Pesel" disabled /><br />
-                                     </div>
+                                </div>
 
                                 <div className="col-sm-6">
                                     <h4><Trans>DataOfOrder</Trans></h4>
@@ -157,7 +164,7 @@ class OrderForm extends React.Component {
                                     <CustomInput labeltext="EmployeeNameOrdered" onChange={this.handleChange} value={this.state.EmployeeName} name="EmployeeName" disabled /><br />
                                     <CustomSelect labeltext="Ward" onChange={e => this.onOptionChange("IdWard", e)} value={this.state.wardOptions.filter(option => option.value === this.state.IdWard)} selectOptions={this.state.wardOptions} name="IdWard" isDisabled={disable} isClearable /> <br />
                                     <CustomInput labeltext="Institution" onChange={this.handleChange} value={this.state.Institution} name="Institution" disabled={disable} /><br />
-                                    </div>
+                                </div>
                             </div>
                             <div className="padding-15-lr">
                                 <CustomSelect labeltext="Consultants" onChange={e => this.onMultiOptionChange("IdConsultants", e)} value={this.state.doctorOptions.filter(option => this.state.IdConsultants !== [] ? this.state.IdConsultants.includes(option.value) : false)} selectOptions={this.state.doctorOptions} name="IdConsultants" isDisabled={disable} isMulti /> <br />
@@ -172,7 +179,7 @@ class OrderForm extends React.Component {
                             <CustomTextArea rows="6" labeltext="Comment" onChange={this.handleChange} value={this.state.Comment} name="Comment" disabled={disable} /><br />
                         </div>
                     </div>
-                    <div>
+                    {/* <div>
                         <h4><Trans>OrderedStudies</Trans></h4>
                         <div className="col-sm-4">
                             <CustomSelect labeltext="Profile" onChange={this.handleSelectProfileChanged} value={this.state.profileOptions.filter(option => option.value === this.state.IdProfile)} selectOptions={this.state.profileOptions} name="IdProfile" isDisabled={disable} /> <br />
@@ -180,10 +187,13 @@ class OrderForm extends React.Component {
                         <div className="col-sm-8">
                             <CustomSelect labeltext="Tests" onChange={this.handleSelectTestChanged} value={this.state.testOptions.filter(option => this.state.IdTests !== [] ? this.state.IdTests.includes(option.value) : false)} selectOptions={this.state.testOptions} name="IdTests" isDisabled={disable} isMulti /> <br />
                         </div>
-                    </div>
+                    </div> */}
+                    <StudiesTab value={this.state.Studies}
+                        onChange={this.onStudiesChange}
+                        profileOptions={this.state.profileOptions}
+                        disable={disable} />
                 </ValidatorForm>
                 <div className="save-cancel-buttons">
-                    {mode === 'edit' ? <button onClick={onFire}><Trans>Fire</Trans></button> : null}
                     {mode !== 'show' ? <button type="submit" form="modalform">{<Trans>Save</Trans>}</button> : null}
                     <button onClick={onCancel}>{cancelText}</button>
                 </div>

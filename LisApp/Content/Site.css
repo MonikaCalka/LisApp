@@ -135,3 +135,11 @@ textarea {
     padding-left: 15px;
     padding-right: 15px;
 }
+
+.rdt_TableRow.selected-custom-table-row {
+    background-color: #fffedb !important;
+}
+
+    .rdt_TableRow.selected-custom-table-row:hover {
+        background-color: #e6e5c8 !important;
+    }

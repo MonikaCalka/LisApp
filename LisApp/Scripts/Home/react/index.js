@@ -10,6 +10,8 @@ import i18n from './i18n';
 import { getJson } from './services/rests';
 import { Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from './components/alertTemplate';
+import Navbar from './components/navbar';
+
 
 const options = {
     position: 'bottom center',
@@ -22,9 +24,14 @@ class App extends React.Component {
 
     constructor(props) {
         super(props);
+        const language = localStorage.getItem('lisLanguage');
+        i18n.changeLanguage(language || 'pl', (err, t) => {
+            if (err) return console.log('something went wrong loading', err);
+            t('key');
+        });
+
         this.state = {
-            data: [],
-            disabledPl : true
+            data: []
         };
     }
 
@@ -37,7 +44,7 @@ class App extends React.Component {
             if (err) return console.log('something went wrong loading', err);
             t('key');
         });
-        this.setState({ disabledPl : false });
+        localStorage.setItem('lisLanguage', 'en');
         this.forceUpdate();
     }
 
@@ -46,54 +53,57 @@ class App extends React.Component {
             if (err) return console.log('something went wrong loading', err);
             t('key');
         });
-        this.setState({ disabledPl: true });
+        localStorage.setItem('lisLanguage', 'pl');
         this.forceUpdate();
     }
 
     render() {
-
         const indexComponent = DoctorPage;
+
+        const language = localStorage.getItem('lisLanguage') || 'pl';
+
         return (
             <>
+                <Navbar />
                 <Router>
                     <AlertProvider template={AlertTemplate} {...options}>
-                    <div>
-                        <nav>
-                            <ul>
-                                <li>
-                                    <Link to="/">Home</Link>
-                                </li>
-                                <li>
-                                    <Link to="/doctor/">Doctor</Link>
-                                </li>
-                                <li>
-                                    <Link to="/nurse/">Nurse</Link>
-                                </li>
-                                <li>
-                                    <Link to="/lab/">Lab</Link>
-                                </li>
-                                <li>
-                                    <Link to="/admin/">Admin</Link>
-                                </li>
-                                <li>
-                                    <Link to="/registrar/">Registrar</Link>
-                                </li>
-                            </ul>
-                        </nav>
-                        
-                        <Route path="/" exact component={indexComponent} />
-                        <Route path="/doctor/" component={DoctorPage} />
-                        <Route path="/nurse/" component={NursePage} />
-                        <Route path="/lab/" component={LabPage} />
-                        <Route path="/admin/" component={AdminPage} />
-                        <Route path="/registrar/" component={RegistrarPage} />
+                        <div>
+                            <nav>
+                                <ul>
+                                    <li>
+                                        <Link to="/">Home</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/doctor/">Doctor</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/nurse/">Nurse</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/lab/">Lab</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/admin/">Admin</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/registrar/">Registrar</Link>
+                                    </li>
+                                </ul>
+                            </nav>
+
+                            <Route path="/" exact component={indexComponent} />
+                            <Route path="/doctor/" component={DoctorPage} />
+                            <Route path="/nurse/" component={NursePage} />
+                            <Route path="/lab/" component={LabPage} />
+                            <Route path="/admin/" component={AdminPage} />
+                            <Route path="/registrar/" component={RegistrarPage} />
                         </div>
                     </AlertProvider>
                 </Router>
-                <button onClick={this.setEng} disabled={!this.state.disabledPl}>en</button>
-                <button onClick={this.setPl} disabled={this.state.disabledPl}>pl</button>
+                <button onClick={this.setEng} disabled={language === 'en'}>en</button>
+                <button onClick={this.setPl} disabled={language === 'pl'}>pl</button>
             </>
-            );
+        );
     }
 }
 
