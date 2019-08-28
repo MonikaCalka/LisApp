@@ -89,7 +89,7 @@ namespace LisApp.DAO
             return BaseDAO.Select(query, ReadSimpleEmployeeModel);
         }
 
-        public long? InsertEmployee(long idEmployee, long idOrder)
+        public long? InsertConsultant(long idEmployee, long idOrder)
         {
             string query = $@"
                 insert into Consultants(IdEmployee, IdOrder) 

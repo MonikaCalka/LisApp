@@ -27,7 +27,7 @@ class StudiesTab extends Component {
                     onChange={this.onStudyChange}
                     disable={disable} />)
                 }
-                <button onClick={this.onAddStudy}>Add</button>
+                <button type="button" onClick={this.onAddStudy}>Add</button>
             </div>
         )
     }

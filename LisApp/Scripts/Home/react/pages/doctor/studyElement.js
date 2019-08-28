@@ -8,9 +8,14 @@ class StudyElement extends Component {
 
         const { profileOptions, study } = props;
         const selectedProfile = profileOptions.find(x => x.value === study.IdProfile);
-        this.state = {
-            testOptions: selectedProfile || []
+
+        var tests = [];
+        if (selectedProfile !== undefined && selectedProfile !== null) {
+            tests = selectedProfile.tests;
         }
+        this.state = {
+            testOptions: tests
+        };
     }
 
 

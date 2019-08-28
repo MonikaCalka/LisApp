@@ -10,5 +10,9 @@ namespace LisApp.IDAO
 
         List<TestModel> ReadOrderedTestsList(long idStudy, string lang);
         TestModel ReadOrderedTestById(long idOrderedTest, string lang);
+
+        long? InsertOrderedTest(long idStudy, long idTest);
+        void DeleteOrderedTestByStudy(long idStudy);
+        List<long> ReadOrderedTestByStudyId(long idStudy);
     }
 }

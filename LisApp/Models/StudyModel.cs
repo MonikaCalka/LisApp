@@ -10,11 +10,11 @@ namespace LisApp.Models
     {
         public long? IdStudy { get; set; }
 
-        public long IdProfile { get; set; }
+        public long? IdProfile { get; set; }
 
         public string Profile { get; set; }
 
-        public long IdEmployee { get; set; }
+        public long? IdEmployee { get; set; }
 
         public string EmployeeName { get; set; }
 
@@ -30,7 +30,7 @@ namespace LisApp.Models
 
         public string Priority { get; set; }
 
-        public DateTime DateOfStudy { get; set; }
+        public DateTime? DateOfStudy { get; set; }
 
         public List<TestModel> OrderedTest { get; set; }
 

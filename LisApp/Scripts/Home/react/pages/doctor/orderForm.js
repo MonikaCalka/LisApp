@@ -188,10 +188,12 @@ class OrderForm extends React.Component {
                             <CustomSelect labeltext="Tests" onChange={this.handleSelectTestChanged} value={this.state.testOptions.filter(option => this.state.IdTests !== [] ? this.state.IdTests.includes(option.value) : false)} selectOptions={this.state.testOptions} name="IdTests" isDisabled={disable} isMulti /> <br />
                         </div>
                     </div> */}
-                    <StudiesTab value={this.state.Studies}
-                        onChange={this.onStudiesChange}
-                        profileOptions={this.state.profileOptions}
-                        disable={disable} />
+                    {this.state.profileOptions.length > 0 &&
+                        <StudiesTab value={this.state.Studies}
+                            onChange={this.onStudiesChange}
+                            profileOptions={this.state.profileOptions}
+                            disable={disable} />
+                    }
                 </ValidatorForm>
                 <div className="save-cancel-buttons">
                     {mode !== 'show' ? <button type="submit" form="modalform">{<Trans>Save</Trans>}</button> : null}

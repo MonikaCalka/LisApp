@@ -10,5 +10,8 @@ namespace LisApp.IDAO
         List<StudyModel> ReadStudiesListForLab(string lang);
         StudyModel ReadStudyById(long? id);
         List<StudyModel> ReadStudiesListByOrderId(long? id);
+
+        long? InsertStudy(StudyModel study);
+        void DeleteStudiesByOrder(long idOrder);
     }
 }

@@ -21,7 +21,7 @@ namespace LisApp.IDAO
 
         List<SelectOption> ReadConsultantsSelect();
 
-        long? InsertEmployee(long idEmployee, long idOrder);
+        long? InsertConsultant(long idEmployee, long idOrder);
         void DeleteConsultantsByOrder(long idOrder);
     }
 }

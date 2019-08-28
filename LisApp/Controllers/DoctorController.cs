@@ -29,6 +29,7 @@ namespace LisApp.Controllers
             OrderModel order = DB.OrderDAO.ReadOrderById(id, langId);
            
             order = setConsultants(order, langId);
+            order = setStudies(order);
 
             return new CustomJsonResult { Data = new { data = order } };
         }
@@ -44,6 +45,20 @@ namespace LisApp.Controllers
                     idConsultants.Add((long)emp.IdEmployee);
                 }
                 order.IdConsultants = idConsultants;
+            }
+            return order;
+        }
+
+        public OrderModel setStudies(OrderModel order)
+        {
+            List<StudyModel> studies = DB.StudiesDAO.ReadStudiesListByOrderId(order.IdOrder);
+            if (studies != null)
+            {
+                foreach (StudyModel study in studies)
+                {
+                    study.IdTests = DB.TestsDAO.ReadOrderedTestByStudyId((long)study.IdStudy);
+                }
+                order.Studies = studies;
             }
             return order;
         }
@@ -92,7 +107,24 @@ namespace LisApp.Controllers
                     {
                         foreach (long cons in order.IdConsultants)
                         {
-                            DB.EmployeesDAO.InsertEmployee(cons, idOrder);
+                            DB.EmployeesDAO.InsertConsultant(cons, idOrder);
+                        }
+                    }
+
+                    if (order.Studies != null)
+                    {
+                        foreach (StudyModel study in order.Studies)
+                        {
+                            if (study.IdProfile != null && study.IdTests != null && study.IdTests.Count > 0)
+                            {
+                                study.IdOrder = idOrder;
+                                long idStudy = (long)DB.StudiesDAO.InsertStudy(study);
+
+                                foreach (long idTest in study.IdTests)
+                                {
+                                    DB.TestsDAO.InsertOrderedTest(idStudy, idTest);
+                                }
+                            }
                         }
                     }
                     return Json("Success");
@@ -123,13 +155,37 @@ namespace LisApp.Controllers
 
                     DB.EmployeesDAO.DeleteConsultantsByOrder((long)order.IdOrder);
 
+                    List<StudyModel> oldStudies = DB.StudiesDAO.ReadStudiesListByOrderId((long)order.IdOrder);
+                    foreach(StudyModel study in oldStudies)
+                    {
+                        DB.TestsDAO.DeleteOrderedTestByStudy((long)study.IdStudy);
+                    }
+                    DB.StudiesDAO.DeleteStudiesByOrder((long)order.IdOrder);
+
                     DB.OrderDAO.UpdateOrder(order);
 
                     if (order.IdConsultants != null)
                     {
                         foreach (long cons in order.IdConsultants)
                         {
-                            DB.EmployeesDAO.InsertEmployee(cons, (long)order.IdOrder);
+                            DB.EmployeesDAO.InsertConsultant(cons, (long)order.IdOrder);
+                        }
+                    }
+
+                    if (order.Studies != null)
+                    {
+                        foreach (StudyModel study in order.Studies)
+                        {
+                            if (study.IdProfile != null && study.IdTests != null && study.IdTests.Count > 0)
+                            {
+                                study.IdOrder = (long)order.IdOrder;
+                                long idStudy = (long)DB.StudiesDAO.InsertStudy(study);
+
+                                foreach (long idTest in study.IdTests)
+                                {
+                                    DB.TestsDAO.InsertOrderedTest(idStudy, idTest);
+                                }
+                            }
                         }
                     }
                     return Json("Success");

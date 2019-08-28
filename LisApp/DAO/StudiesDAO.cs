@@ -99,16 +99,34 @@ namespace LisApp.DAO
             return BaseDAO.Select(query, ReadSimpleStudyModel);
         }
 
+        public long? InsertStudy(StudyModel study)
+        {
+            string query = $@"
+                insert into Studies(IdOrder, IdProfile, IdStatus) 
+                    output INSERTED.IdStudy
+                    values({study.IdOrder}, {study.IdProfile}, 1 )  ;
+            ";
+            return BaseDAO.InsertOrUpdate(query, true);
+        }
+
+        public void DeleteStudiesByOrder(long idOrder)
+        {
+            string query = $@"
+                delete Studies where IdOrder = {idOrder}
+            ";
+            BaseDAO.InsertOrUpdate(query, false);
+        }
+
         private StudyModel ReadSimpleStudyModel(CustomReader reader)
         {
             return new StudyModel()
             {
                 IdStudy = reader.GetLong("IdStudy"),
-                IdProfile = reader.GetLong("IdProfile"),
-                IdEmployee = reader.GetLong("IdEmployee"),
+                IdProfile = reader.GetNullableLong("IdProfile"),
+                IdEmployee = reader.GetNullableLong("IdEmployee"),
                 IdOrder = reader.GetLong("IdOrder"),
                 IdStatus = reader.GetLong("IdStatus"),
-                DateOfStudy = reader.GetDate("DateOfStudy")
+                DateOfStudy = reader.GetNullableDate("DateOfStudy")
             };
         }
 
@@ -117,11 +135,11 @@ namespace LisApp.DAO
             return new StudyModel()
             {
                 IdStudy = reader.GetLong("IdStudy"),
-                IdProfile = reader.GetLong("IdProfile"),
-                IdEmployee = reader.GetLong("IdEmployee"),
+                IdProfile = reader.GetNullableLong("IdProfile"),
+                IdEmployee = reader.GetNullableLong("IdEmployee"),
                 IdOrder = reader.GetLong("IdOrder"),
                 IdStatus = reader.GetLong("IdStatus"),
-                DateOfStudy = reader.GetDate("DateOfStudy"),
+                DateOfStudy = reader.GetNullableDate("DateOfStudy"),
                 Status = reader.GetNullableString("Status"),
                 IdPriority = reader.GetNullableLong("IdPriority"),
                 Priority = reader.GetNullableString("Priority"),

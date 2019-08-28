@@ -96,6 +96,7 @@ class DoctorPage extends React.Component {
         getJson("Doctor/GetOrder?id=" + this.state.actualRow.IdOrder, response => {
             this.setState({ selectedData: response });
             this.modalRef.current.openModal();
+            console.log(response);
         });
     }
 

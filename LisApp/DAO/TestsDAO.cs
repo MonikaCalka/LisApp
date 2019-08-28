@@ -57,10 +57,40 @@ namespace LisApp.DAO
                 join OrderedTests o on t.IdTest = o.IdTest
                 join TestTranslations tr on t.IdTest = tr.IdTest
                 join Languages l on tr.IdLanguage = l.IdLanguage
-                where o.IdOrderedTrdt= {idOrderedTest} and l.code = '{lang}'
+                where o.IdOrderedTest= {idOrderedTest} and l.code = '{lang}'
             ";
 
             return BaseDAO.SelectFirst(query, ReadTestModel);
+        }
+
+        public List<long> ReadOrderedTestByStudyId(long idStudy)
+        {
+            string query = $@"
+                select t.IdTest
+                from Tests t 
+                join OrderedTests o on t.IdTest = o.IdTest
+                where o.IdStudy= {idStudy}
+            ";
+
+            return BaseDAO.Select(query, ReadOrderedTestId);
+        }
+
+        public long? InsertOrderedTest(long idStudy, long idTest)
+        {
+            string query = $@"
+                insert into OrderedTests(IdStudy, IdTest) 
+                    output INSERTED.IdOrderedTest
+                    values({idStudy}, {idTest})  ;
+            ";
+            return BaseDAO.InsertOrUpdate(query, true);
+        }
+
+        public void DeleteOrderedTestByStudy(long idStudy)
+        {
+            string query = $@"
+                delete OrderedTests where IdStudy = {idStudy}
+            ";
+            BaseDAO.InsertOrUpdate(query, false);
         }
 
         private TestModel ReadTestModel(CustomReader reader) {
@@ -76,6 +106,11 @@ namespace LisApp.DAO
                 NormMaxF = reader.GetDouble("NormMaxF"),
                 label = reader.GetString("Name")
             };
+        }
+
+        private long ReadOrderedTestId(CustomReader reader)
+        {
+            return reader.GetLong("IdTest");
         }
     }
 }
