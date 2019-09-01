@@ -14,6 +14,11 @@ class StudiesTab extends Component {
         onChange(value.map((x, i) => i !== index ? x : study));
     }
 
+    onDeleteStudy = (study, index) => {
+        const { onChange, value } = this.props;
+        onChange(value.filter((x, i) => i !== index));
+    }
+
     render() {
         const { value, profileOptions, disable } = this.props;
 
@@ -25,7 +30,8 @@ class StudiesTab extends Component {
                     index={i}
                     study={s}
                     onChange={this.onStudyChange}
-                    disable={disable} />)
+                    disable={disable}
+                    onDelete={this.onDeleteStudy}/>)
                 }
                 <button type="button" onClick={this.onAddStudy}>Add</button>
             </div>

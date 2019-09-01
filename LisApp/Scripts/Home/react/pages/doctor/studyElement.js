@@ -6,23 +6,33 @@ class StudyElement extends Component {
     constructor(props) {
         super(props);
 
-        const { profileOptions, study } = props;
-        const selectedProfile = profileOptions.find(x => x.value === study.IdProfile);
-
-        var tests = [];
-        if (selectedProfile !== undefined && selectedProfile !== null) {
-            tests = selectedProfile.tests;
-        }
         this.state = {
-            testOptions: tests
+            testOptions: this.getTestOptions(props)
         };
     }
 
+    componentDidUpdate(prevProps) {
+        const { study } = this.props;
+        const prevStudy = prevProps.study;
+        if (study.IdProfile !== prevStudy.IdProfile) {
+            this.setState({ testOptions: this.getTestOptions(this.props) });
+        }
+    }
+
+    getTestOptions(props) {
+        const { profileOptions, study } = props;
+        const selectedProfile = profileOptions.find(x => x.value === study.IdProfile);
+
+        let tests = [];
+        if (selectedProfile !== undefined && selectedProfile !== null) {
+            tests = selectedProfile.tests;
+        }
+        return tests;
+    }
 
     handleSelectProfileChanged = selectedOption => {
-        this.setState({ testOptions: selectedOption.tests });
         const { study, onChange, index } = this.props;
-        const editedStudy = { ...study, IdProfile: selectedOption === null ? "" : selectedOption.value };
+        const editedStudy = { ...study, IdProfile: selectedOption === null ? "" : selectedOption.value, IdTests: [] };
         onChange(editedStudy, index);
     }
 
@@ -31,15 +41,18 @@ class StudyElement extends Component {
         const { study, onChange, index } = this.props;
         const editedStudy = { ...study, IdTests: arr };
         onChange(editedStudy, index);
+    }
 
-        console.log(selectedOption);
+    onDeleteStudy = () => {
+        const { onDelete, index, study } = this.props;
+        onDelete(study, index);
     }
 
     render() {
         const { profileOptions, study, disable } = this.props;
         const { testOptions } = this.state;
         return (
-            <div>
+            <div className="row">
                 <div className="col-sm-4">
                     <CustomSelect labeltext="Profile"
                         onChange={this.handleSelectProfileChanged}
@@ -49,7 +62,7 @@ class StudyElement extends Component {
                         isDisabled={disable} />
                     <br />
                 </div>
-                <div className="col-sm-8">
+                <div className="col-sm-7">
                     <CustomSelect labeltext="Tests"
                         onChange={this.handleSelectTestChanged}
                         value={testOptions.filter(option => study.IdTests !== [] ? study.IdTests.includes(option.value) : false)}
@@ -57,6 +70,9 @@ class StudyElement extends Component {
                         name="IdTests"
                         isDisabled={disable}
                         isMulti /> <br />
+                </div>
+                <div className="col-sm-1">
+                    <button type="button" onClick={this.onDeleteStudy}>X</button>
                 </div>
             </div>
         )

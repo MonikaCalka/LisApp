@@ -137,6 +137,11 @@ class OrderForm extends React.Component {
         this.setState({ Studies: studies });
     }
 
+    //onStudiesDelete = study => {
+    //    var newStudies = this.state.Studies.filter(el => el !== study);
+    //    this.setState({ Studies: newStudies });
+    //}
+
     render() {
         const { title, mode, onAccept, onCancel } = this.props;
 
@@ -192,7 +197,9 @@ class OrderForm extends React.Component {
                         <StudiesTab value={this.state.Studies}
                             onChange={this.onStudiesChange}
                             profileOptions={this.state.profileOptions}
-                            disable={disable} />
+                            disable={disable}
+                    //onDelete={this.onStudiesDelete}
+                    />
                     }
                 </ValidatorForm>
                 <div className="save-cancel-buttons">
