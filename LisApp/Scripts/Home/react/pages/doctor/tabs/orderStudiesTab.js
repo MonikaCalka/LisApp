@@ -8,6 +8,16 @@ import { ValidatorForm } from 'react-form-validator-core';
 const propertyName = "Studies";
 
 class OrderStudiesTab extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            error : ""
+        };
+        
+    }
+
     onAddStudy = () => {
         const { onModelChange, model } = this.props;
         onModelChange(propertyName, [...model[propertyName], new StudyModel()]);
@@ -15,6 +25,9 @@ class OrderStudiesTab extends Component {
 
     onStudyChange = (study, index) => {
         const { onModelChange, model } = this.props;
+        this.setState({
+            error: ""
+        });
         onModelChange(propertyName, model[propertyName].map((x, i) => i !== index ? x : study));
     }
 
@@ -28,13 +41,25 @@ class OrderStudiesTab extends Component {
         onTabChange(model.actualTabIndex - 1);
     }
 
+    onAcceptWithValidation = () => {
+        const { model, onAccept } = this.props;
+
+        if (model.Studies.length !== 0  && model.Studies[0].IdTests.length > 0) {
+            onAccept();
+        } else {
+            this.setState({
+                error: "AddFirstTest"
+            });
+        }
+    }
+
     render() {
-        const { mode, onCancel, model, onAccept } = this.props;
+        const { mode, onCancel, model } = this.props;
         const disable = mode === 'show' ? true : false;
 
         return (
             <div>
-                <ValidatorForm id="modalform" onSubmit={onAccept} >
+                <ValidatorForm id="modalform" onSubmit={this.onAcceptWithValidation} >
 
                     <div>
                         <h4><Trans>OrderedStudies</Trans></h4>
@@ -47,6 +72,9 @@ class OrderStudiesTab extends Component {
                             onDelete={this.onDeleteStudy} />)
                         }
                         <button type="button" onClick={this.onAddStudy}>Add</button>
+                        <div style={{ color: 'red' }}>
+                            <Trans>{this.state.error}</Trans>
+                        </div>
                     </div>
                 </ValidatorForm>
                 <ModalButtons mode={mode} onCancel={onCancel} actualTabIndex={model.actualTabIndex} tabCount={3} onPrev={this.onPrev} />

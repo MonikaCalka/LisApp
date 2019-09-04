@@ -89,7 +89,8 @@ const resources = {
             "Next": "Next",
             "Order": "Order",
             "PatientData": "Patient data",
-            "IsNumberNN": "Enter number or NN"
+            "IsNumberNN": "Enter number or NN",
+            "AddFirstTest": "Add at least 1 test in the first study"
         }
     },
     pl: {
@@ -177,7 +178,8 @@ const resources = {
             "Next": "Dalej",
             "Order": "Zlecenie",
             "PatientData": "Dane pacjenta",
-            "IsNumberNN": "Podaj numer lub wpisz NN"
+            "IsNumberNN": "Podaj numer lub wpisz NN",
+            "AddFirstTest": "Dodaj przynajmniej 1 test w pierwszym badaniu"
         }
     }
 };
