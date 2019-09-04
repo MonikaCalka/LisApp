@@ -13,7 +13,8 @@ namespace LisApp.DAO
         {
             string query = $@"
                 select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,
-                    e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, pft.Name as Profile
+                    e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, 
+                    pft.Name as Profile, o.Comment
                 from Studies s
                 join Orders o on s.IdOrder = o.IdOrder
                 join Patients p on o.IdPatient = p.IdPatient
@@ -37,7 +38,8 @@ namespace LisApp.DAO
         {
             string query = $@"
                 select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,
-                    e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, pft.Name as Profile
+                    e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, 
+                    pft.Name as Profile, o.Comment
                 from Studies s
                 join Orders o on s.IdOrder = o.IdOrder
                 join Patients p on o.IdPatient = p.IdPatient
@@ -61,7 +63,8 @@ namespace LisApp.DAO
         {
             string query = $@"
                 select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,
-                    e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, pft.Name as Profile
+                    e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, 
+                    pft.Name as Profile, o.Comment
                 from Studies s
                 join Orders o on s.IdOrder = o.IdOrder
                 join Patients p on o.IdPatient = p.IdPatient
@@ -85,7 +88,8 @@ namespace LisApp.DAO
         {
             string query = $@"
                 select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,
-                    e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, pft.Name as Profile
+                    e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, 
+                    pft.Name as Profile, o.Comment
                 from Studies s
                 join Orders o on s.IdOrder = o.IdOrder
                 join Patients p on o.IdPatient = p.IdPatient
@@ -140,7 +144,7 @@ namespace LisApp.DAO
             {
                 IdStudy = reader.GetLong("IdStudy"),
                 IdProfile = reader.GetNullableLong("IdProfile"),
-                IdEmployee = reader.GetNullableLong("IdEmployee"),
+                IdDoctor = reader.GetNullableLong("IdEmployee"),
                 IdOrder = reader.GetLong("IdOrder"),
                 IdStatus = reader.GetLong("IdStatus"),
                 DateOfStudy = reader.GetNullableDate("DateOfStudy")
@@ -153,7 +157,7 @@ namespace LisApp.DAO
             {
                 IdStudy = reader.GetLong("IdStudy"),
                 IdProfile = reader.GetNullableLong("IdProfile"),
-                IdEmployee = reader.GetNullableLong("IdEmployee"),
+                IdDoctor = reader.GetNullableLong("IdEmployee"),
                 IdOrder = reader.GetLong("IdOrder"),
                 IdStatus = reader.GetLong("IdStatus"),
                 DateOfStudy = reader.GetNullableDate("DateOfStudy"),
@@ -162,9 +166,10 @@ namespace LisApp.DAO
                 Priority = reader.GetNullableString("Priority"),
                 IdPatient = reader.GetNullableLong("IdPatient"),
                 Patient = reader.GetNullableString("PatientName") + " " + reader.GetNullableString("PatientSurname"),
-                EmployeeName = reader.GetNullableString("DoctorName") + " " + reader.GetNullableString("DoctorSurname"),
+                Doctor = reader.GetNullableString("DoctorName") + " " + reader.GetNullableString("DoctorSurname"),
                 Profile = reader.GetNullableString("Profile"),
-                DateOfOrder = reader.GetDate("DateOfOrder")
+                DateOfOrder = reader.GetDate("DateOfOrder"),
+                OrderComment = reader.GetNullableString("Comment")
             };
         }
     }

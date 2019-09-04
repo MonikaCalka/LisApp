@@ -105,6 +105,15 @@ namespace LisApp.Controllers
         {
             string langId = Language.getLang(Request);
             StudyModel study = DB.StudiesDAO.ReadStudyById(id, langId);
+            if(study.IdStatus != 1 && study.IdStatus != 7)
+            {
+                EmployeeModel lab = DB.EmployeesDAO.ReadEmployeeByStudyId((long)study.IdStudy, langId);
+                if (lab != null)
+                {
+                    study.IdLab = lab.IdEmployee;
+                    study.Lab = lab.FirstName + " " + lab.Surname;
+                }
+            }
             return new CustomJsonResult { Data = new { data = study } };
         }
 

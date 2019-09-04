@@ -7,6 +7,17 @@ import TabNavigator from '../../components/tabNavigator';
 
 const emptyState = {
     DateOfOrder: "",
+    DateOfStudy: "",
+    Doctor: "",
+    IdOrder: "",
+    Patient: "",
+    Priority: "",
+    Profile: "",
+    Status: "",
+    Lab: "",
+    OrderComment: "",
+    DateOfCollection: "",
+    SampleCode: "",
     actualTabIndex: 0
 };
 

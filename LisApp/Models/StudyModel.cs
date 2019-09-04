@@ -14,9 +14,13 @@ namespace LisApp.Models
 
         public string Profile { get; set; }
 
-        public long? IdEmployee { get; set; }
+        public long? IdDoctor { get; set; }
 
-        public string EmployeeName { get; set; }
+        public string Doctor { get; set; }
+
+        public long? IdLab { get; set; }
+
+        public string Lab { get; set; }
 
         public EmployeeModel Employee { get; set; }
 
@@ -45,6 +49,8 @@ namespace LisApp.Models
         public long? IdPatient { get; set; }
 
         public DateTime DateOfOrder { get; set; }
+
+        public string OrderComment { get; set; }
 
     }
 }

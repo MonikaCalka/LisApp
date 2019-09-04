@@ -75,6 +75,19 @@ namespace LisApp.DAO
             return BaseDAO.Select(query, ReadPatientSelect);
         }
 
+        public EmployeeModel ReadEmployeeByStudyId(long? idStudy, string lang)
+        {
+            string query = $@"
+                select e.IdEmployee, e.IdPosition, e.FirstName, e.Surname, e.Phone, e.Email, e.IdWard, wt.Name as Ward
+                from Employees e join Studies s on e.IdEmployee = s.IdEmployee 
+                left join Wards w on e.IdWard = w.IdWard
+                full join WardTranslations wt on w.IdWard = wt.Idward
+                where s.IdStudy = {idStudy}
+                    and (w.IdWard is null or wt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}'))
+            ";
+            return BaseDAO.SelectFirst(query, ReadSimpleEmployeeModel);
+        }
+
         public List<EmployeeModel> ReadConsultantsList(long idOrder, string lang)
         {
             string query = $@"

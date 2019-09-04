@@ -23,5 +23,7 @@ namespace LisApp.IDAO
 
         long? InsertConsultant(long idEmployee, long idOrder);
         void DeleteConsultantsByOrder(long idOrder);
+
+        EmployeeModel ReadEmployeeByStudyId(long? idStudy, string lang);
     }
 }

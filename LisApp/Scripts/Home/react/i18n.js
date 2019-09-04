@@ -91,7 +91,12 @@ const resources = {
             "PatientData": "Patient data",
             "IsNumberNN": "Enter number or NN",
             "AddFirstTest": "Add at least 1 test in the first study",
-            "DetailsAndResult": "Details and result"
+            "DetailsAndResult": "Details and result",
+            "DataOfStudy": "Data of study",
+            "DateOfStudy": "Date of testing",
+            "Profile": "Type of study",
+            "DateOfCollection": "Date of sampling",
+            "EmployeeNameTesting": "Testing lab"
         }
     },
     pl: {
@@ -181,7 +186,13 @@ const resources = {
             "PatientData": "Dane pacjenta",
             "IsNumberNN": "Podaj numer lub wpisz NN",
             "AddFirstTest": "Dodaj przynajmniej 1 test w pierwszym badaniu",
-            "DetailsAndResult": "Szczegóły i wyniki"
+            "DetailsAndResult": "Szczegóły i wyniki",
+            "DataOfStudy": "Dane badania",
+            "DateOfStudy": "Data wykonania badania",
+            "Profile": "Typ badania",
+            "SampleCode": "Kod próbki",
+            "DateOfCollection": "Data pobrania próbki",
+            "EmployeeNameTesting": "Laborant wykonujący badanie"
         }
     }
 };

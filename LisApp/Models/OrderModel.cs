@@ -17,7 +17,7 @@ namespace LisApp.Models
 
         public long IdEmployee { get; set; }
 
-        public String EmployeeName { get; set; }
+        public string EmployeeName { get; set; }
 
         public long? IdWard { get; set; }
 
@@ -45,6 +45,6 @@ namespace LisApp.Models
 
         public List<StudyModel> Studies { get; set; }
 
-        public String PatientName { get; set; }
+        public string PatientName { get; set; }
     }
 }
