@@ -5,8 +5,9 @@ import { getStateFromPropsData } from '../../services/getStateFromPropsData';
 import { getDic } from '../../services/rests';
 import OrderStudiesTab from './tabs/orderStudiesTab';
 import OrderDetailsTab from './tabs/orderDetailsTab';
-import OrderPatientTab from './tabs/orderPatientTab'
+import OrderPatientTab from './tabs/orderPatientTab';
 import StudyModel from '../../models/studyModel';
+import TabNavigator from '../../components/tabNavigator';
 
 const emptyState = {
     IdPatient: "",
@@ -30,6 +31,12 @@ const emptyState = {
     IdConsultants: [],
     actualTabIndex: 0
 };
+
+const tabs = [
+    { index: 0, name: 'Patient' },
+    { index: 1, name: 'Order' },
+    { index: 2, name: 'Studies' },
+];
 
 class OrderForm extends React.Component {
 
@@ -112,6 +119,7 @@ class OrderForm extends React.Component {
         return (
             <div className="modal-div">
                 <h2><Trans>{title}</Trans></h2>
+                <TabNavigator tabs={tabs} selectedTab={this.state.actualTabIndex} />
                 {actualTab}
             </div>
         );

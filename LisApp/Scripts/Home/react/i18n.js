@@ -87,7 +87,8 @@ const resources = {
             "EditOrderError" : "Editing the order failed.",
             "Prev" : "Previous",
             "Next": "Next",
-            "NoOption":"No options"
+            "Order": "Order",
+            "PatientData": "Patient data"
         }
     },
     pl: {
@@ -173,7 +174,8 @@ const resources = {
             "EditOrderError" : "Edycja zlecenia zakończona niepowodzeniem.",
             "Prev" : "Wstęcz",
             "Next": "Dalej",
-            "NoOption": "Brak opcji"
+            "Order": "Zlecenie",
+            "PatientData": "Dane pacjenta"
         }
     }
 };

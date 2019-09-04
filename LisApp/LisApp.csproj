@@ -298,8 +298,10 @@
     <Content Include="Scripts\Home\react\components\modalButtons.js" />
     <Content Include="Scripts\Home\react\components\navbar.js" />
     <Content Include="Scripts\Home\react\components\studyElement.js" />
+    <Content Include="Scripts\Home\react\components\tabNavigator.js" />
     <Content Include="Scripts\Home\react\i18n.js" />
     <Content Include="Scripts\Home\react\index.js" />
+    <Content Include="Scripts\Home\react\models\studyModel.js" />
     <Content Include="Scripts\Home\react\pages\admin\employeeForm.js" />
     <Content Include="Scripts\Home\react\pages\admin\adminPage.js" />
     <Content Include="Scripts\Home\react\pages\doctor\doctorPage.js" />

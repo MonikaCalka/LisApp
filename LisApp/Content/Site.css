@@ -152,3 +152,25 @@ textarea {
 .width-100-proc {
     width: 100%;
 }
+
+.all-tab {
+    font-size: 14px;
+    font-family: inherit;
+    display: inline;
+    padding: 10px;
+}
+.selected-tab {
+    background-color: #26d5fe !important;
+    color: white;
+    border-radius: 15px 15px 0px 0px;
+}
+
+.not-selected-tab {
+    background-color: white !important;
+    color: #26d5fe;
+}
+
+.div-tabs {
+    margin-bottom: 10px;
+    margin-top: 20px;
+}

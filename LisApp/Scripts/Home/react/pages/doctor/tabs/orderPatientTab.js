@@ -62,7 +62,7 @@ class OrderPatientTab extends Component {
         return (
             <div className="row">
                 <ValidatorForm id="modalform" onSubmit={this.onNext} >
-                    <h4><Trans>Patient</Trans></h4>
+                    <h4><Trans>PatientData</Trans></h4>
                     <div className="col-sm-12">
                         <CustomSelect labeltext="IdPatient" onChange={this.handleSelectPatientChanged} value={model.patientOptions.filter(option => option.value === model.IdPatient)} selectOptions={model.patientOptions} name="IdPatient" isDisabled={disable} validators={['required']} errorMessages={[<Trans>RequiredField</Trans>]} requiredMark /> <br />
                         <CustomInput labeltext="PatientName" onChange={this.handleChange} value={model.PatientName} name="PatientName" disabled /><br />
