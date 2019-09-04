@@ -90,7 +90,8 @@ const resources = {
             "Order": "Order",
             "PatientData": "Patient data",
             "IsNumberNN": "Enter number or NN",
-            "AddFirstTest": "Add at least 1 test in the first study"
+            "AddFirstTest": "Add at least 1 test in the first study",
+            "DetailsAndResult": "Details and result"
         }
     },
     pl: {
@@ -174,12 +175,13 @@ const resources = {
             "AddOrderError": "Dodawanie zlecenia zakończone niepowodzeniem.",
             "EditOrderSuccess": "Dane zlecenia zostały zmienione.",
             "EditOrderError" : "Edycja zlecenia zakończona niepowodzeniem.",
-            "Prev" : "Wstęcz",
+            "Prev" : "Wstecz",
             "Next": "Dalej",
             "Order": "Zlecenie",
             "PatientData": "Dane pacjenta",
             "IsNumberNN": "Podaj numer lub wpisz NN",
-            "AddFirstTest": "Dodaj przynajmniej 1 test w pierwszym badaniu"
+            "AddFirstTest": "Dodaj przynajmniej 1 test w pierwszym badaniu",
+            "DetailsAndResult": "Szczegóły i wyniki"
         }
     }
 };

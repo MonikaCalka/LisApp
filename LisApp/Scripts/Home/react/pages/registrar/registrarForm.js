@@ -1,6 +1,5 @@
 ﻿import React from 'react';
 import { Trans } from 'react-i18next';
-import { getJson } from '../../services/rests';
 import { getStateFromPropsData } from '../../services/getStateFromPropsData';
 import CustomInput from '../../components/customInput';
 import CustomSelect from '../../components/customSelect';

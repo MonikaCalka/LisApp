@@ -9,22 +9,11 @@ namespace LisApp.DAO
 {
     public class StudiesDAO : IStudiesDAO
     {
-        public StudyModel ReadStudyById(long? id)
-        {
-            string query = $@"
-                select IdStudy, IdProfile, IdEmployee, IdOrder, IdStatus, DateOfStudy
-                from Studies
-                where IdStudy = {id}
-            ";
-
-            return BaseDAO.SelectFirst(query, ReadSimpleStudyModel);
-        }
-
-        public List<StudyModel> ReadStudiesListForDoctors(long idEmployee, String lang)
+        public StudyModel ReadStudyById(long? id, string lang)
         {
             string query = $@"
                 select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,
-                    e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname
+                    e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, pft.Name as Profile
                 from Studies s
                 join Orders o on s.IdOrder = o.IdOrder
                 join Patients p on o.IdPatient = p.IdPatient
@@ -33,20 +22,46 @@ namespace LisApp.DAO
                 join StatusTranslations stt on st.IdStatus = stt.IdStatus
                 join Priorities pr on o.IdPriority = pr.IdPriority
                 join PriorityTranslations prt on pr.IdPriority = prt.IdPriority
+                join Profiles pf on s.IdProfile = pf.IdProfile
+                join ProfileTranslations pft on pf.IdProfile = pft.IdProfile
+                where stt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
+                    and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
+                    and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
+                    and IdStudy = {id}
+            ";
+
+            return BaseDAO.SelectFirst(query, ReadStudyModel);
+        }
+
+        public List<StudyModel> ReadStudiesListForDoctors(long idEmployee, string lang)
+        {
+            string query = $@"
+                select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,
+                    e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, pft.Name as Profile
+                from Studies s
+                join Orders o on s.IdOrder = o.IdOrder
+                join Patients p on o.IdPatient = p.IdPatient
+                join Employees e on o.IdEmployee = e.IdEmployee
+                join Status st on s.IdStatus = st.IdStatus
+                join StatusTranslations stt on st.IdStatus = stt.IdStatus
+                join Priorities pr on o.IdPriority = pr.IdPriority
+                join PriorityTranslations prt on pr.IdPriority = prt.IdPriority
+                join Profiles pf on s.IdProfile = pf.IdProfile
+                join ProfileTranslations pft on pf.IdProfile = pft.IdProfile
                 where ({idEmployee} = o.IdEmployee or {idEmployee} in (select con.IdEmployee from Consultants con where con.IdOrder = o.IdOrder))
-                    and st.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}') 
-                    and prt.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
+                    and stt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
+                    and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
                     and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
             ";
 
             return BaseDAO.Select(query, ReadStudyModel);
         }
 
-        public List<StudyModel> ReadStudiesListForNurse(String lang)
+        public List<StudyModel> ReadStudiesListForNurse(string lang)
         {
             string query = $@"
                 select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,
-                    e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname
+                    e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, pft.Name as Profile
                 from Studies s
                 join Orders o on s.IdOrder = o.IdOrder
                 join Patients p on o.IdPatient = p.IdPatient
@@ -55,6 +70,8 @@ namespace LisApp.DAO
                 join StatusTranslations stt on st.IdStatus = stt.IdStatus
                 join Priorities pr on o.IdPriority = pr.IdPriority
                 join PriorityTranslations prt on pr.IdPriority = prt.IdPriority
+                join Profiles pf on s.IdProfile = pf.IdProfile
+                join ProfileTranslations pft on pf.IdProfile = pft.IdProfile
                 where stt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
                     and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
                     and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
@@ -64,7 +81,7 @@ namespace LisApp.DAO
             return BaseDAO.Select(query, ReadStudyModel);
         }
 
-        public List<StudyModel> ReadStudiesListForLab(String lang)
+        public List<StudyModel> ReadStudiesListForLab(string lang)
         {
             string query = $@"
                 select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,

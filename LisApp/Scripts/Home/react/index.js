@@ -2,6 +2,7 @@
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import DoctorPage from './pages/doctor/doctorPage';
+import DoctorStudiesPage from './pages/doctor/doctorStudiesPage';
 import NursePage from './pages/nurse/nursePage';
 import LabPage from './pages/lab/labPage';
 import AdminPage from './pages/admin/adminPage';
@@ -88,11 +89,15 @@ class App extends React.Component {
                                     <li>
                                         <Link to="/registrar/">Registrar</Link>
                                     </li>
+                                    <li>
+                                        <Link to="/doctorstudies/">DoctorStudies</Link>
+                                    </li>
                                 </ul>
                             </nav>
 
                             <Route path="/" exact component={indexComponent} />
                             <Route path="/doctor/" component={DoctorPage} />
+                            <Route path="/doctorstudies/" component={DoctorStudiesPage} />
                             <Route path="/nurse/" component={NursePage} />
                             <Route path="/lab/" component={LabPage} />
                             <Route path="/admin/" component={AdminPage} />

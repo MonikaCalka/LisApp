@@ -20,5 +20,6 @@ namespace LisApp.Controllers
             List<StudyModel> studies = DB.StudiesDAO.ReadStudiesListForLab(langId);
             return new CustomJsonResult { Data = new { data = studies } };
         }
+        
     }
 }

@@ -89,6 +89,25 @@ namespace LisApp.Controllers
             return Json(select, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult GetStudyList()
+        {
+            // get User !!!
+            long userId = 1;
+
+            string langId = Language.getLang(Request);
+            List<StudyModel> studies = DB.StudiesDAO.ReadStudiesListForDoctors(userId, langId);
+            return new CustomJsonResult { Data = new { data = studies } };
+        }
+
+        [HttpGet]
+        public ActionResult GetStudy(long id)
+        {
+            string langId = Language.getLang(Request);
+            StudyModel study = DB.StudiesDAO.ReadStudyById(id, langId);
+            return new CustomJsonResult { Data = new { data = study } };
+        }
+
         [HttpPost]
         public ActionResult AddNewOrder(OrderModel order)
         {
