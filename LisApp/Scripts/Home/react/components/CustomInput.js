@@ -8,8 +8,8 @@ class CustomInput extends ValidatorComponent {
         const { errorMessages, validators, requiredError, validatorListener, requiredMark, labeltext, ...rest } = this.props;
         const requiredStar = requiredMark === true ? "*" : "";
         return (
-            <div className="div-input">
-                <label>
+            <div>
+                <label className="width-100-proc">
                     {requiredStar}<Trans>{labeltext}</Trans>
                     <input className="form-control custom-form" type="text" {...rest} ref={(r) => { this.input = r; }}/>
                 </label>

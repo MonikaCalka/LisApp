@@ -84,7 +84,10 @@ const resources = {
             "AddOrderSuccess": "A new order has been added.",
             "AddOrderError": "Order adding failed.",
             "EditOrderSuccess": "Order data has been changed.",
-            "EditOrderError" : "Editing the order failed."
+            "EditOrderError" : "Editing the order failed.",
+            "Prev" : "Previous",
+            "Next": "Next",
+            "NoOption":"No options"
         }
     },
     pl: {
@@ -167,7 +170,10 @@ const resources = {
             "AddOrderSuccess": "Dodano nowe zlecenie.",
             "AddOrderError": "Dodawanie zlecenia zakończone niepowodzeniem.",
             "EditOrderSuccess": "Dane zlecenia zostały zmienione.",
-            "EditOrderError" : "Edycja zlecenia zakończona niepowodzeniem."
+            "EditOrderError" : "Edycja zlecenia zakończona niepowodzeniem.",
+            "Prev" : "Wstęcz",
+            "Next": "Dalej",
+            "NoOption": "Brak opcji"
         }
     }
 };

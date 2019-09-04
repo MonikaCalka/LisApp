@@ -36,7 +36,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        getJson("Admin/GetUserList", response => this.setState({ data: response }));
+        //getJson("Admin/GetUserList", response => this.setState({ data: response }));
     }
 
     setEng = () => {

@@ -295,7 +295,9 @@
     <Content Include="Scripts\Home\react\components\customSelect.js" />
     <Content Include="Scripts\Home\react\components\customTable.js" />
     <Content Include="Scripts\Home\react\components\customTextArea.js" />
+    <Content Include="Scripts\Home\react\components\modalButtons.js" />
     <Content Include="Scripts\Home\react\components\navbar.js" />
+    <Content Include="Scripts\Home\react\components\studyElement.js" />
     <Content Include="Scripts\Home\react\i18n.js" />
     <Content Include="Scripts\Home\react\index.js" />
     <Content Include="Scripts\Home\react\pages\admin\employeeForm.js" />
@@ -305,6 +307,9 @@
     <Content Include="Scripts\Home\react\pages\doctor\studiesTab.js" />
     <Content Include="Scripts\Home\react\pages\doctor\studyElement.js" />
     <Content Include="Scripts\Home\react\pages\doctor\studyModel.js" />
+    <Content Include="Scripts\Home\react\pages\doctor\tabs\orderDetailsTab.js" />
+    <Content Include="Scripts\Home\react\pages\doctor\tabs\orderPatientTab.js" />
+    <Content Include="Scripts\Home\react\pages\doctor\tabs\orderStudiesTab.js" />
     <Content Include="Scripts\Home\react\pages\lab\labPage.js" />
     <Content Include="Scripts\Home\react\pages\nurse\nursePage.js" />
     <Content Include="Scripts\Home\react\pages\registrar\registrarForm.js" />

@@ -40,11 +40,9 @@ class RegistrarForm extends React.Component {
         } else {
             this.state = emptyState;
         }
-
-        this.handleChange = this.handleChange.bind(this);
     }
 
-    handleChange(event) {
+    handleChange = (event) => {
         const target = event.target;
         const value = target.value;
         const name = target.name;
@@ -58,7 +56,7 @@ class RegistrarForm extends React.Component {
         this.setState({ [selectName]: selectedOption === null ? "" : selectedOption.value });
     };
 
-    getData() {
+    getData = () => {
         return this.state;
     }
 

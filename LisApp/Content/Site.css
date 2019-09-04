@@ -1,4 +1,4 @@
-﻿body {
+﻿﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -20,7 +20,12 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 100%;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .button {
@@ -53,16 +58,20 @@ textarea {
     }
 
 .image-button {
-    position:absolute;
+    position: absolute;
     top: -20px;
     left: calc(50% - 23px);
-    text-align:center;
+    text-align: center;
 }
 
 .modal-div {
-    overflow: scroll;
+    overflow: auto;
     max-height: 800px;
     max-width: 900px;
+    min-height: 450px;
+    min-width: 650px;
+    height: 70vh;
+    width: 60vw;
 }
 
 .custom-select {
@@ -127,10 +136,6 @@ textarea {
     max-height: 38px;
 }
 
-.div-input {
-    margin-top:  -10px;
-}
-
 .padding-15-lr {
     padding-left: 15px;
     padding-right: 15px;
@@ -143,3 +148,7 @@ textarea {
     .rdt_TableRow.selected-custom-table-row:hover {
         background-color: #e6e5c8 !important;
     }
+
+.width-100-proc {
+    width: 100%;
+}

@@ -41,7 +41,6 @@ class CustomModal extends React.Component {
     }
 
     render() {
-        const { onCancelText} = this.props;
         return (
             <Modal
                 isOpen={this.state.modalIsOpen}

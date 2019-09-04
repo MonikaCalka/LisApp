@@ -42,8 +42,6 @@ class EmployeeForm extends React.Component {
         } else {
             this.state = emptyState;
         }
-
-        this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
@@ -55,7 +53,7 @@ class EmployeeForm extends React.Component {
         });
     }
 
-    handleChange(event) {
+    handleChange = (event) => {
         const target = event.target;
         const value = target.value;
         const name = target.name;
@@ -69,7 +67,7 @@ class EmployeeForm extends React.Component {
         this.setState({ [selectName]: selectedOption === null ? "" : selectedOption.value });
     };
 
-    getData() {
+    getData = () => {
         return this.state;
     }
 
