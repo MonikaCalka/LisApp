@@ -5,6 +5,7 @@ import CustomSelect from '../../../components/customSelect';
 import { ValidatorForm } from 'react-form-validator-core';
 import ModalButtons from '../../../components/modalButtons';
 import { getJson } from '../../../services/rests';
+import { requiredField } from '../../../components/validatorRules';
 
 const options = [
     { value: "F", label: <Trans>Female</Trans> },
@@ -64,7 +65,7 @@ class OrderPatientTab extends Component {
                 <ValidatorForm id="modalform" onSubmit={this.onNext} >
                     <h4><Trans>PatientData</Trans></h4>
                     <div className="col-sm-12">
-                        <CustomSelect labeltext="IdPatient" onChange={this.handleSelectPatientChanged} value={model.patientOptions.filter(option => option.value === model.IdPatient)} selectOptions={model.patientOptions} name="IdPatient" isDisabled={disable} validators={['required']} errorMessages={[<Trans>RequiredField</Trans>]} requiredMark /> <br />
+                        <CustomSelect labeltext="IdPatient" onChange={this.handleSelectPatientChanged} value={model.patientOptions.filter(option => option.value === model.IdPatient)} selectOptions={model.patientOptions} name="IdPatient" isDisabled={disable} {...requiredField} /> <br />
                         <CustomInput labeltext="PatientName" onChange={this.handleChange} value={model.PatientName} name="PatientName" disabled /><br />
                         <CustomSelect labeltext="Sex" onChange={e => this.onOptionChange("Sex", e)} value={options.filter(option => option.value === model.Sex)} selectOptions={options} name="Sex" isDisabled /> <br />
                         <CustomInput labeltext="PESEL" onChange={this.handleChange} value={model.Pesel} name="Pesel" disabled /><br />

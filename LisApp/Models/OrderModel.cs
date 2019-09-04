@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace LisApp.Models
 {
@@ -9,6 +10,7 @@ namespace LisApp.Models
     {
         public long? IdOrder { get; set; }
 
+        [Required]
         public long IdPatient { get; set; }
 
         public PatientModel Patient { get; set; }
@@ -21,6 +23,7 @@ namespace LisApp.Models
 
         public string Ward { get; set; }
 
+        [StringLength(100)]
         public string Institution { get; set; }
 
         public string Comment { get; set; }
@@ -33,6 +36,7 @@ namespace LisApp.Models
 
         public string Status { get; set; }
 
+        [Required]
         public long IdPriority { get; set; }
 
         public string Priority { get; set; }

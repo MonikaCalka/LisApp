@@ -88,7 +88,8 @@ const resources = {
             "Prev" : "Previous",
             "Next": "Next",
             "Order": "Order",
-            "PatientData": "Patient data"
+            "PatientData": "Patient data",
+            "IsNumberNN": "Enter number or NN"
         }
     },
     pl: {
@@ -175,7 +176,8 @@ const resources = {
             "Prev" : "Wstęcz",
             "Next": "Dalej",
             "Order": "Zlecenie",
-            "PatientData": "Dane pacjenta"
+            "PatientData": "Dane pacjenta",
+            "IsNumberNN": "Podaj numer lub wpisz NN"
         }
     }
 };

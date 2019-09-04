@@ -5,6 +5,7 @@ import CustomSelect from '../../../components/customSelect';
 import { ValidatorForm } from 'react-form-validator-core';
 import ModalButtons from '../../../components/modalButtons';
 import CustomTextArea from '../../../components/customTextArea';
+import { requiredField } from '../../../components/validatorRules';
 
 class OrderDetailsTab extends Component {
 
@@ -53,7 +54,7 @@ class OrderDetailsTab extends Component {
                             <h4><Trans>OrderDetail</Trans></h4>
                             <CustomInput labeltext="OrderId" onChange={this.handleChange} value={model.IdOrder} name="IdOrder" disabled />
                             <CustomInput labeltext="Status" onChange={this.handleChange} value={model.Status} name="Status" disabled />
-                            <CustomSelect labeltext="Priority" onChange={e => this.onOptionChange("IdPriority", e)} value={model.priorityOptions.filter(option => option.value === model.IdPriority)} selectOptions={model.priorityOptions} name="IdPriority" isDisabled={disable} validators={['required']} errorMessages={[<Trans>RequiredField</Trans>]} requiredMark />
+                            <CustomSelect labeltext="Priority" onChange={e => this.onOptionChange("IdPriority", e)} value={model.priorityOptions.filter(option => option.value === model.IdPriority)} selectOptions={model.priorityOptions} name="IdPriority" isDisabled={disable} {...requiredField}/>
                             <CustomTextArea rows="6" labeltext="Comment" onChange={this.handleChange} value={model.Comment} name="Comment" disabled={disable} />
                         </div>
                     </div>
