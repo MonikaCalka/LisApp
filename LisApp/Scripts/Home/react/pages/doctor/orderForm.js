@@ -15,7 +15,6 @@ const emptyState = {
     Sex: "",
     Pesel: "",
     IdCardNumber: "",
-    Insurance: "",
     IdPriority: "",
     EmployeeName: "",
     DateOfOrder: "",
@@ -35,7 +34,7 @@ const emptyState = {
 const tabs = [
     { index: 0, name: 'Patient' },
     { index: 1, name: 'Order' },
-    { index: 2, name: 'Studies' },
+    { index: 2, name: 'Studies' }
 ];
 
 class OrderForm extends React.Component {
@@ -51,14 +50,14 @@ class OrderForm extends React.Component {
     }
 
     componentDidMount() {
+        getJson("Doctor/GetPatientSelect", response => {
+            this.setState({ patientOptions: response });
+        });
         getDic("ward", response => {
             this.setState({ wardOptions: response });
         });
         getDic("priority", response => {
             this.setState({ priorityOptions: response });
-        });
-        getJson("Doctor/GetPatientSelect", response => {
-            this.setState({ patientOptions: response });
         });
         getJson("Doctor/GetProfileSelect", response => {
             this.setState({ profileOptions: response });

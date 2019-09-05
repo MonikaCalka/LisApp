@@ -46,5 +46,8 @@ namespace LisApp.Models
         public List<StudyModel> Studies { get; set; }
 
         public string PatientName { get; set; }
+
+        public string IdCardNumber { get; set; }
+        
     }
 }

@@ -53,9 +53,6 @@ namespace LisApp.Models
         public string IdCardNumber { get; set; }
 
         [StringLength(50)]
-        public string Insurance { get; set; }
-
-        [StringLength(50)]
         public string ContactPersonFirstName { get; set; }
 
         [StringLength(50)]

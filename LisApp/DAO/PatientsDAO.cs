@@ -18,7 +18,7 @@ namespace LisApp.DAO
         public PatientModel ReadPatientById(long? id)
         {
             string query = $@"
-                select IdPatient, FirstName, Surname, Pesel, Sex, Street, HouseNumber, City, PostalCode, Country, Phone, IdCardNumber, Insurance, 
+                select IdPatient, FirstName, Surname, Pesel, Sex, Street, HouseNumber, City, PostalCode, Country, Phone, IdCardNumber,
                     ContactPersonFirstName, ContactPersonSurname, ContactPersonPesel, ContactPersonPhone
                 from Patients 
                 where IdPatient = {id}
@@ -29,7 +29,7 @@ namespace LisApp.DAO
         public List<PatientModel> ReadPatientsList()
         {
             string query = @"
-                select IdPatient, FirstName, Surname, Pesel, Sex, Street, HouseNumber, City, PostalCode, Country, Phone, IdCardNumber, Insurance, 
+                select IdPatient, FirstName, Surname, Pesel, Sex, Street, HouseNumber, City, PostalCode, Country, Phone, IdCardNumber,
                     ContactPersonFirstName, ContactPersonSurname, ContactPersonPesel, ContactPersonPhone 
                 from Patients
             ";
@@ -40,11 +40,11 @@ namespace LisApp.DAO
         public void InsertPatient(PatientModel p)
         {
             string query = $@"
-                insert into Patients(FirstName, Surname, Pesel, Sex, Street, HouseNumber, City, PostalCode, Country, Phone, IdCardNumber, Insurance, 
+                insert into Patients(FirstName, Surname, Pesel, Sex, Street, HouseNumber, City, PostalCode, Country, Phone, IdCardNumber,
                     ContactPersonFirstName, ContactPersonSurname, ContactPersonPesel, ContactPersonPhone) 
                     values({BaseDAO.SetString(p.FirstName)},{BaseDAO.SetString(p.Surname)},{BaseDAO.SetString(p.Pesel)},{BaseDAO.SetString(p.Sex)},
                     {BaseDAO.SetString(p.Street)},{BaseDAO.SetString(p.HouseNumber)},{BaseDAO.SetString(p.City)},{BaseDAO.SetString(p.PostalCode)},
-                    {BaseDAO.SetString(p.Country)},{BaseDAO.SetString(p.Phone)},{BaseDAO.SetString(p.IdCardNumber)},{BaseDAO.SetString(p.Insurance)},
+                    {BaseDAO.SetString(p.Country)},{BaseDAO.SetString(p.Phone)},{BaseDAO.SetString(p.IdCardNumber)},
                     {BaseDAO.SetString(p.ContactPersonFirstName)},{BaseDAO.SetString(p.ContactPersonSurname)},{BaseDAO.SetString(p.ContactPersonPesel)},
                     {BaseDAO.SetString(p.ContactPersonPhone)});
             ";
@@ -57,7 +57,7 @@ namespace LisApp.DAO
                 update Patients set FirstName={BaseDAO.SetString(p.FirstName)}, Surname={BaseDAO.SetString(p.Surname)}, Pesel={BaseDAO.SetString(p.Pesel)}, 
                 Sex={BaseDAO.SetString(p.Sex)}, Street={BaseDAO.SetString(p.Street)}, HouseNumber={BaseDAO.SetString(p.HouseNumber)}, City={BaseDAO.SetString(p.City)}, 
                 PostalCode={BaseDAO.SetString(p.PostalCode)}, Country={BaseDAO.SetString(p.Country)}, Phone={BaseDAO.SetString(p.Phone)}, IdCardNumber={BaseDAO.SetString(p.IdCardNumber)}, 
-                Insurance={BaseDAO.SetString(p.Insurance)}, ContactPersonFirstName={BaseDAO.SetString(p.ContactPersonFirstName)}, ContactPersonSurname={BaseDAO.SetString(p.ContactPersonSurname)}, 
+                ContactPersonFirstName={BaseDAO.SetString(p.ContactPersonFirstName)}, ContactPersonSurname={BaseDAO.SetString(p.ContactPersonSurname)}, 
                 ContactPersonPesel={BaseDAO.SetString(p.ContactPersonPesel)}, ContactPersonPhone={BaseDAO.SetString(p.ContactPersonPhone)}
                 where IdPatient={p.IdPatient}
             ";
@@ -67,11 +67,11 @@ namespace LisApp.DAO
         public void InsertHistoryDataOfPatient(PatientModel p, string user)
         {
             string query = $@"
-                insert into HistoryPersonalData(FirstName, Surname, Pesel, Sex, Street, HouseNumber, City, PostalCode, Country, Phone, IdCardNumber, Insurance, 
+                insert into HistoryPersonalData(FirstName, Surname, Pesel, Sex, Street, HouseNumber, City, PostalCode, Country, Phone, IdCardNumber, 
                     ContactPersonFirstName, ContactPersonSurname, ContactPersonPesel, ContactPersonPhone, IdPatient, DateOfChange, UserOfChange) 
                     values({BaseDAO.SetString(p.FirstName)},{BaseDAO.SetString(p.Surname)},{BaseDAO.SetString(p.Pesel)},{BaseDAO.SetString(p.Sex)},
                     {BaseDAO.SetString(p.Street)},{BaseDAO.SetString(p.HouseNumber)},{BaseDAO.SetString(p.City)},{BaseDAO.SetString(p.PostalCode)},
-                    {BaseDAO.SetString(p.Country)},{BaseDAO.SetString(p.Phone)},{BaseDAO.SetString(p.IdCardNumber)},{BaseDAO.SetString(p.Insurance)},
+                    {BaseDAO.SetString(p.Country)},{BaseDAO.SetString(p.Phone)},{BaseDAO.SetString(p.IdCardNumber)},
                     {BaseDAO.SetString(p.ContactPersonFirstName)},{BaseDAO.SetString(p.ContactPersonSurname)},{BaseDAO.SetString(p.ContactPersonPesel)},
                     {BaseDAO.SetString(p.ContactPersonPhone)},{p.IdPatient},{BaseDAO.SetDate(DateTime.Now)},{BaseDAO.SetString(user)});
             ";
@@ -104,7 +104,6 @@ namespace LisApp.DAO
                 Country = reader.GetString("Country"),
                 Phone = reader.GetString("Phone"),
                 IdCardNumber = reader.GetNullableString("IdCardNumber"),
-                Insurance = reader.GetNullableString("Insurance"),
                 ContactPersonFirstName = reader.GetNullableString("ContactPersonFirstName"),
                 ContactPersonSurname = reader.GetNullableString("ContactPersonSurname"),
                 ContactPersonPesel = reader.GetNullableString("ContactPersonPesel"),

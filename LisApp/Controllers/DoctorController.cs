@@ -34,7 +34,7 @@ namespace LisApp.Controllers
             return new CustomJsonResult { Data = new { data = order } };
         }
 
-        public OrderModel setConsultants(OrderModel order, string langId)
+        private OrderModel setConsultants(OrderModel order, string langId)
         {
             List<EmployeeModel> consultants = DB.EmployeesDAO.ReadConsultantsList((long)order.IdOrder, langId);
             if (consultants != null)
@@ -49,7 +49,7 @@ namespace LisApp.Controllers
             return order;
         }
 
-        public OrderModel setStudies(OrderModel order)
+        private OrderModel setStudies(OrderModel order)
         {
             List<StudyModel> studies = DB.StudiesDAO.ReadStudiesListByOrderId(order.IdOrder);
             if (studies != null)
@@ -190,7 +190,14 @@ namespace LisApp.Controllers
                     }
                     DB.StudiesDAO.DeleteStudiesByOrder((long)order.IdOrder);
 
-                    DB.OrderDAO.UpdateOrder(order);
+                    if (order.IdStatus == 1)
+                    {
+                        DB.OrderDAO.FullUpdateOrder(order);
+                    }
+                    else
+                    {
+                        DB.OrderDAO.UpdateOrder(order);
+                    }
 
                     if (order.IdConsultants != null)
                     {

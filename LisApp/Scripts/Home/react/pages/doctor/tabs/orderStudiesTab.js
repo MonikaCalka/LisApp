@@ -55,8 +55,11 @@ class OrderStudiesTab extends Component {
 
     render() {
         const { mode, onCancel, model } = this.props;
-        const disable = mode === 'show' ? true : false;
-
+        const disableInProgress = mode === 'show' || (mode !== 'add' && model.IdStatus !== 1) ? true : false;
+        let addButton = null;
+        if (!disableInProgress) {
+            addButton = <button type="button" onClick={this.onAddStudy}>Add</button>;
+        }
         return (
             <div>
                 <ValidatorForm id="modalform" onSubmit={this.onAcceptWithValidation} >
@@ -68,10 +71,10 @@ class OrderStudiesTab extends Component {
                             index={i}
                             study={s}
                             onChange={this.onStudyChange}
-                            disable={disable}
+                            disable={disableInProgress}
                             onDelete={this.onDeleteStudy} />)
                         }
-                        <button type="button" onClick={this.onAddStudy}>Add</button>
+                        {addButton}
                         <div style={{ color: 'red' }}>
                             <Trans>{this.state.error}</Trans>
                         </div>

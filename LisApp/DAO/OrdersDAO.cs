@@ -11,7 +11,7 @@ namespace LisApp.DAO
         {
             string query = $@"
                 select o.IdOrder, o.IdPatient, o.IdEmployee, e.FirstName as DoctorFirstName, e.Surname as DoctorSurname, o.IdWard, wt.Name as Ward, o.Institution,
-                    o.Comment, o.DateOfOrder, o.DateOfReceived, o.IdStatus, st.Name as Status, o.IdPriority, prt.Name as Priority, p.FirstName, p.Surname
+                    o.Comment, o.DateOfOrder, o.DateOfReceived, o.IdStatus, st.Name as Status, o.IdPriority, prt.Name as Priority, p.FirstName, p.Surname, p.IdCardNumber
                 from Orders o
                 join Patients p on o.IdPatient = p.IdPatient
                 join Employees e on o.IdEmployee = e.IdEmployee
@@ -30,34 +30,51 @@ namespace LisApp.DAO
             return BaseDAO.SelectFirst(query, ReadOrderModel);
         }
 
+        public OrderModel ReadSimpleOrderById(long id, string lang)
+        {
+            string query = $@"
+                select o.IdOrder, o.IdPatient, o.IdEmployee, e.FirstName as DoctorFirstName, e.Surname as DoctorSurname, 
+                    o.Comment, o.DateOfOrder, o.DateOfReceived, o.IdStatus, st.Name as Status, o.IdPriority, prt.Name as Priority, p.FirstName, p.Surname
+                from Orders o
+                join Patients p on o.IdPatient = p.IdPatient
+                join Employees e on o.IdEmployee = e.IdEmployee
+                join Priorities pr  on o.IdPriority = pr.IdPriority
+                join PriorityTranslations prt on pr.IdPriority = prt.IdPriority
+                join Status s on o.IdStatus = s.IdStatus
+                join StatusTranslations st on s.IdStatus = st.IdStatus
+                where st.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}') 
+                    and prt.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
+                    and IdOrder = {id}
+            ";
+
+            return BaseDAO.SelectFirst(query, ReadOrderModel);
+        }
+
         public List<OrderModel> ReadOrdersList(long idEmployee, string lang)
         {
             //Status: all
             string query = $@"
-                select o.IdOrder, o.IdPatient, o.IdEmployee, e.FirstName as DoctorFirstName, e.Surname as DoctorSurname, o.IdWard, wt.Name as Ward, o.Institution, o.Comment, o.DateOfOrder, o.DateOfReceived, o.IdStatus, 
+                select o.IdOrder, o.IdPatient, o.IdEmployee, e.FirstName as DoctorFirstName, e.Surname as DoctorSurname, o.Comment, o.DateOfOrder, o.DateOfReceived, o.IdStatus, 
                     st.Name as Status, o.IdPriority, prt.Name as Priority, p.FirstName, p.Surname
                 from Orders o
                 join Patients p on o.IdPatient = p.IdPatient
                 join Employees e on o.IdEmployee = e.IdEmployee
                 join Priorities pr  on o.IdPriority = pr.IdPriority
                 join PriorityTranslations prt on pr.IdPriority = prt.IdPriority
-                left join Wards w on o.IdWard = w.IdWard
-                full join WardTranslations wt on w.IdWard = wt.Idward
                 join Status s on o.IdStatus = s.IdStatus
                 join StatusTranslations st on s.IdStatus = st.IdStatus
                 where ({idEmployee} = o.IdEmployee or {idEmployee} in (select con.IdEmployee from Consultants con where con.IdOrder = o.IdOrder))
-                    and (w.IdWard is null or wt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}'))
                     and st.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}') 
                     and prt.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
             ";
 
-            return BaseDAO.Select(query, ReadOrderModel);
+            return BaseDAO.Select(query, ReadSimpleOrderModel);
         }
 
 
         public List<OrderModel> ReadOrdersListForNurse(string lang)
         {
-            //Status: Ordered
+            //Status: Ordered and InProgress where sample wasn't collect
             string query = $@"
                 select o.IdOrder, o.IdPatient, o.IdEmployee, e.FirstName as DoctorFirstName, e.Surname as DoctorSurname, o.Comment, o.DateOfOrder, o.IdStatus, 
                     st.Name as Status, o.IdPriority, prt.Name as Priority, p.FirstName, p.Surname
@@ -70,7 +87,13 @@ namespace LisApp.DAO
                 join StatusTranslations st on s.IdStatus = st.IdStatus
                 where st.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
                     and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
-                    and s.IdStatus = 7;
+                    and (s.IdStatus = 1 or s.IdStatus = 3)
+					and o.IdOrder in (
+						select stu.IdOrder 
+						from Studies stu
+						where stu.IdStatus in (1) 
+					) 
+                order by IdOrder;
             ";
 
             return BaseDAO.Select(query, ReadSimpleOrderModel);
@@ -91,6 +114,15 @@ namespace LisApp.DAO
         {
             string query = $@"
                 update Orders set IdWard={BaseDAO.SetNullableLong(o.IdWard)}, Institution={BaseDAO.SetString(o.Institution)},
+                Comment={BaseDAO.SetString(o.Comment)}, IdPriority={o.IdPriority}
+                where IdOrder={o.IdOrder}
+            ";
+            BaseDAO.InsertOrUpdate(query, false);
+        }
+        public void FullUpdateOrder(OrderModel o)
+        {
+            string query = $@"
+                update Orders set IdPatient={o.IdPatient}, IdWard={BaseDAO.SetNullableLong(o.IdWard)}, Institution={BaseDAO.SetString(o.Institution)},
                 Comment={BaseDAO.SetString(o.Comment)}, IdPriority={o.IdPriority}
                 where IdOrder={o.IdOrder}
             ";
@@ -124,7 +156,8 @@ namespace LisApp.DAO
                 Status = reader.GetString("Status"),
                 IdPriority = reader.GetLong("IdPriority"),
                 Priority = reader.GetString("Priority"),
-                PatientName = reader.GetString("FirstName") + " " + reader.GetString("Surname")
+                PatientName = reader.GetString("FirstName") + " " + reader.GetString("Surname"),
+                IdCardNumber = reader.GetNullableString("IdCardNumber")
             };
         }
 

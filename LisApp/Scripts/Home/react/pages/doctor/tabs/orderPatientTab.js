@@ -41,6 +41,7 @@ class OrderPatientTab extends Component {
                 PatientName: response.FirstName + " " + response.Surname,
                 Sex: response.Sex,
                 Pesel: response.Pesel,
+                IdCardNumber: response.IdCardNumber,
                 IdPatient
             });
         });
@@ -48,17 +49,18 @@ class OrderPatientTab extends Component {
 
     render() {
         const { model, mode, onCancel } = this.props;
-        const disable = mode === 'show' ? true : false;
+        const disableInProgress = mode === 'show' || (mode !== 'add' && model.IdStatus !== 1) ? true : false;
 
         return (
             <div className="row">
                 <ValidatorForm id="modalform" onSubmit={this.onNext} >
                     <h4><Trans>PatientData</Trans></h4>
                     <div className="col-sm-12">
-                        <CustomSelect labeltext="IdPatient" onChange={this.handleSelectPatientChanged} value={model.patientOptions.filter(option => option.value === model.IdPatient)} selectOptions={model.patientOptions} name="IdPatient" isDisabled={disable} {...requiredField} /> <br />
-                        <CustomInput labeltext="PatientName" onChange={this.handleChange} value={model.PatientName} name="PatientName" disabled /><br />
-                        <CustomSelect labeltext="Sex" onChange={e => this.onOptionChange("Sex", e)} value={options.filter(option => option.value === model.Sex)} selectOptions={options} name="Sex" isDisabled /> <br />
-                        <CustomInput labeltext="PESEL" onChange={this.handleChange} value={model.Pesel} name="Pesel" disabled /><br />
+                        <CustomSelect labeltext="IdPatient" onChange={this.handleSelectPatientChanged} value={model.patientOptions.filter(option => option.value === model.IdPatient)} selectOptions={model.patientOptions} name="IdPatient" isDisabled={disableInProgress} {...requiredField} />
+                        <CustomInput labeltext="PatientName" onChange={this.handleChange} value={model.PatientName} name="PatientName" disabled />
+                        <CustomSelect labeltext="Sex" onChange={e => this.onOptionChange("Sex", e)} value={options.filter(option => option.value === model.Sex)} selectOptions={options} name="Sex" isDisabled /> 
+                        <CustomInput labeltext="PESEL" onChange={this.handleChange} value={model.Pesel} name="Pesel" disabled />
+                        <CustomInput labeltext="IdCardNumber" onChange={this.handleChange} value={model.IdCardNumber} name="IdCardNumber" disabled/>
                     </div>
                 </ValidatorForm>
                 <ModalButtons mode={mode} onCancel={onCancel} actualTabIndex={model.actualTabIndex} tabCount={3}  />

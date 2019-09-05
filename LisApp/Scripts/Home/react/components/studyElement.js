@@ -50,6 +50,14 @@ class StudyElement extends Component {
     render() {
         const { profileOptions, study, disable } = this.props;
         const { testOptions } = this.state;
+        let buttons = null;
+        if (!disable) {
+            buttons = <button type="button" onClick={this.onDeleteStudy}>X</button>;
+        } else {
+            //TODO
+        }
+    
+
         return (
             <div className="row">
                 <div className="col-sm-4">
@@ -70,13 +78,13 @@ class StudyElement extends Component {
                         isDisabled={disable}
                         className="basic-multi-select"
                         isMulti
-                        closeMenuOnSelect={false}/> <br />
+                        closeMenuOnSelect={false} />
                 </div>
                 <div className="col-sm-1">
-                    <button type="button" onClick={this.onDeleteStudy}>X</button>
+                    {buttons}
                 </div>
             </div>
-        )
+        );
     }
 }
 

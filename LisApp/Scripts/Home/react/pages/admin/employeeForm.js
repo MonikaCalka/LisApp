@@ -84,30 +84,30 @@ class EmployeeForm extends React.Component {
                 <ValidatorForm id="modalform" onSubmit={onAccept} >
                     <div className="col-sm-4">
                         <h4><Trans>ContactData</Trans></h4>
-                        <CustomInput labeltext="FirstName" onChange={this.handleChange} value={this.state.FirstName} name="FirstName" disabled={disable} {...requiredMax50} /><br />
-                        <CustomInput labeltext="LastName" onChange={this.handleChange} value={this.state.Surname} name="Surname" disabled={disable} {...requiredMax50} /><br />
-                        <CustomSelect labeltext="Sex" onChange={e => this.onOptionChange("Sex", e)} value={options.filter(option => option.value === this.state.Sex)} selectOptions={options} name="Sex" isDisabled={disable}  {...requiredField} /> <br />
-                        <CustomInput labeltext="PESEL" onChange={this.handleChange} value={this.state.Pesel} name="Pesel" disabled={disable} {...requiredPesel} /><br />
-                        <CustomInput labeltext="Phone" onChange={this.handleChange} value={this.state.Phone} name="Phone" disabled={disable} {...requiredPhone} /><br />
-                        <CustomInput labeltext="Email" onChange={this.handleChange} value={this.state.Email} name="Email" disabled={disable} {...isEmail} /><br />
+                        <CustomInput labeltext="FirstName" onChange={this.handleChange} value={this.state.FirstName} name="FirstName" disabled={disable} {...requiredMax50} />/>
+                        <CustomInput labeltext="LastName" onChange={this.handleChange} value={this.state.Surname} name="Surname" disabled={disable} {...requiredMax50} />
+                        <CustomSelect labeltext="Sex" onChange={e => this.onOptionChange("Sex", e)} value={options.filter(option => option.value === this.state.Sex)} selectOptions={options} name="Sex" isDisabled={disable}  {...requiredField} />
+                        <CustomInput labeltext="PESEL" onChange={this.handleChange} value={this.state.Pesel} name="Pesel" disabled={disable} {...requiredPesel} />
+                        <CustomInput labeltext="Phone" onChange={this.handleChange} value={this.state.Phone} name="Phone" disabled={disable} {...requiredPhone} />
+                        <CustomInput labeltext="Email" onChange={this.handleChange} value={this.state.Email} name="Email" disabled={disable} {...isEmail} />
                     </div>
 
                     <div className="col-sm-4">
                         <h4><Trans>Address</Trans></h4>
-                        <CustomInput labeltext="Street" onChange={this.handleChange} value={this.state.Street} name="Street" disabled={disable} {...requiredMax50} /><br />
-                        <CustomInput labeltext="HouseNumber" onChange={this.handleChange} value={this.state.HouseNumber} name="HouseNumber" disabled={disable} {...requiredMax15} /><br />
-                        <CustomInput labeltext="City" onChange={this.handleChange} value={this.state.City} name="City" disabled={disable} {...requiredMax50}/><br />
-                        <CustomInput labeltext="PostalCode" onChange={this.handleChange} value={this.state.PostalCode} name="PostalCode" disabled={disable} {...requiredMax15} /><br />
-                        <CustomInput labeltext="Country" onChange={this.handleChange} value={this.state.Country} name="Country" disabled={disable} {...requiredMax50} /><br />
+                        <CustomInput labeltext="Street" onChange={this.handleChange} value={this.state.Street} name="Street" disabled={disable} {...requiredMax50} />
+                        <CustomInput labeltext="HouseNumber" onChange={this.handleChange} value={this.state.HouseNumber} name="HouseNumber" disabled={disable} {...requiredMax15} />
+                        <CustomInput labeltext="City" onChange={this.handleChange} value={this.state.City} name="City" disabled={disable} {...requiredMax50}/>
+                        <CustomInput labeltext="PostalCode" onChange={this.handleChange} value={this.state.PostalCode} name="PostalCode" disabled={disable} {...requiredMax15} />
+                        <CustomInput labeltext="Country" onChange={this.handleChange} value={this.state.Country} name="Country" disabled={disable} {...requiredMax50} />
                     </div>
 
                     <div className="col-sm-4">
                         <h4><Trans>EmploymentDetails</Trans></h4>
-                        <CustomInput labeltext="Login" onChange={this.handleChange} value={this.state.Login} name="Login" disabled={disable} {...requiredMax50} /><br />
-                        <CustomSelect labeltext="Position" onChange={e => this.onOptionChange("IdPosition", e)} value={this.state.positionOptions.filter(option => option.value === this.state.IdPosition)} selectOptions={this.state.positionOptions} name="IdPosition" isDisabled={disable} {...requiredField} /> <br />
-                        <CustomInput labeltext="DateOfEmployment" onChange={this.handleChange} value={this.state.DateOfEmployment} name="DateOfEmployment" disabled /><br />
-                        <CustomInput labeltext="LicenseNumber" onChange={this.handleChange} value={this.state.LicenseNumber} name="LicenseNumber" disabled={disable} {...max50} /><br />
-                        <CustomSelect labeltext="Ward" onChange={e => this.onOptionChange("IdWard", e)} value={this.state.wardOptions.filter(option => option.value === this.state.IdWard)} selectOptions={this.state.wardOptions} name="IdWard" isDisabled={disable} isClearable  /> <br />
+                        <CustomInput labeltext="Login" onChange={this.handleChange} value={this.state.Login} name="Login" disabled={disable} {...requiredMax50} />
+                        <CustomSelect labeltext="Position" onChange={e => this.onOptionChange("IdPosition", e)} value={this.state.positionOptions.filter(option => option.value === this.state.IdPosition)} selectOptions={this.state.positionOptions} name="IdPosition" isDisabled={disable} {...requiredField} />
+                        <CustomInput labeltext="DateOfEmployment" onChange={this.handleChange} value={this.state.DateOfEmployment} name="DateOfEmployment" disabled />
+                        <CustomInput labeltext="LicenseNumber" onChange={this.handleChange} value={this.state.LicenseNumber} name="LicenseNumber" disabled={disable} {...max50} />
+                        <CustomSelect labeltext="Ward" onChange={e => this.onOptionChange("IdWard", e)} value={this.state.wardOptions.filter(option => option.value === this.state.IdWard)} selectOptions={this.state.wardOptions} name="IdWard" isDisabled={disable} isClearable  /> 
                     </div>
                 </ValidatorForm>
                 <div className="save-cancel-buttons">
