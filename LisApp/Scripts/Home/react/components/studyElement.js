@@ -59,7 +59,7 @@ class StudyElement extends Component {
         }
         let sample = null;
         if (showSample) {
-            sample = <CustomInput labeltext="Sample" value={study.Sample ? study.Sample : ""} name="Sample" disabled />;
+            sample = <CustomInput labeltext="Sample" value={study.SampleCode ? study.SampleCode : ""} name="Sample" disabled />;
         }
     
 

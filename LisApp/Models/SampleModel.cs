@@ -11,11 +11,11 @@ namespace LisApp.Models
 
         public long IdEmployee { get; set; }
 
-        public EmployeeModel Employee { get; set; }
+        public string EmployeeName { get; set; }
 
         public long IdStudy { get; set; }
 
-        public DateTime DateOfCollecion { get; set; }
+        public DateTime DateOfCollection { get; set; }
 
         public string Code { get; set; }
     }

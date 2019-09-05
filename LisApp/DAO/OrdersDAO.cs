@@ -74,7 +74,7 @@ namespace LisApp.DAO
 
         public List<OrderModel> ReadOrdersListForNurse(string lang)
         {
-            //Status: Ordered and InProgress where sample wasn't collect
+            //Status: Ordered and InProgress where study not in progress in lab (only sample collected)
             string query = $@"
                 select o.IdOrder, o.IdPatient, o.IdEmployee, e.FirstName as DoctorFirstName, e.Surname as DoctorSurname, o.Comment, o.DateOfOrder, o.IdStatus, 
                     st.Name as Status, o.IdPriority, prt.Name as Priority, p.FirstName, p.Surname
@@ -91,7 +91,7 @@ namespace LisApp.DAO
 					and o.IdOrder in (
 						select stu.IdOrder 
 						from Studies stu
-						where stu.IdStatus in (1) 
+						where stu.IdStatus in (1, 7) 
 					) 
                 order by IdOrder;
             ";

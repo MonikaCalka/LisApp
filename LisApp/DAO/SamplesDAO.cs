@@ -12,8 +12,9 @@ namespace LisApp.DAO
         public SampleModel ReadSampleById(long id)
         {
             string query = $@"
-                select IdSample, IdEmployee, IdStudy, DateOfCollection, Code
-                from Samples
+                select s.IdSample, s.IdEmployee, s.IdStudy, s.DateOfCollection, s.Code, e.FirstName, e.Surname
+                from Samples s
+                join Employees e on s.IdEmployee = e.IdEmployee
                 where IdSample = {id}
             ";
 
@@ -23,8 +24,9 @@ namespace LisApp.DAO
         public SampleModel ReadSampleByStudyId(long id)
         {
             string query = $@"
-                select IdSample, IdEmployee, IdStudy, DateOfCollection, Code
-                from Samples
+                select s.IdSample, s.IdEmployee, s.IdStudy, s.DateOfCollection, s.Code, e.FirstName, e.Surname
+                from Samples s
+                join Employees e on s.IdEmployee = e.IdEmployee
                 where IdStudy = {id}
             ";
 
@@ -34,8 +36,9 @@ namespace LisApp.DAO
         public List<SampleModel> ReadSamplesList()
         {
             string query = @"
-                select IdSample, IdEmployee, IdStudy, DateOfCollection, Code
-                from Samples
+                select s.IdSample, s.IdEmployee, s.IdStudy, s.DateOfCollection, s.Code, e.FirstName, e.Surname
+                from Samples s
+                join Employees e on s.IdEmployee = e.IdEmployee
             ";
 
             return BaseDAO.Select(query, ReadSampleModel);
@@ -48,8 +51,9 @@ namespace LisApp.DAO
             {
                 IdSample = reader.GetLong("IdSample"),
                 IdEmployee = reader.GetLong("IdEmployee"),
+                EmployeeName = reader.GetString("FirstName") + " " + reader.GetString("Surname"),
                 IdStudy = reader.GetLong("IdStudy"),
-                DateOfCollecion = reader.GetDate("DateOfCollection"),
+                DateOfCollection = reader.GetDate("DateOfCollection"),
                 Code = reader.GetString("Code")
             };
         }

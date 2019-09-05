@@ -95,7 +95,9 @@ const resources = {
             "DateOfStudy": "Date of testing",
             "Profile": "Type of study",
             "DateOfCollection": "Date of sampling",
-            "EmployeeNameTesting": "Testing lab"
+            "EmployeeNameTesting": "Testing lab",
+            "Sample": "Próbka",
+            "EmployeeNameCollected": "Nurse taking a sample"
         }
     },
     pl: {
@@ -190,7 +192,9 @@ const resources = {
             "Profile": "Typ badania",
             "SampleCode": "Kod próbki",
             "DateOfCollection": "Data pobrania próbki",
-            "EmployeeNameTesting": "Laborant wykonujący badanie"
+            "EmployeeNameTesting": "Laborant wykonujący badanie",
+            "Sample": "Próbka",
+            "EmployeeNameCollected": "Pielęgniarz pobierający próbkę",
         }
     }
 };

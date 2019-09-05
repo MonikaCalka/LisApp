@@ -4,6 +4,8 @@ import { getStateFromPropsData } from '../../services/getStateFromPropsData';
 import { getDic } from '../../services/rests';
 import StudyDetailsTab from './tabs/studyDetailsTab';
 import TabNavigator from '../../components/tabNavigator';
+import SampleModel from '../../models/sampleModel';
+import StudySampleTab from './tabs/studySampleTab';
 
 const emptyState = {
     DateOfOrder: "",
@@ -18,34 +20,22 @@ const emptyState = {
     OrderComment: "",
     DateOfCollection: "",
     SampleCode: "",
+    Sample: new SampleModel(),
     actualTabIndex: 0
 };
 
 const tabs = [
     { index: 0, name: 'Order' },
-    { index: 1, name: 'tab1' },
+    { index: 1, name: 'Sample' },
     { index: 2, name: 'tab2' }
 ];
 
-class OrderForm extends React.Component {
+class StudyForm extends React.Component {
 
     constructor(props) {
         super(props);
 
-        if (this.props.mode !== 'add') {
-            this.state = getStateFromPropsData(props.data.data, emptyState);
-        } else {
-            this.state = emptyState;
-        }
-    }
-
-    componentDidMount() {
-        //getDic("ward", response => {
-        //    this.setState({ wardOptions: response });
-        //});
-        //getDic("priority", response => {
-        //    this.setState({ priorityOptions: response });
-        //});
+        this.state = getStateFromPropsData(props.data.data, emptyState);
     }
 
     onModelChange = (name, value) => {
@@ -54,9 +44,6 @@ class OrderForm extends React.Component {
         });
     }
 
-    //onPatientChange = selectedPatientData => {
-    //    this.setState(selectedPatientData);
-    //}
 
     getData = () => {
         return this.state;
@@ -78,8 +65,11 @@ class OrderForm extends React.Component {
                     onCancel={onCancel}
                     mode={mode} />;
                 break;
-            case 1:
-                actualTab = null;
+            case 1: 
+                actualTab = <StudySampleTab onTabChange={this.onTabChange}
+                    model={this.state}
+                    onCancel={onCancel}
+                    mode={mode} />;
                 break;
             case 2:
                 actualTab = null;
@@ -95,7 +85,4 @@ class OrderForm extends React.Component {
         );
     }
 }
-
-
-
-export default OrderForm;
+export default StudyForm;

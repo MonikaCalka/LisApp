@@ -1,11 +1,9 @@
 ﻿import React, { Component } from 'react';
 import { Trans } from 'react-i18next';
 import CustomInput from '../../../components/customInput';
-import CustomSelect from '../../../components/customSelect';
 import { ValidatorForm } from 'react-form-validator-core';
 import ModalButtons from '../../../components/modalButtons';
 import CustomTextArea from '../../../components/customTextArea';
-import { requiredField } from '../../../components/validatorRules';
 
 class NurseOrderDetailsTab extends Component {
 
@@ -22,11 +20,6 @@ class NurseOrderDetailsTab extends Component {
         var arr = !!selectedOption ? selectedOption.map(item => item.value) : [];
         this.props.onModelChange(selectName, arr);
     };
-
-    onPrev = () => {
-        const { onTabChange, model } = this.props;
-        onTabChange(model.actualTabIndex - 1);
-    }
 
     onNext = () => {
         const { onTabChange, model } = this.props;
@@ -54,7 +47,7 @@ class NurseOrderDetailsTab extends Component {
                         </div>
                     </div>
                 </ValidatorForm>
-                <ModalButtons mode={mode} onCancel={onCancel} actualTabIndex={model.actualTabIndex} tabCount={3} onPrev={this.onPrev} />
+                <ModalButtons mode={mode} onCancel={onCancel} actualTabIndex={model.actualTabIndex} tabCount={2} onPrev={this.onPrev} onNext={this.onNext} />
             </div>
         );
     }

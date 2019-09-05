@@ -81,7 +81,7 @@ namespace LisApp.DAO
                 where stt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
                     and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
                     and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
-                    and s.IdStatus in (1)
+                    and s.IdStatus in (1, 7)
             ";
 
             return BaseDAO.Select(query, ReadStudyModel);
@@ -153,7 +153,7 @@ namespace LisApp.DAO
                 IdOrder = reader.GetLong("IdOrder"),
                 IdStatus = reader.GetLong("IdStatus"),
                 DateOfStudy = reader.GetNullableDate("DateOfStudy"),
-                Sample = reader.GetNullableString("Sample")
+                SampleCode = reader.GetNullableString("Sample")
             };
         }
 
@@ -176,7 +176,7 @@ namespace LisApp.DAO
                 Profile = reader.GetNullableString("Profile"),
                 DateOfOrder = reader.GetDate("DateOfOrder"),
                 OrderComment = reader.GetNullableString("Comment"),
-                Sample = reader.GetNullableString("Sample")
+                SampleCode = reader.GetNullableString("Sample")
             };
         }
     }

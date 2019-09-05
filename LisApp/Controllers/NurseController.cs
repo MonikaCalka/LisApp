@@ -43,5 +43,25 @@ namespace LisApp.Controllers
             }
             return order;
         }
+
+        [HttpGet]
+        public ActionResult GetStudyList()
+        { 
+            string langId = Language.getLang(Request);
+            List<StudyModel> studies = DB.StudiesDAO.ReadStudiesListForNurse(langId);
+            return new CustomJsonResult { Data = new { data = studies } };
+        }
+
+        [HttpGet]
+        public ActionResult GetStudy(long id)
+        {
+            string langId = Language.getLang(Request);
+            StudyModel study = DB.StudiesDAO.ReadStudyById(id, langId);
+            if (study.IdStatus == 7) //pobrana próbka
+            {
+                study.Sample = DB.SamplesDAO.ReadSampleByStudyId((long) study.IdStudy);
+            }
+            return new CustomJsonResult { Data = new { data = study } };
+        }
     }
 }

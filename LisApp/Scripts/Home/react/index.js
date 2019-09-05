@@ -4,11 +4,11 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import DoctorPage from './pages/doctor/doctorPage';
 import DoctorStudiesPage from './pages/doctor/doctorStudiesPage';
 import NursePage from './pages/nurse/nursePage';
+import NurseStudiesPage from './pages/nurse/nurseStudiesPage';
 import LabPage from './pages/lab/labPage';
 import AdminPage from './pages/admin/adminPage';
 import RegistrarPage from './pages/registrar/registrarPage';
 import i18n from './i18n';
-import { getJson } from './services/rests';
 import { Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from './components/alertTemplate';
 import Navbar from './components/navbar';
@@ -92,6 +92,9 @@ class App extends React.Component {
                                     <li>
                                         <Link to="/doctorstudies/">DoctorStudies</Link>
                                     </li>
+                                    <li>
+                                        <Link to="/nursestudies/">NurseStudies</Link>
+                                    </li>
                                 </ul>
                             </nav>
 
@@ -99,6 +102,7 @@ class App extends React.Component {
                             <Route path="/doctor/" component={DoctorPage} />
                             <Route path="/doctorstudies/" component={DoctorStudiesPage} />
                             <Route path="/nurse/" component={NursePage} />
+                            <Route path="/nursestudies/" component={NurseStudiesPage} />
                             <Route path="/lab/" component={LabPage} />
                             <Route path="/admin/" component={AdminPage} />
                             <Route path="/registrar/" component={RegistrarPage} />

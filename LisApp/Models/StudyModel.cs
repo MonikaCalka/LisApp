@@ -40,7 +40,9 @@ namespace LisApp.Models
 
         public List<long> IdTests { get; set; }
 
-        public string Sample { get; set; }
+        public SampleModel Sample { get; set; }
+
+        public string SampleCode { get; set; }
 
         public ResultModel Result { get; set; }
 
