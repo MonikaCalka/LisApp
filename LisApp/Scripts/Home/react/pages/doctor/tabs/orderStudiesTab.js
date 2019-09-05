@@ -54,7 +54,7 @@ class OrderStudiesTab extends Component {
     }
 
     render() {
-        const { mode, onCancel, model } = this.props;
+        const { mode, onCancel, model, showSample } = this.props;
         const disableInProgress = mode === 'show' || (mode !== 'add' && model.IdStatus !== 1) ? true : false;
         let addButton = null;
         if (!disableInProgress) {
@@ -72,7 +72,8 @@ class OrderStudiesTab extends Component {
                             study={s}
                             onChange={this.onStudyChange}
                             disable={disableInProgress}
-                            onDelete={this.onDeleteStudy} />)
+                            onDelete={this.onDeleteStudy}
+                            showSample={showSample}/>)
                         }
                         {addButton}
                         <div style={{ color: 'red' }}>

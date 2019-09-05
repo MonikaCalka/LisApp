@@ -6,6 +6,7 @@ import CustomButton from '../../components/customButton';
 import { getJson, postJson } from '../../services/rests';
 import { withAlert } from 'react-alert';
 import i18n from '../../i18n';
+import NurseOrderForm from './nurseOrderForm';
 
 const columns = [
     {
@@ -80,25 +81,40 @@ class NursePage extends React.Component {
         });
     };
 
-        // open Modal + onAccept method
+    getOrderAndOpenModal = () => {
+        getJson("Nurse/GetOrder?id=" + this.state.actualRow.IdOrder, response => {
+            this.setState({ selectedData: response });
+            this.modalRef.current.openModal();
+            console.log(response);
+        });
+    }
 
-    onAccept = () => {
-        switch (this.state.mode) {
-            case 'add':
-                break;
-            case 'edit':
-                break;
-            case 'show':
-                return null;
-        }
+    openShowModal = () => {
+        this.setState({
+            titleOfModal: "Details",
+            mode: "show"
+        });
+        this.getOrderAndOpenModal();
     };
+
+    closeModal = () => {
+        this.modalRef.current.closeModal();
+    }
 
     render() {
         return (
             <div>
-                Trust me I'm Nurse :3
+                <CustomButton onClick={this.openShowModal} text={<Trans>Details</Trans>} disable={this.state.disableMode} />
 
                 <CustomModal ref={this.modalRef}>
+                    <NurseOrderForm
+                        title={this.state.titleOfModal}
+                        mode={this.state.mode}
+                        data={this.state.selectedData}
+                        ref={this.formRef}
+                        onAccept={this.onAccept}
+                        onCancel={this.closeModal}
+                    />
                 </CustomModal>
                 <br />
 

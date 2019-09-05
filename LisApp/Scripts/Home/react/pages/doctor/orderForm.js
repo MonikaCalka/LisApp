@@ -17,7 +17,6 @@ const emptyState = {
     IdCardNumber: "",
     IdPriority: "",
     EmployeeName: "",
-    DateOfOrder: "",
     Status: "",
     IdOrder: "",
     Comment: "",
@@ -111,7 +110,8 @@ class OrderForm extends React.Component {
                     model={this.state}
                     onCancel={onCancel}
                     onAccept={onAccept}
-                    mode={mode} />;
+                    mode={mode}
+                    showSamples={false}/>;
                 break;
         }
 

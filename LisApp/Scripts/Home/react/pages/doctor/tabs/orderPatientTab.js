@@ -41,7 +41,7 @@ class OrderPatientTab extends Component {
                 PatientName: response.FirstName + " " + response.Surname,
                 Sex: response.Sex,
                 Pesel: response.Pesel,
-                IdCardNumber: response.IdCardNumber,
+                IdCardNumber: response.IdCardNumber ? response.IdCardNumber : "" ,
                 IdPatient
             });
         });

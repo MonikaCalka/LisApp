@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CustomSelect from './customSelect';
+import CustomInput from './customInput';
 
 class StudyElement extends Component {
     constructor(props) {
@@ -48,13 +49,17 @@ class StudyElement extends Component {
     }
 
     render() {
-        const { profileOptions, study, disable } = this.props;
+        const { profileOptions, study, disable, showSample } = this.props;
         const { testOptions } = this.state;
         let buttons = null;
         if (!disable) {
             buttons = <button type="button" onClick={this.onDeleteStudy}>X</button>;
         } else {
             //TODO
+        }
+        let sample = null;
+        if (showSample) {
+            sample = <CustomInput labeltext="Sample" value={study.Sample ? study.Sample : ""} name="Sample" disabled />;
         }
     
 
@@ -79,6 +84,7 @@ class StudyElement extends Component {
                         className="basic-multi-select"
                         isMulti
                         closeMenuOnSelect={false} />
+                    {sample}
                 </div>
                 <div className="col-sm-1">
                     {buttons}

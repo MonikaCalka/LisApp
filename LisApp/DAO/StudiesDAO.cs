@@ -14,7 +14,7 @@ namespace LisApp.DAO
             string query = $@"
                 select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,
                     e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, 
-                    pft.Name as Profile, o.Comment
+                    pft.Name as Profile, o.Comment, sam.Code as Sample
                 from Studies s
                 join Orders o on s.IdOrder = o.IdOrder
                 join Patients p on o.IdPatient = p.IdPatient
@@ -25,10 +25,11 @@ namespace LisApp.DAO
                 join PriorityTranslations prt on pr.IdPriority = prt.IdPriority
                 join Profiles pf on s.IdProfile = pf.IdProfile
                 join ProfileTranslations pft on pf.IdProfile = pft.IdProfile
+                left join Samples sam on s.IdStudy = sam.IdStudy
                 where stt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
                     and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
                     and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
-                    and IdStudy = {id}
+                    and s.IdStudy = {id}
             ";
 
             return BaseDAO.SelectFirst(query, ReadStudyModel);
@@ -39,7 +40,7 @@ namespace LisApp.DAO
             string query = $@"
                 select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,
                     e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, 
-                    pft.Name as Profile, o.Comment
+                    pft.Name as Profile, o.Comment, sam.Code as Sample
                 from Studies s
                 join Orders o on s.IdOrder = o.IdOrder
                 join Patients p on o.IdPatient = p.IdPatient
@@ -50,6 +51,7 @@ namespace LisApp.DAO
                 join PriorityTranslations prt on pr.IdPriority = prt.IdPriority
                 join Profiles pf on s.IdProfile = pf.IdProfile
                 join ProfileTranslations pft on pf.IdProfile = pft.IdProfile
+                left join Samples sam on s.IdStudy = sam.IdStudy
                 where ({idEmployee} = o.IdEmployee or {idEmployee} in (select con.IdEmployee from Consultants con where con.IdOrder = o.IdOrder))
                     and stt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
                     and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
@@ -64,7 +66,7 @@ namespace LisApp.DAO
             string query = $@"
                 select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,
                     e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, 
-                    pft.Name as Profile, o.Comment
+                    pft.Name as Profile, o.Comment, sam.Code as Sample
                 from Studies s
                 join Orders o on s.IdOrder = o.IdOrder
                 join Patients p on o.IdPatient = p.IdPatient
@@ -75,10 +77,11 @@ namespace LisApp.DAO
                 join PriorityTranslations prt on pr.IdPriority = prt.IdPriority
                 join Profiles pf on s.IdProfile = pf.IdProfile
                 join ProfileTranslations pft on pf.IdProfile = pft.IdProfile
+                left join Samples sam on s.IdStudy = sam.IdStudy
                 where stt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
                     and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
                     and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
-                    and IdStatus in (1)
+                    and s.IdStatus in (1)
             ";
 
             return BaseDAO.Select(query, ReadStudyModel);
@@ -89,7 +92,7 @@ namespace LisApp.DAO
             string query = $@"
                 select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,
                     e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, 
-                    pft.Name as Profile, o.Comment
+                    pft.Name as Profile, o.Comment, sam.Code as Sample
                 from Studies s
                 join Orders o on s.IdOrder = o.IdOrder
                 join Patients p on o.IdPatient = p.IdPatient
@@ -100,6 +103,7 @@ namespace LisApp.DAO
                 join PriorityTranslations prt on pr.IdPriority = prt.IdPriority
                 join Profiles pf on s.IdProfile = pf.IdProfile
                 join ProfileTranslations pft on pf.IdProfile = pft.IdProfile
+                left join Samples sam on s.IdStudy = sam.IdStudy
                 where stt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
                     and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
                     and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
@@ -112,8 +116,9 @@ namespace LisApp.DAO
         public List<StudyModel> ReadStudiesListByOrderId(long? id)
         {
             string query = $@"
-                select IdStudy, IdProfile, IdEmployee, IdOrder, IdStatus, DateOfStudy
-                from Studies
+                select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, s.DateOfStudy, sam.Code as Sample
+                from Studies s
+                left join Samples sam on s.IdStudy = sam.IdStudy
                 where IdOrder = {id}
             ";
 
@@ -147,7 +152,8 @@ namespace LisApp.DAO
                 IdDoctor = reader.GetNullableLong("IdEmployee"),
                 IdOrder = reader.GetLong("IdOrder"),
                 IdStatus = reader.GetLong("IdStatus"),
-                DateOfStudy = reader.GetNullableDate("DateOfStudy")
+                DateOfStudy = reader.GetNullableDate("DateOfStudy"),
+                Sample = reader.GetNullableString("Sample")
             };
         }
 
@@ -169,7 +175,8 @@ namespace LisApp.DAO
                 Doctor = reader.GetNullableString("DoctorName") + " " + reader.GetNullableString("DoctorSurname"),
                 Profile = reader.GetNullableString("Profile"),
                 DateOfOrder = reader.GetDate("DateOfOrder"),
-                OrderComment = reader.GetNullableString("Comment")
+                OrderComment = reader.GetNullableString("Comment"),
+                Sample = reader.GetNullableString("Sample")
             };
         }
     }

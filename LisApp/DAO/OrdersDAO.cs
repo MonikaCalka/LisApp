@@ -47,7 +47,7 @@ namespace LisApp.DAO
                     and IdOrder = {id}
             ";
 
-            return BaseDAO.SelectFirst(query, ReadOrderModel);
+            return BaseDAO.SelectFirst(query, ReadSimpleOrderModel);
         }
 
         public List<OrderModel> ReadOrdersList(long idEmployee, string lang)
