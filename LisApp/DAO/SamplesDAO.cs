@@ -44,6 +44,25 @@ namespace LisApp.DAO
             return BaseDAO.Select(query, ReadSampleModel);
         }
 
+        public long? InsertSample(SampleModel s)
+        {
+            string query = $@"
+                insert into Samples(IdStudy, IdEmployee, DateOfCollection) 
+                    output INSERTED.IdSample
+                    values({s.IdStudy}, {s.IdEmployee},{BaseDAO.SetDate(DateTime.Now)} )  ;
+            ";
+            return BaseDAO.InsertOrUpdate(query, true);
+        }
+
+        public void UpdateSample(SampleModel s)
+        {
+            string query = $@"
+                update Samples set Code={BaseDAO.SetString(s.Code)}
+                where IdSample={s.IdSample}
+            ";
+            BaseDAO.InsertOrUpdate(query, false);
+        }
+
         private SampleModel ReadSampleModel(CustomReader reader)
         {
 

@@ -28,9 +28,6 @@ class NurseOrderDetailsTab extends Component {
 
     render() {
         const { model, mode, onCancel } = this.props;
-        const disable = mode === 'show' ? true : false;
-        const disableInProgress = mode === 'show' || (mode !== 'add' && model.IdStatus !== 1) ? true : false;
-        const disableEnded = mode === 'show' || (mode !== 'add' && model.IdStatus === 6) ? true : false;
 
         return (
             <div className="row">
@@ -43,7 +40,7 @@ class NurseOrderDetailsTab extends Component {
                             <CustomInput labeltext="EmployeeNameOrdered" onChange={this.handleChange} value={model.EmployeeName} name="EmployeeName" disabled />
                             <CustomInput labeltext="Priority" onChange={this.handleChange} value={model.Priority} name="Priority" disabled />
                             <CustomInput labeltext="Status" onChange={this.handleChange} value={model.Status} name="Status" disabled />
-                            <CustomTextArea rows="4" labeltext="Comment" onChange={this.handleChange} value={model.Comment} name="Comment" disabled={disableEnded} />
+                            <CustomTextArea rows="4" labeltext="Comment" onChange={this.handleChange} value={model.Comment} name="Comment" disabled />
                         </div>
                     </div>
                 </ValidatorForm>

@@ -3,7 +3,7 @@ import { Trans } from 'react-i18next';
 import CustomModal from '../../components/customModal';
 import CustomTable from '../../components/customTable';
 import CustomButton from '../../components/customButton';
-import { getJson } from '../../services/rests';
+import { getJson, postJson } from '../../services/rests';
 import { withAlert } from 'react-alert';
 import i18n from '../../i18n';
 import NurseStudyForm from './nurseStudyForm';
@@ -65,6 +65,7 @@ class NurseStudiesPage extends React.Component {
             actualRow: null,
             actualLang: 'pl',
             disableMode: true,
+            disableRegister: true,
             titleOfModal: "",
             mode: "",
             postResult: "",
@@ -92,7 +93,8 @@ class NurseStudiesPage extends React.Component {
     rowClick = (row) => {
         this.setState({
             actualRow: row,
-            disableMode: row === null
+            disableMode: row === null,
+            disableRegister: row === null || row.IdStatus !== 1
         });
     };
 
@@ -112,13 +114,27 @@ class NurseStudiesPage extends React.Component {
         this.getStudyAndOpenModal();
     };
 
-    closeModal = () => {
+    openRegisterSampleModal = () => {
+        this.setState({
+            titleOfModal: "RegisterSample",
+            mode: "edit"
+        });
+        this.getStudyAndOpenModal();
+    };
+
+    closeModal = (refreshTable) => {
         this.modalRef.current.closeModal();
+
+        if (refreshTable) {
+            this.setStudyList();
+        }
     }
+
 
     render() {
         return (
             <div>
+                <CustomButton onClick={this.openRegisterSampleModal} text={<Trans>RegisterSample</Trans>} disable={this.state.disableRegister} />
                 <CustomButton onClick={this.openShowModal} text={<Trans>Details</Trans>} disable={this.state.disableMode} />
 
                 <CustomModal ref={this.modalRef}>
@@ -127,7 +143,6 @@ class NurseStudiesPage extends React.Component {
                         mode={this.state.mode}
                         data={this.state.selectedData}
                         ref={this.formRef}
-                        onAccept={this.onAccept}
                         onCancel={this.closeModal}
                     />
                 </CustomModal>

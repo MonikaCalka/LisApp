@@ -97,7 +97,11 @@ const resources = {
             "DateOfCollection": "Date of sampling",
             "EmployeeNameTesting": "Testing lab",
             "Sample": "Próbka",
-            "EmployeeNameCollected": "Nurse taking a sample"
+            "EmployeeNameCollected": "Nurse taking a sample",
+            "RegisterSample": "Register sample",
+            "MarkSample": "Mark sample with the generated code.",
+            "RegisterSampleError": "Sample registration failed.",
+            "PrintCode": "Print code"
         }
     },
     pl: {
@@ -195,6 +199,10 @@ const resources = {
             "EmployeeNameTesting": "Laborant wykonujący badanie",
             "Sample": "Próbka",
             "EmployeeNameCollected": "Pielęgniarz pobierający próbkę",
+            "RegisterSample": "Rejestruj próbkę",
+            "MarkSample": "Oznacz próbkę wygenerowanym kodem.",
+            "RegisterSampleError": "Rejestracja próbki zakończona niepowodzeniem.",
+            "PrintCode": "Drukuj kod"
         }
     }
 };

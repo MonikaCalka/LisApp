@@ -12,5 +12,8 @@ namespace LisApp.IDAO
         List<SampleModel> ReadSamplesList();
         SampleModel ReadSampleById(long id);
         SampleModel ReadSampleByStudyId(long id);
+
+        long? InsertSample(SampleModel s);
+        void UpdateSample(SampleModel s);
     }
 }

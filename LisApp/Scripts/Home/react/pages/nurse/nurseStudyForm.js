@@ -1,11 +1,12 @@
 ﻿import React from 'react';
 import { Trans } from 'react-i18next';
 import { getStateFromPropsData } from '../../services/getStateFromPropsData';
-import { getJson } from '../../services/rests';
+import { getJson, postJson } from '../../services/rests';
 import StudyDetailsTab from '../doctor/tabs/studyDetailsTab';
 import TabNavigator from '../../components/tabNavigator';
 import SampleTab from './tabs/sampleTab';
 import SampleModel from '../../models/sampleModel';
+import { withAlert } from 'react-alert';
 
 const emptyState = {
     DateOfOrder: "",
@@ -18,10 +19,9 @@ const emptyState = {
     Status: "",
     Lab: "",
     OrderComment: "",
-    DateOfCollection: "",
-    SampleCode: "",
     Sample: new SampleModel(),
-    actualTabIndex: 0
+    actualTabIndex: 0,
+    refreshTable: false
 };
 
 const tabs = [
@@ -47,9 +47,24 @@ class NurseStudyForm extends React.Component {
         });
     }
 
-    //onPatientChange = selectedPatientData => {
-    //    this.setState(selectedPatientData);
-    //}
+    onRegisterSample = () => {
+        postJson("Nurse/RegisterSample", this.state, response => {
+            if (response === "Error") {
+                this.props.alert.error(<Trans>RegisterSampleError</Trans>);
+            }
+            else {
+                console.log(response);
+                this.props.alert.info(<Trans>MarkSample</Trans>);
+                this.setState(getStateFromPropsData(response.data, emptyState));
+                this.setState({
+                    actualTabIndex: 1,
+                    refreshTable: true
+                });
+            }
+        });
+    };
+
+
 
     getData = () => {
         return this.state;
@@ -57,6 +72,11 @@ class NurseStudyForm extends React.Component {
 
     onTabChange = newTabIndex => {
         this.setState({ actualTabIndex: newTabIndex });
+    }
+
+    onCancel = () => {
+        const { onCancel } = this.props;
+        onCancel(this.state.refreshTable);
     }
 
     render() {
@@ -68,14 +88,15 @@ class NurseStudyForm extends React.Component {
             case 0:
                 actualTab = <StudyDetailsTab onTabChange={this.onTabChange}
                     model={this.state}
-                    onCancel={onCancel}
+                    onCancel={this.onCancel}
                     mode={mode} />;
                 break;
             case 1:
                 actualTab = <SampleTab onTabChange={this.onTabChange}
                     model={this.state}
-                    onCancel={onCancel}
-                    mode={mode} />
+                    onCancel={this.onCancel}
+                    mode={mode}
+                    onRegisterSample={this.onRegisterSample}/>
                 break;
         }
 
@@ -88,4 +109,4 @@ class NurseStudyForm extends React.Component {
         );
     }
 }
-export default NurseStudyForm;
+export default withAlert()(NurseStudyForm);

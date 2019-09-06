@@ -135,6 +135,16 @@ namespace LisApp.DAO
             return BaseDAO.InsertOrUpdate(query, true);
         }
 
+        public void ChangeStudyStatus(long IdStudy, long IdStatus)
+        {
+            string query = $@"
+                update Studies set IdStatus={IdStatus}
+                where IdStudy={IdStudy}
+            ";
+            BaseDAO.InsertOrUpdate(query, false);
+        }
+
+
         public void DeleteStudiesByOrder(long idOrder)
         {
             string query = $@"

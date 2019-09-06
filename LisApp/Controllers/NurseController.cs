@@ -55,13 +55,54 @@ namespace LisApp.Controllers
         [HttpGet]
         public ActionResult GetStudy(long id)
         {
+            StudyModel study = GetStudyById(id);
+            return new CustomJsonResult { Data = new { data = study } };
+        }
+
+        private StudyModel GetStudyById(long id)
+        {
             string langId = Language.getLang(Request);
             StudyModel study = DB.StudiesDAO.ReadStudyById(id, langId);
             if (study.IdStatus == 7) //pobrana próbka
             {
-                study.Sample = DB.SamplesDAO.ReadSampleByStudyId((long) study.IdStudy);
+                study.Sample = DB.SamplesDAO.ReadSampleByStudyId((long)study.IdStudy);
             }
-            return new CustomJsonResult { Data = new { data = study } };
+            return study;
+        }
+
+        [HttpPost]
+        public ActionResult RegisterSample(StudyModel study)
+        {
+            if (study != null )
+            {
+                try
+                {
+                    // get User !!!
+                    long employeeId = 1;
+                    SampleModel sample = new SampleModel();
+                    sample.IdEmployee = employeeId;
+                    sample.IdStudy = (long)study.IdStudy;
+                    
+                    long idSample = (long)DB.SamplesDAO.InsertSample(sample);
+                    sample.Code = study.IdOrder + "-" + study.IdStudy + "-" + idSample;
+                    sample.IdSample = idSample;
+                    DB.SamplesDAO.UpdateSample(sample);
+
+                    DB.OrderDAO.ChangeOrderStatus(study.IdOrder, 3);
+                    DB.StudiesDAO.ChangeStudyStatus((long)study.IdStudy, 7);
+
+                    study = GetStudyById((long)study.IdStudy);
+                    return new CustomJsonResult { Data = new { data = study } };
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error");
+                }
+            }
+            else
+            {
+                return Json("Error");
+            }
         }
     }
 }

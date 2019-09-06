@@ -44,7 +44,7 @@ class StudyDetailsTab extends Component {
                         </div>
                     </div>
                     <div className="col-sm-12">
-                        <CustomTextArea rows="4" labeltext="Comment" onChange={this.handleChange} value={model.OrderComment} name="OrderComment" disabled={disable} />
+                        <CustomTextArea rows="4" labeltext="Comment" onChange={this.handleChange} value={model.OrderComment} name="OrderComment" disabled/>
                     </div>
                 </ValidatorForm>
                 <ModalButtons mode={mode} onCancel={onCancel} actualTabIndex={model.actualTabIndex} tabCount={3} onPrev={this.onPrev} />
