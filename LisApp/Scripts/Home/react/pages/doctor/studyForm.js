@@ -5,7 +5,7 @@ import { getDic } from '../../services/rests';
 import StudyDetailsTab from './tabs/studyDetailsTab';
 import TabNavigator from '../../components/tabNavigator';
 import SampleModel from '../../models/sampleModel';
-import StudySampleTab from './tabs/studySampleTab';
+import SampleTab from '../nurse/tabs/sampleTab';
 
 const emptyState = {
     DateOfOrder: "",
@@ -63,13 +63,16 @@ class StudyForm extends React.Component {
                 actualTab = <StudyDetailsTab onTabChange={this.onTabChange}
                     model={this.state}
                     onCancel={onCancel}
-                    mode={mode} />;
+                    mode={mode}
+                    tabCount={3}/>;
                 break;
             case 1: 
-                actualTab = <StudySampleTab onTabChange={this.onTabChange}
+                actualTab = <SampleTab onTabChange={this.onTabChange}
                     model={this.state}
                     onCancel={onCancel}
-                    mode={mode} />;
+                    mode={mode}
+                    tabCount={3}
+                    nurseMode={false}/>;
                 break;
             case 2:
                 actualTab = null;

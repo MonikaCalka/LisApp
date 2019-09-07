@@ -6,6 +6,7 @@ import CustomButton from '../../components/customButton';
 import { getJson, postJson } from '../../services/rests';
 import { withAlert } from 'react-alert';
 import i18n from '../../i18n';
+import LabForm from './labForm';
 
 const columns = [
     {
@@ -58,21 +59,29 @@ class LabPage extends React.Component {
             actualLang: 'pl',
             actualRow: null,
             disableMode: true,
+            disableStart: true,
             titleOfModal: "",
             mode: "",
             postResult: "",
-            selectedData: null
+            selectedData: null,
+            tabHeaders: [],
+            tabCount: 0
+
         };
     }
 
     componentDidMount() {
-        getJson("Lab/GetStudyList", response => this.setState({ data: response.data }));
+        this.setStudyList();
     }
     componentDidUpdate() {
         if (this.state.actualLang !== i18n.language) {
-            getJson("Lab/GetStudyList", response => this.setState({ data: response.data }));
+            this.setStudyList();
             this.setLanguage();
         }
+    }
+
+    setStudyList = () => {
+        getJson("Lab/GetStudyList", response => this.setState({ data: response.data }));
     }
 
     setLanguage() {
@@ -82,17 +91,75 @@ class LabPage extends React.Component {
     rowClick = (row) => {
         this.setState({
             actualRow: row,
-            disableMode: row === null
+            disableMode: row === null,
+            disableStart: row === null || row.IdStatus !== 7
         });
     };
 
-    // open Modal + onAccept method
+    getStudyAndOpenModal = () => {
+        getJson("Lab/GetStudy?id=" + this.state.actualRow.IdStudy, response => {
+            this.setState({ selectedData: response });
+            this.modalRef.current.openModal();
+            console.log(response);
+        });
+    }
+
+    openShowModal = () => {
+        this.setState({
+            titleOfModal: "Details",
+            mode: "show",
+            tabHeaders : [
+                { index: 0, name: 'Order' },
+                { index: 1, name: 'Sample' },
+                { index: 2, name: 'Result' },
+                { index: 3, name: 'Verification' }
+            ],
+            tabCount: 4
+
+        });
+        this.getStudyAndOpenModal();
+    };
+
+    openStartModal = () => {
+        this.setState({
+            titleOfModal: "StartStudy",
+            mode: "start",
+            tabHeaders: [
+                { index: 0, name: 'Order' },
+                { index: 1, name: 'Sample' },
+                { index: 2, name: 'Tests' }
+            ],
+            tabCount: 3
+
+        });
+        console.log(this.state.tabHeaders);
+        this.getStudyAndOpenModal();
+    };
+
+    closeModal = () => {
+        this.modalRef.current.closeModal();
+    }
+
+    onStartStudy = () => {
+        postJson("Lab/StartStudy", this.formRef.current.getData(), response => {
+            if (response === "Success") {
+                this.setStudyList();
+                this.modalRef.current.closeModal();
+                this.props.alert.info(<Trans>StartStudyInfo</Trans>);
+                this.setState({
+                    disableStart: true
+                });
+            } else {
+                this.modalRef.current.closeModal();
+                this.props.alert.error(<Trans>StartStudyError</Trans>);
+            }
+        });
+    }
 
     onAccept = () => {
         switch (this.state.mode) {
-            case 'add':
-                break;
-            case 'edit':
+            case 'start':
+                this.onStartStudy();
                 break;
             case 'show':
                 return null;
@@ -102,9 +169,20 @@ class LabPage extends React.Component {
     render() {
         return (
             <div>
-                Trust me I'm Lab :3
+                <CustomButton onClick={this.openStartModal} text={<Trans>StartStudy</Trans>} disable={this.state.disableStart} />
+                <CustomButton onClick={this.openShowModal} text={<Trans>Details</Trans>} disable={this.state.disableMode} />
 
                 <CustomModal ref={this.modalRef}>
+                    <LabForm
+                        title={this.state.titleOfModal}
+                        mode={this.state.mode}
+                        data={this.state.selectedData}
+                        ref={this.formRef}
+                        onCancel={this.closeModal}
+                        tabs={this.state.tabHeaders}
+                        tabCount={this.state.tabCount}
+                        onAccept={this.onAccept}
+                    />
                 </CustomModal>
 
                 <CustomTable key={i18n.language}
@@ -112,7 +190,7 @@ class LabPage extends React.Component {
                     columns={columns}
                     data={this.state.data}
                     onRowClicked={this.rowClick}
-                    idName="IdOrder"
+                    idName="IdStudy"
                 />
             </div>
         );

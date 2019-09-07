@@ -89,14 +89,20 @@ class NurseStudyForm extends React.Component {
                 actualTab = <StudyDetailsTab onTabChange={this.onTabChange}
                     model={this.state}
                     onCancel={this.onCancel}
-                    mode={mode} />;
+                    mode={mode}
+                    tabCount={2}
+                />;
                 break;
             case 1:
                 actualTab = <SampleTab onTabChange={this.onTabChange}
                     model={this.state}
                     onCancel={this.onCancel}
                     mode={mode}
-                    onRegisterSample={this.onRegisterSample}/>
+                    onRegisterSample={this.onRegisterSample}
+                    enableRegister={true}
+                    nurseMode={true}
+                    tabCount={2}
+                />
                 break;
         }
 

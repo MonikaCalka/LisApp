@@ -19,7 +19,7 @@ class StudyDetailsTab extends Component {
     }
 
     render() {
-        const { model, mode, onCancel } = this.props;
+        const { model, mode, onCancel, tabCount } = this.props;
         const disable = mode === 'show' ? true : false;
 
         return (
@@ -47,7 +47,7 @@ class StudyDetailsTab extends Component {
                         <CustomTextArea rows="4" labeltext="Comment" onChange={this.handleChange} value={model.OrderComment} name="OrderComment" disabled/>
                     </div>
                 </ValidatorForm>
-                <ModalButtons mode={mode} onCancel={onCancel} actualTabIndex={model.actualTabIndex} tabCount={3} onPrev={this.onPrev} />
+                <ModalButtons mode={mode} onCancel={onCancel} actualTabIndex={model.actualTabIndex} tabCount={tabCount} onPrev={this.onPrev} />
             </div>
         );
     }

@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+﻿﻿import React, { Component } from 'react';
 import { Trans } from 'react-i18next';
 import CustomInput from '../../../components/customInput';
 import { ValidatorForm } from 'react-form-validator-core';

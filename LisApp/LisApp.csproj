@@ -237,6 +237,7 @@
     <Compile Include="DAO\UserDAO.cs" />
     <Compile Include="DAO\VerificationsDAO.cs" />
     <Compile Include="Enums\DictionaryTypesEnum.cs" />
+    <Compile Include="Enums\StatusTypeEnum.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -297,14 +298,15 @@
     <Content Include="Scripts\Home\react\components\customTextArea.js" />
     <Content Include="Scripts\Home\react\components\modalButtons.js" />
     <Content Include="Scripts\Home\react\components\navbar.js" />
-    <Content Include="Scripts\Home\react\components\sampleTabContent.js" />
     <Content Include="Scripts\Home\react\components\studyElement.js" />
     <Content Include="Scripts\Home\react\components\tabNavigator.js" />
+    <Content Include="Scripts\Home\react\components\testElement.js" />
     <Content Include="Scripts\Home\react\components\validatorRules.js" />
     <Content Include="Scripts\Home\react\i18n.js" />
     <Content Include="Scripts\Home\react\index.js" />
     <Content Include="Scripts\Home\react\models\sampleModel.js" />
     <Content Include="Scripts\Home\react\models\studyModel.js" />
+    <Content Include="Scripts\Home\react\models\testModel.js" />
     <Content Include="Scripts\Home\react\pages\admin\employeeForm.js" />
     <Content Include="Scripts\Home\react\pages\admin\adminPage.js" />
     <Content Include="Scripts\Home\react\pages\doctor\doctorPage.js" />
@@ -315,8 +317,9 @@
     <Content Include="Scripts\Home\react\pages\doctor\tabs\orderStudiesTab.js" />
     <Content Include="Scripts\Home\react\pages\doctor\studyForm.js" />
     <Content Include="Scripts\Home\react\pages\doctor\tabs\studyDetailsTab.js" />
-    <Content Include="Scripts\Home\react\pages\doctor\tabs\studySampleTab.js" />
+    <Content Include="Scripts\Home\react\pages\lab\labForm.js" />
     <Content Include="Scripts\Home\react\pages\lab\labPage.js" />
+    <Content Include="Scripts\Home\react\pages\lab\tabs\testTab.js" />
     <Content Include="Scripts\Home\react\pages\nurse\nursePage.js" />
     <Content Include="Scripts\Home\react\pages\nurse\nurseOrderForm.js" />
     <Content Include="Scripts\Home\react\pages\nurse\nurseStudiesPage.js" />

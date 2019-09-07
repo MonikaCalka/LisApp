@@ -144,6 +144,15 @@ namespace LisApp.DAO
             BaseDAO.InsertOrUpdate(query, false);
         }
 
+        public void UpdateStudy(StudyModel study)
+        {
+            string query = $@"
+                update Studies set IdEmployee={study.IdDoctor}, IdStatus={study.IdStatus}, DateOfStudy={BaseDAO.SetDate(DateTime.Now)}
+                where IdStudy={study.IdStudy}
+            ";
+            BaseDAO.InsertOrUpdate(query, false);
+        }
+
 
         public void DeleteStudiesByOrder(long idOrder)
         {

@@ -1,13 +1,14 @@
-﻿using System;
+﻿using LisApp.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace LisApp.Models
 {
-    public class TestModel
+    public class TestModel : SelectOption
     {
-        public long value { get; set; } //IdTest
+        public long IdTest { get; set; }
 
         public long IdProfile { get; set; }
 
@@ -23,6 +24,10 @@ namespace LisApp.Models
 
         public double NormMaxF { get; set; }
 
-        public string label { get; set; } //Name
+        public string Name { get; set; }
+
+        public string Unit { get; set; }
+
+        public double? Result { get; set; }
     }
 }

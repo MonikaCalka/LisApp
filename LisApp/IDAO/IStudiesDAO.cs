@@ -14,5 +14,6 @@ namespace LisApp.IDAO
         long? InsertStudy(StudyModel study);
         void DeleteStudiesByOrder(long idOrder);
         void ChangeStudyStatus(long IdStudy, long IdStatus);
+        void UpdateStudy(StudyModel study);
     }
 }

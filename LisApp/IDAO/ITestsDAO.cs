@@ -14,5 +14,6 @@ namespace LisApp.IDAO
         long? InsertOrderedTest(long idStudy, long idTest);
         void DeleteOrderedTestByStudy(long idStudy);
         List<long> ReadOrderedTestByStudyId(long idStudy);
+        List<TestModel> ReadFullOrderedTestByStudyId(long idStudy, string lang);
     }
 }

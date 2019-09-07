@@ -117,7 +117,7 @@ class NurseStudiesPage extends React.Component {
     openRegisterSampleModal = () => {
         this.setState({
             titleOfModal: "RegisterSample",
-            mode: "edit"
+            mode: "show"
         });
         this.getStudyAndOpenModal();
     };

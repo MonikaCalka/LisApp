@@ -63,6 +63,11 @@ namespace LisApp.Controllers
         {
             string langId = Language.getLang(Request);
             StudyModel study = DB.StudiesDAO.ReadStudyById(id, langId);
+            if(study.IdStatus != 1 && study.IdStatus != 7)
+            {
+                return null;
+            }
+
             if (study.IdStatus == 7) //pobrana próbka
             {
                 study.Sample = DB.SamplesDAO.ReadSampleByStudyId((long)study.IdStudy);

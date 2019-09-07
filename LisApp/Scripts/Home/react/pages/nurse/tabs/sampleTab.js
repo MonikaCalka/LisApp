@@ -2,9 +2,14 @@
 import { Trans } from 'react-i18next';
 import { ValidatorForm } from 'react-form-validator-core';
 import ModalButtons from '../../../components/modalButtons';
-import SampleTabContent from '../../../components/sampleTabContent';
+import CustomInput from '../../../components/customInput';
 
 class SampleTab extends Component {
+
+    handleChange(event) {
+        const target = event.target;
+        this.props.onModelChange(target.name, target.value);
+    }
 
     onPrev = () => {
         const { onTabChange, model } = this.props;
@@ -40,23 +45,32 @@ class SampleTab extends Component {
     }
 
     render() {
-        const { model, mode, onCancel, onModelChange } = this.props;
+        const { model, mode, enableRegister, onCancel, onModelChange, nurseMode, tabCount } = this.props;
         let registerButton = null;
-        if (mode === 'edit' && model.IdStatus === 1) {
-            registerButton = <button type="button" className="register-sample-button" onClick={this.onRegisterSample} ><Trans>RegisterSample</Trans></button>;    
-        }
         let printButton = null;
-        if (model.Sample.Code !== null && model.Sample.Code !== "") {
-            printButton = <button type="button" className="register-sample-button" onClick={this.onPrint}><Trans>PrintCode</Trans></button>;
+        if (nurseMode) {
+            if (enableRegister && model.IdStatus === 1) {
+                registerButton = <button type="button" className="register-sample-button" onClick={this.onRegisterSample} ><Trans>RegisterSample</Trans></button>;
+            }
+            if (model.Sample.Code !== null && model.Sample.Code !== "") {
+                printButton = <button type="button" className="register-sample-button" onClick={this.onPrint}><Trans>PrintCode</Trans></button>;
+            }
         }
         return (
             <div className="row">
                 <ValidatorForm id="modalform" onSubmit={this.onNext} >
-                    <SampleTabContent model={model} onModelChange={onModelChange} />
+                    <div>
+                        <div className="col-sm-12">
+                            <h4><Trans>Sample</Trans></h4>
+                            <CustomInput labeltext="SampleCode" onChange={this.handleChange} value={model.Sample.Code ? model.Sample.Code : ""} name="SampleCode" disabled />
+                            <CustomInput labeltext="EmployeeNameCollected" onChange={this.handleChange} value={model.Sample.EmployeeName ? model.Sample.EmployeeName : ""} name="EmployeeNameCollected" disabled />
+                            <CustomInput labeltext="DateOfCollection" onChange={this.handleChange} value={model.Sample.DateOfCollection ? model.Sample.DateOfCollection : ""} name="DateOfCollection" disabled />
+                        </div>
+                    </div>
                     {registerButton}
                     {printButton}
                 </ValidatorForm>
-                <ModalButtons mode={mode} onCancel={onCancel} actualTabIndex={model.actualTabIndex} tabCount={2} onPrev={this.onPrev} />
+                <ModalButtons mode={mode} onCancel={onCancel} actualTabIndex={model.actualTabIndex} tabCount={tabCount} onPrev={this.onPrev} />
             </div>
         );
     }

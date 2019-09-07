@@ -1,15 +1,16 @@
-﻿using System;
+﻿using LisApp.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace LisApp.Models
 {
-    public class ProfileModel
+    public class ProfileModel : SelectOption
     {
-        public long value { get; set; } //IdProfile
+        public long IdProfile { get; set; } 
 
-        public string label { get; set; } //Name
+        public string Name { get; set; } 
 
         public string Code { get; set; }
 

@@ -188,14 +188,14 @@ namespace LisApp.Controllers
                     DB.EmployeesDAO.DeleteConsultantsByOrder((long)order.IdOrder);
 
                     List<StudyModel> oldStudies = DB.StudiesDAO.ReadStudiesListByOrderId((long)order.IdOrder);
-                    foreach(StudyModel study in oldStudies)
-                    {
-                        DB.TestsDAO.DeleteOrderedTestByStudy((long)study.IdStudy);
-                    }
-                    DB.StudiesDAO.DeleteStudiesByOrder((long)order.IdOrder);
 
                     if (order.IdStatus == 1)
                     {
+                        foreach (StudyModel study in oldStudies)
+                        {
+                            DB.TestsDAO.DeleteOrderedTestByStudy((long)study.IdStudy);
+                        }
+                        DB.StudiesDAO.DeleteStudiesByOrder((long)order.IdOrder);
                         DB.OrderDAO.FullUpdateOrder(order);
                     }
                     else
@@ -211,18 +211,21 @@ namespace LisApp.Controllers
                         }
                     }
 
-                    if (order.Studies != null)
+                    if (order.IdStatus == 1)
                     {
-                        foreach (StudyModel study in order.Studies)
+                        if (order.Studies != null)
                         {
-                            if (study.IdProfile != null && study.IdTests != null && study.IdTests.Count > 0)
+                            foreach (StudyModel study in order.Studies)
                             {
-                                study.IdOrder = (long)order.IdOrder;
-                                long idStudy = (long)DB.StudiesDAO.InsertStudy(study);
-
-                                foreach (long idTest in study.IdTests)
+                                if (study.IdProfile != null && study.IdTests != null && study.IdTests.Count > 0)
                                 {
-                                    DB.TestsDAO.InsertOrderedTest(idStudy, idTest);
+                                    study.IdOrder = (long)order.IdOrder;
+                                    long idStudy = (long)DB.StudiesDAO.InsertStudy(study);
+
+                                    foreach (long idTest in study.IdTests)
+                                    {
+                                        DB.TestsDAO.InsertOrderedTest(idStudy, idTest);
+                                    }
                                 }
                             }
                         }

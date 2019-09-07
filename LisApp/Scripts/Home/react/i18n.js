@@ -101,7 +101,16 @@ const resources = {
             "RegisterSample": "Register sample",
             "MarkSample": "Mark sample with the generated code.",
             "RegisterSampleError": "Sample registration failed.",
-            "PrintCode": "Print code"
+            "PrintCode": "Print code",
+            "Result": "Result",
+            "Verification": "Verification",
+            "StartStudy": "Start testing",
+            "Start": "Start",
+            "Tests": "Tests",
+            "Absent": "Absent",
+            "Standard": "Standard",
+            "StartStudyInfo": "Insert the sample into the analyzer and perform the ordered tests.",
+            "StartStudyError": "Start testing failed."
         }
     },
     pl: {
@@ -202,7 +211,16 @@ const resources = {
             "RegisterSample": "Rejestruj próbkę",
             "MarkSample": "Oznacz próbkę wygenerowanym kodem.",
             "RegisterSampleError": "Rejestracja próbki zakończona niepowodzeniem.",
-            "PrintCode": "Drukuj kod"
+            "PrintCode": "Drukuj kod",
+            "Result": "Wyniki",
+            "Verification": "Weryfikacja",
+            "StartStudy": "Rozpocznij badanie",
+            "Start": "Rozpocznij",
+            "Tests": "Testy",
+            "Absent": "Nieobecny",
+            "Standard": "Norma",
+            "StartStudyInfo": "Wprowadź próbkę do analizatora i wykonaj zlecone testy.",
+            "StartStudyError": "Rozpoczęcie testu zakończone niepowodzeniem."
         }
     }
 };
