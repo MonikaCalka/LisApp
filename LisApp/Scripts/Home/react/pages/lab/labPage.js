@@ -61,6 +61,7 @@ class LabPage extends React.Component {
             disableMode: true,
             disableStart: true,
             disableAddResult: true,
+            disableVerify: true,
             titleOfModal: "",
             mode: "",
             postResult: "",
@@ -94,7 +95,8 @@ class LabPage extends React.Component {
             actualRow: row,
             disableMode: row === null,
             disableStart: row === null || row.IdStatus !== 7,
-            disableAddResult: row === null || row.IdStatus !== 3
+            disableAddResult: row === null || row.IdStatus !== 3,
+            disableVerify: row === null || row.IdStatus !== 4
         });
     };
 
@@ -114,10 +116,9 @@ class LabPage extends React.Component {
                 { index: 0, name: 'Order' },
                 { index: 1, name: 'Sample' },
                 { index: 2, name: 'Tests' },
-                { index: 3, name: 'Result' },
-                { index: 4, name: 'Verification' }
+                { index: 3, name: 'Result' }
             ],
-            tabCount: 5
+            tabCount: 4
 
         });
         this.getStudyAndOpenModal();
@@ -154,6 +155,23 @@ class LabPage extends React.Component {
         this.getStudyAndOpenModal();
     };
 
+    openVerifyModal = () => {
+        this.setState({
+            titleOfModal: "Verify",
+            mode: "verify",
+            tabHeaders: [
+                { index: 0, name: 'Order' },
+                { index: 1, name: 'Sample' },
+                { index: 2, name: 'Tests' },
+                { index: 3, name: 'Result' },
+                { index: 4, name: 'Verification' }
+            ],
+            tabCount: 5
+        });
+        console.log(this.state.tabHeaders);
+        this.getStudyAndOpenModal();
+    };
+
     closeModal = () => {
         this.modalRef.current.closeModal();
     }
@@ -165,7 +183,7 @@ class LabPage extends React.Component {
                 this.modalRef.current.closeModal();
                 this.props.alert.info(<Trans>StartStudyInfo</Trans>);
                 this.setState({
-                    disableStart: true
+                    disableVerify: true
                 });
             } else {
                 this.modalRef.current.closeModal();
@@ -179,17 +197,32 @@ class LabPage extends React.Component {
             if (response === "Success") {
                 this.setStudyList();
                 this.modalRef.current.closeModal();
-                this.props.alert.info(<Trans>StartStudyInfo</Trans>);
+                this.props.alert.info(<Trans>AddResultSuccess</Trans>);
+                this.setState({
+                    disableAddResult: true
+                });
+            } else {
+                this.modalRef.current.closeModal();
+                this.props.alert.error(<Trans>AddResultError</Trans>);
+            }
+        });
+    }
+
+    onVerify = () => {
+        postJson("Lab/AddVerify", this.formRef.current.getData(), response => {
+            if (response === "Success") {
+                this.setStudyList();
+                this.modalRef.current.closeModal();
+                this.props.alert.success(<Trans>VerifySuccess</Trans>);
                 this.setState({
                     disableStart: true
                 });
             } else {
                 this.modalRef.current.closeModal();
-                this.props.alert.error(<Trans>StartStudyError</Trans>);
+                this.props.alert.error(<Trans>VerifyError</Trans>);
             }
         });
     }
-
 
     onAccept = () => {
         switch (this.state.mode) {
@@ -198,6 +231,9 @@ class LabPage extends React.Component {
                 break;
             case 'addResult':
                 this.onAddResult();
+                break;
+            case 'verify':
+                this.onVerify();
                 break;
             case 'show':
                 return null;
@@ -209,6 +245,7 @@ class LabPage extends React.Component {
             <div>
                 <CustomButton onClick={this.openStartModal} text={<Trans>StartStudy</Trans>} disable={this.state.disableStart} />
                 <CustomButton onClick={this.openAddResultModal} text={<Trans>AddResult</Trans>} disable={this.state.disableAddResult} />
+                <CustomButton onClick={this.openVerifyModal} text={<Trans>Verify</Trans>} disable={this.state.disableVerify} />
                 <CustomButton onClick={this.openShowModal} text={<Trans>Details</Trans>} disable={this.state.disableMode} />
 
                 <CustomModal ref={this.modalRef}>

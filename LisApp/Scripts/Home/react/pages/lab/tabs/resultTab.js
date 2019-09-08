@@ -32,7 +32,7 @@ class ResultTab extends Component {
                             <h4><Trans>Result</Trans></h4>
                             <CustomInput labeltext="LabResultName" onChange={this.handleChange} value={model.Result.EmployeeName ? model.Result.EmployeeName : ""} name="EmployeeName" disabled />
                             <CustomInput labeltext="DateOfResult" onChange={this.handleChange} value={model.Result.DateOfResult ? model.Result.DateOfResult : ""} name="DateOfResult" disabled />
-                            <CustomTextArea rows="4" labeltext="ResultDesc" onChange={this.handleResultChange} value={model.Result.Description !== null ? model.Result.Description : ""} name="Description" disabled />
+                            <CustomTextArea rows="4" labeltext="ResultDesc" onChange={this.handleChange} value={model.Result.Description !== null ? model.Result.Description : ""} name="Description" disabled />
                         </div>
                     </div>
                 </ValidatorForm>

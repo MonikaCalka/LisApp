@@ -10,6 +10,7 @@ import ResultModel from '../../models/resultModel';
 import SampleTab from '../nurse/tabs/sampleTab';
 import TestTab from '../lab/tabs/testTab';
 import ResultTab from '../lab/tabs/resultTab';
+import VerifyTab from '../lab/tabs/verifyTab';
 
 const emptyState = {
     DateOfOrder: "",
@@ -34,7 +35,8 @@ const tabs = [
     { index: 0, name: 'Order' },
     { index: 1, name: 'Sample' },
     { index: 2, name: 'Tests' },
-    { index: 3, name: 'Result' }
+    { index: 3, name: 'Result' },
+    { index: 4, name: 'Verification' }
 ];
 
 class StudyForm extends React.Component {
@@ -97,6 +99,16 @@ class StudyForm extends React.Component {
                     mode={mode}
                     tabCount={tabCount}
                     onModelChange={this.onModelChange}
+                />;
+                break;
+            case 4:
+                actualTab = <VerifyTab onTabChange={this.onTabChange}
+                    model={this.state}
+                    onCancel={onCancel}
+                    mode={mode}
+                    tabCount={tabCount}
+                    onModelChange={this.onModelChange}
+                    onAccept={onAccept}
                 />;
                 break;
         }

@@ -62,6 +62,7 @@ namespace LisApp.Controllers
                         study.Result = DB.ResultsDAO.ReadResultByStudyId((long)study.IdStudy);
                         EmployeeModel resultLab = DB.EmployeesDAO.ReadEmployeeById((long) study.Result.IdEmployee, langId);
                         study.Result.EmployeeName = resultLab.FirstName + " " + resultLab.Surname;
+                        study.Result.Verification = new VerificationModel();
                     }
                 }
             }
@@ -133,5 +134,34 @@ namespace LisApp.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult AddVerify(StudyModel study)
+        {
+            if (study != null)
+            {
+                try
+                {
+                    // get User !!!
+                    long employeeId = 1;
+
+                    study.Result.Verification.IdEmployee = employeeId;
+                    study.Result.Verification.IdResult = (long)study.Result.IdResult;
+
+                    DB.VerificationsDAO.InsertVerify(study.Result.Verification);
+
+                    DB.StudiesDAO.ChangeStudyStatus((long)study.IdStudy, (long)StatusTypeEnum.Verified);
+
+                    return Json("Success");
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error");
+                }
+            }
+            else
+            {
+                return Json("Error");
+            }
+        }
     }
 }

@@ -13,9 +13,9 @@ namespace LisApp.Models
 
         public long IdEmployee { get; set; }
 
-        public EmployeeModel Employee { get; set; }
+        public string EmployeeName { get; set; }
 
-        public DateTime DateOfVerification { get; set; }
+        public DateTime? DateOfVerification { get; set; }
 
         public string Description { get; set; }
 

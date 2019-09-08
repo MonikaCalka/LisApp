@@ -28,7 +28,7 @@ namespace LisApp.Controllers
         {
             string langId = Language.getLang(Request);
             OrderModel order = DB.OrderDAO.ReadOrderById(id, langId);
-           
+
             order = setConsultants(order, langId);
             order = setStudies(order);
 
@@ -76,7 +76,8 @@ namespace LisApp.Controllers
         {
             string langId = Language.getLang(Request);
             List<ProfileModel> select = DB.ProfilesDAO.ReadProfilesList(langId);
-            foreach (ProfileModel profile in select) {
+            foreach (ProfileModel profile in select)
+            {
                 List<TestModel> test = DB.TestsDAO.ReadTestsList(profile.value, langId);
                 profile.tests = test;
             }
@@ -124,6 +125,11 @@ namespace LisApp.Controllers
                         study.Result = DB.ResultsDAO.ReadResultByStudyId((long)study.IdStudy);
                         EmployeeModel resultLab = DB.EmployeesDAO.ReadEmployeeById((long)study.Result.IdEmployee, langId);
                         study.Result.EmployeeName = resultLab.FirstName + " " + resultLab.Surname;
+                        study.Result.Verification = new VerificationModel();
+                        if (study.IdStatus != (long)StatusTypeEnum.ToVerify)
+                        {
+                            study.Result.Verification = DB.VerificationsDAO.ReadVerificationByResultId((long)study.Result.IdResult);
+                        }
                     }
                 }
             }

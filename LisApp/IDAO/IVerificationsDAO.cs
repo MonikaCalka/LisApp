@@ -5,8 +5,7 @@ namespace LisApp.IDAO
 {
     public interface IVerificationsDAO
     {
-        List<VerificationModel> ReadVerificationsList();
-        VerificationModel ReadVerificationById(long id);
         VerificationModel ReadVerificationByResultId(long id);
+        void InsertVerify(VerificationModel v);
     }
 }

@@ -9,38 +9,26 @@ namespace LisApp.DAO
 {
     public class VerificationsDAO : IVerificationsDAO
     {
-        public VerificationModel ReadVerificationById(long id)
-        {
-            string query = $@"
-                select IdVerification, IdResult, IdEmployee, DateOfVerification, Description
-                from Verifications
-                where IdVerification = {id}
-            ";
-
-            return BaseDAO.SelectFirst(query, ReadVerificationModel);
-        }
-
         public VerificationModel ReadVerificationByResultId(long id)
         {
             string query = $@"
-                select IdVerification, IdResult, IdEmployee, DateOfVerification, Description
-                from Verifications
+                select v.IdVerification, v.IdResult, v.IdEmployee, v.DateOfVerification, v.Description, e.FirstName, e.Surname
+                from Verifications v
+                join Employees e on v.IdEmployee = e.IdEmployee
                 where IdResult = {id}
             ";
 
             return BaseDAO.SelectFirst(query, ReadVerificationModel);
         }
 
-        public List<VerificationModel> ReadVerificationsList()
+        public void InsertVerify(VerificationModel v)
         {
-            string query = @"
-                select IdVerification, IdResult, IdEmployee, DateOfVerification, Description
-                from Verifications
+            string query = $@"
+                insert into Verifications(IdResult, IdEmployee, DateOfVerification, Description) 
+                    values({v.IdResult},{v.IdEmployee},{BaseDAO.SetDate(DateTime.Now)},{BaseDAO.SetString(v.Description)});
             ";
-
-            return BaseDAO.Select(query, ReadVerificationModel);
+            BaseDAO.InsertOrUpdate(query, false);
         }
-
         private VerificationModel ReadVerificationModel(CustomReader reader)
         {
             return new VerificationModel()
@@ -49,7 +37,8 @@ namespace LisApp.DAO
                 IdResult = reader.GetLong("IdResult"),
                 IdEmployee = reader.GetLong("IdEmployee"),
                 DateOfVerification = reader.GetDate("DateOfVerification"),
-                Description = reader.GetString("Description")
+                Description = reader.GetString("Description"),
+                EmployeeName = reader.GetString("FirstName") + " " + reader.GetString("Surname")
             };
         }
     }

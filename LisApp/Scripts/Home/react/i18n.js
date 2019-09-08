@@ -103,7 +103,6 @@ const resources = {
             "RegisterSampleError": "Sample registration failed.",
             "PrintCode": "Print code",
             "Result": "Result",
-            "Verification": "Verification",
             "StartStudy": "Start testing",
             "Start": "Start",
             "Tests": "Tests",
@@ -114,8 +113,16 @@ const resources = {
             "AddResult": "Add results",
             "ResultDesc": "Description of results",
             "IsFloat": "The value must be a float",
-            "LabResultName": "Lab entering results",
-            "DateOfResult": "Date of receipt of results"
+            "LabResultName": "Lab technician entering results",
+            "DateOfResult": "Date of receipt of results",
+            "LabVerifyName": "Lab technician verifying results",
+            "DateOfVerification": "Date of verification",
+            "VerifyDesc": "Verification description",
+            "Verify": "Verify",
+            "AddResultSuccess": "Results has been added.",
+            "AddResultError": "Results adding failed.",
+            "VerifySuccess": "Results has been verified.",
+            "VerifyError": "Results verifying failed."
         }
     },
     pl: {
@@ -230,7 +237,15 @@ const resources = {
             "ResultDesc": "Opis wyników",
             "IsFloat": "Wartość musi być liczbą",
             "LabResultName": "Laborant wpisujący wyniki",
-            "DateOfResult": "Data otrzymania wyników"
+            "DateOfResult": "Data otrzymania wyników",
+            "LabVerifyName": "Laborant weryfikujący wyniki",
+            "DateOfVerification":"Data weryfikacji",
+            "VerifyDesc": "Opis weryfikacji",
+            "Verify": "Zweryfikuj",
+            "AddResultSuccess": "Dodano wyniki.",
+            "AddResultError": "Dodawanie wyników zakończone niepowodzeniem.",
+            "VerifySuccess": "Zweryfikowano wyniki",
+            "VerifyError": "Weryfikacja wyników nie powiodła się."
         }
     }
 };

@@ -11,6 +11,7 @@ import TestTab from './tabs/testTab';
 import TestModel from '../../models/testModel';
 import ResultModel from '../../models/resultModel';
 import ResultTab from './tabs/resultTab';
+import VerifyTab from './tabs/verifyTab';
 
 
 const emptyState = {
@@ -98,6 +99,16 @@ class LabForm extends React.Component {
                     mode={mode}
                     tabCount={tabCount}
                     onModelChange={this.onModelChange}
+                />;
+                break;
+            case 4:
+                actualTab = <VerifyTab onTabChange={this.onTabChange}
+                    model={this.state}
+                    onCancel={onCancel}
+                    mode={mode}
+                    tabCount={tabCount}
+                    onModelChange={this.onModelChange}
+                    onAccept={onAccept}
                 />;
                 break;
         }
