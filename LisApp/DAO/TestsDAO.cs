@@ -66,16 +66,17 @@ namespace LisApp.DAO
         public List<TestModel> ReadFullOrderedTestByStudyId(long idStudy, string lang)
         {
             string query = $@"
-                select t.IdTest, t.IdProfile, t.Code, t.NormMinM, t.NormMaxM, t.NormMinF, t.NormMaxF, tr.Name as Name, t.Unit, ru.Value as Result
+                select t.IdTest, t.IdProfile, t.Code, t.NormMinM, t.NormMaxM, t.NormMinF, t.NormMaxF, tr.Name as Name, t.Unit, ru.Value as Result, o.IdOrderedTest
                 from Tests t 
                 join OrderedTests o on t.IdTest = o.IdTest
                 join TestTranslations tr on t.IdTest = tr.IdTest
                 join Languages l on tr.IdLanguage = l.IdLanguage
                 left join ResultUnits ru on o.IdOrderedTest = ru.IdOrderedTests
-                where o.IdStudy= {idStudy} and l.code = '{lang}'
+                left join Results r on ru.IdResult = r.IdResult
+                where o.IdStudy= {idStudy} and l.code = '{lang}' and (r.Actual = 1 or r.Actual is null)
             ";
 
-            return BaseDAO.Select(query, ReadTestModel);
+            return BaseDAO.Select(query, ReadOrderedTestModel);
         }
 
         public List<long> ReadOrderedTestByStudyId(long idStudy)
@@ -146,6 +147,25 @@ namespace LisApp.DAO
                 Name = reader.GetString("Name"),
                 Unit = reader.GetNullableString("Unit"),
                 Result = reader.GetNullableDouble("Result")
+            };
+        }
+
+        private TestModel ReadOrderedTestModel(CustomReader reader)
+        {
+
+            return new TestModel
+            {
+                IdTest = reader.GetLong("IdTest"),
+                IdProfile = reader.GetLong("IdProfile"),
+                Code = reader.GetString("Code"),
+                NormMinM = reader.GetDouble("NormMinM"),
+                NormMaxM = reader.GetDouble("NormMaxM"),
+                NormMinF = reader.GetDouble("NormMinF"),
+                NormMaxF = reader.GetDouble("NormMaxF"),
+                Name = reader.GetString("Name"),
+                Unit = reader.GetNullableString("Unit"),
+                Result = reader.GetNullableDouble("Result"),
+                IdOrderedTest = reader.GetNullableLong("IdOrderedTest")
             };
         }
     }

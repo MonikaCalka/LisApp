@@ -9,6 +9,8 @@ import StudyDetailsTab from '../doctor/tabs/studyDetailsTab';
 import SampleTab from '../nurse/tabs/sampleTab';
 import TestTab from './tabs/testTab';
 import TestModel from '../../models/testModel';
+import ResultModel from '../../models/resultModel';
+import ResultTab from './tabs/resultTab';
 
 
 const emptyState = {
@@ -25,7 +27,7 @@ const emptyState = {
     OrderComment: "",
     Sample: new SampleModel(),
     OrderedTest: [new TestModel()],
-    Result: "",
+    Result: new ResultModel(),
     actualTabIndex: 0,
     refreshTable: false
 };
@@ -86,6 +88,16 @@ class LabForm extends React.Component {
                     mode={mode}
                     tabCount={tabCount}
                     onAccept={onAccept}
+                    onModelChange={this.onModelChange}
+                />;
+                break;
+            case 3:
+                actualTab = <ResultTab onTabChange={this.onTabChange}
+                    model={this.state}
+                    onCancel={onCancel}
+                    mode={mode}
+                    tabCount={tabCount}
+                    onModelChange={this.onModelChange}
                 />;
                 break;
         }

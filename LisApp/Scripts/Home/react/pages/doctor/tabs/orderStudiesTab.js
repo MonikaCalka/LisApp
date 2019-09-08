@@ -63,7 +63,6 @@ class OrderStudiesTab extends Component {
         return (
             <div>
                 <ValidatorForm id="modalform" onSubmit={this.onAcceptWithValidation} >
-
                     <div>
                         <h4><Trans>OrderedStudies</Trans></h4>
                         {model[propertyName].map((s, i) => <StudyElement profileOptions={model.profileOptions}

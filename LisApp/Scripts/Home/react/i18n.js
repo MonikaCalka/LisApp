@@ -110,7 +110,12 @@ const resources = {
             "Absent": "Absent",
             "Standard": "Standard",
             "StartStudyInfo": "Insert the sample into the analyzer and perform the ordered tests.",
-            "StartStudyError": "Start testing failed."
+            "StartStudyError": "Start testing failed.",
+            "AddResult": "Add results",
+            "ResultDesc": "Description of results",
+            "IsFloat": "The value must be a float",
+            "LabResultName": "Lab entering results",
+            "DateOfResult": "Date of receipt of results"
         }
     },
     pl: {
@@ -220,7 +225,12 @@ const resources = {
             "Absent": "Nieobecny",
             "Standard": "Norma",
             "StartStudyInfo": "Wprowadź próbkę do analizatora i wykonaj zlecone testy.",
-            "StartStudyError": "Rozpoczęcie testu zakończone niepowodzeniem."
+            "StartStudyError": "Rozpoczęcie testu zakończone niepowodzeniem.",
+            "AddResult": "Dodaj wyniki",
+            "ResultDesc": "Opis wyników",
+            "IsFloat": "Wartość musi być liczbą",
+            "LabResultName": "Laborant wpisujący wyniki",
+            "DateOfResult": "Data otrzymania wyników"
         }
     }
 };

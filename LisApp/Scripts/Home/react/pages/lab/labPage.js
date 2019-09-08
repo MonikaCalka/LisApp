@@ -60,6 +60,7 @@ class LabPage extends React.Component {
             actualRow: null,
             disableMode: true,
             disableStart: true,
+            disableAddResult: true,
             titleOfModal: "",
             mode: "",
             postResult: "",
@@ -92,7 +93,8 @@ class LabPage extends React.Component {
         this.setState({
             actualRow: row,
             disableMode: row === null,
-            disableStart: row === null || row.IdStatus !== 7
+            disableStart: row === null || row.IdStatus !== 7,
+            disableAddResult: row === null || row.IdStatus !== 3
         });
     };
 
@@ -111,10 +113,11 @@ class LabPage extends React.Component {
             tabHeaders : [
                 { index: 0, name: 'Order' },
                 { index: 1, name: 'Sample' },
-                { index: 2, name: 'Result' },
-                { index: 3, name: 'Verification' }
+                { index: 2, name: 'Tests' },
+                { index: 3, name: 'Result' },
+                { index: 4, name: 'Verification' }
             ],
-            tabCount: 4
+            tabCount: 5
 
         });
         this.getStudyAndOpenModal();
@@ -131,6 +134,21 @@ class LabPage extends React.Component {
             ],
             tabCount: 3
 
+        });
+        console.log(this.state.tabHeaders);
+        this.getStudyAndOpenModal();
+    };
+
+    openAddResultModal = () => {
+        this.setState({
+            titleOfModal: "AddResult",
+            mode: "addResult",
+            tabHeaders: [
+                { index: 0, name: 'Order' },
+                { index: 1, name: 'Sample' },
+                { index: 2, name: 'Result' }
+            ],
+            tabCount: 3
         });
         console.log(this.state.tabHeaders);
         this.getStudyAndOpenModal();
@@ -156,10 +174,30 @@ class LabPage extends React.Component {
         });
     }
 
+    onAddResult = () => {
+        postJson("Lab/AddResult", this.formRef.current.getData(), response => {
+            if (response === "Success") {
+                this.setStudyList();
+                this.modalRef.current.closeModal();
+                this.props.alert.info(<Trans>StartStudyInfo</Trans>);
+                this.setState({
+                    disableStart: true
+                });
+            } else {
+                this.modalRef.current.closeModal();
+                this.props.alert.error(<Trans>StartStudyError</Trans>);
+            }
+        });
+    }
+
+
     onAccept = () => {
         switch (this.state.mode) {
             case 'start':
                 this.onStartStudy();
+                break;
+            case 'addResult':
+                this.onAddResult();
                 break;
             case 'show':
                 return null;
@@ -170,6 +208,7 @@ class LabPage extends React.Component {
         return (
             <div>
                 <CustomButton onClick={this.openStartModal} text={<Trans>StartStudy</Trans>} disable={this.state.disableStart} />
+                <CustomButton onClick={this.openAddResultModal} text={<Trans>AddResult</Trans>} disable={this.state.disableAddResult} />
                 <CustomButton onClick={this.openShowModal} text={<Trans>Details</Trans>} disable={this.state.disableMode} />
 
                 <CustomModal ref={this.modalRef}>

@@ -48,6 +48,8 @@ namespace LisApp.Models
 
         public string Patient { get; set; }
 
+        public string PatientSex { get; set; }
+
         public long? IdPatient { get; set; }
 
         public DateTime DateOfOrder { get; set; }

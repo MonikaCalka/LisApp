@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LisApp.IDAO;
 using LisApp.Models;
 
@@ -25,6 +26,28 @@ namespace LisApp.DAO
             ";
 
             return BaseDAO.Select(query, ReadResultModel);
+        }
+
+        public ResultModel ReadResultByStudyId(long idStudy)
+        {
+            string query = $@"
+                select IdResult, IdEmployee, IdStudy, DateOfResult, Description, ReasonForRepeat, Actual
+                from Results
+                where IdStudy = {idStudy} and Actual = 1
+            ";
+
+            return BaseDAO.SelectFirst(query, ReadResultModel);
+        }
+
+        public long? InsertResult(ResultModel r)
+        {
+            string query = $@"
+                insert into Results(IdEmployee, IdStudy, DateOfResult, Description, Actual) 
+                    output INSERTED.IdResult
+                    values({r.IdEmployee},{r.IdStudy},{BaseDAO.SetDate(DateTime.Now)},
+                    {BaseDAO.SetString(r.Description)},1);
+            ";
+            return BaseDAO.InsertOrUpdate(query, true);
         }
 
         private ResultModel ReadResultModel(CustomReader reader)

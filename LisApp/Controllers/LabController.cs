@@ -57,6 +57,12 @@ namespace LisApp.Controllers
                         study.IdLab = lab.IdEmployee;
                         study.Lab = lab.FirstName + " " + lab.Surname;
                     }
+                    if(study.IdStatus != (long)StatusTypeEnum.InProgress)
+                    {
+                        study.Result = DB.ResultsDAO.ReadResultByStudyId((long)study.IdStudy);
+                        EmployeeModel resultLab = DB.EmployeesDAO.ReadEmployeeById((long) study.Result.IdEmployee, langId);
+                        study.Result.EmployeeName = resultLab.FirstName + " " + resultLab.Surname;
+                    }
                 }
             }
             return new CustomJsonResult { Data = new { data = study } };
@@ -75,6 +81,45 @@ namespace LisApp.Controllers
                     study.IdDoctor = employeeId;
                     study.IdStatus = (long)StatusTypeEnum.InProgress;
                     DB.StudiesDAO.UpdateStudy(study);
+                    return Json("Success");
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error");
+                }
+            }
+            else
+            {
+                return Json("Error");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AddResult(StudyModel study)
+        {
+            if (study != null)
+            {
+                try
+                {
+                    // get User !!!
+                    long employeeId = 1;
+                    
+                    study.Result.IdEmployee = employeeId;
+                    study.Result.IdStudy = (long)study.IdStudy;
+
+                    long idResult = (long)DB.ResultsDAO.InsertResult(study.Result);
+                    foreach(TestModel test in study.OrderedTest)
+                    {
+                        ResultUnitModel resultUnit = new ResultUnitModel();
+                        resultUnit.IdResult = idResult;
+                        resultUnit.IdOrderedTest = (long)test.IdOrderedTest;
+                        resultUnit.Value = (double)test.Result;
+
+                        DB.ResultUnitsDAO.InsertResultUnit(resultUnit);
+                    }
+
+                    DB.StudiesDAO.ChangeStudyStatus((long)study.IdStudy, (long)StatusTypeEnum.ToVerify);
+
                     return Json("Success");
                 }
                 catch (Exception ex)

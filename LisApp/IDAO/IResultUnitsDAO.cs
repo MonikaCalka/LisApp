@@ -8,5 +8,7 @@ namespace LisApp.IDAO
         List<ResultUnitModel> ReadResultUnitsList();
         ResultUnitModel ReadResultUnitModelById(long id);
         List<ResultUnitModel> ReadResultUnitModelByResultId(long id);
+
+        void InsertResultUnit(ResultUnitModel r);
     }
 }

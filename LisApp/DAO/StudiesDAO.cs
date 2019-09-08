@@ -14,7 +14,7 @@ namespace LisApp.DAO
             string query = $@"
                 select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,
                     e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, 
-                    pft.Name as Profile, o.Comment, sam.Code as Sample
+                    pft.Name as Profile, o.Comment, sam.Code as Sample, p.Sex as PatientSex
                 from Studies s
                 join Orders o on s.IdOrder = o.IdOrder
                 join Patients p on o.IdPatient = p.IdPatient
@@ -40,7 +40,7 @@ namespace LisApp.DAO
             string query = $@"
                 select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,
                     e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, 
-                    pft.Name as Profile, o.Comment, sam.Code as Sample
+                    pft.Name as Profile, o.Comment, sam.Code as Sample, p.Sex as PatientSex
                 from Studies s
                 join Orders o on s.IdOrder = o.IdOrder
                 join Patients p on o.IdPatient = p.IdPatient
@@ -66,7 +66,7 @@ namespace LisApp.DAO
             string query = $@"
                 select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,
                     e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, 
-                    pft.Name as Profile, o.Comment, sam.Code as Sample
+                    pft.Name as Profile, o.Comment, sam.Code as Sample, p.Sex as PatientSex
                 from Studies s
                 join Orders o on s.IdOrder = o.IdOrder
                 join Patients p on o.IdPatient = p.IdPatient
@@ -92,7 +92,7 @@ namespace LisApp.DAO
             string query = $@"
                 select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,
                     e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, 
-                    pft.Name as Profile, o.Comment, sam.Code as Sample
+                    pft.Name as Profile, o.Comment, sam.Code as Sample, p.Sex as PatientSex
                 from Studies s
                 join Orders o on s.IdOrder = o.IdOrder
                 join Patients p on o.IdPatient = p.IdPatient
@@ -195,7 +195,8 @@ namespace LisApp.DAO
                 Profile = reader.GetNullableString("Profile"),
                 DateOfOrder = reader.GetDate("DateOfOrder"),
                 OrderComment = reader.GetNullableString("Comment"),
-                SampleCode = reader.GetNullableString("Sample")
+                SampleCode = reader.GetNullableString("Sample"),
+                PatientSex = reader.GetNullableString("PatientSex")
             };
         }
     }

@@ -8,5 +8,8 @@ namespace LisApp.IDAO
     {
         List<ResultModel> ReadResultsList();
         ResultModel ReadResultById(long id);
+        ResultModel ReadResultByStudyId(long idStudy);
+
+        long? InsertResult(ResultModel result);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using LisApp.Common;
+using LisApp.Enums;
 using LisApp.Models;
 using System;
 using System.Collections.Generic;
@@ -105,16 +106,24 @@ namespace LisApp.Controllers
         {
             string langId = Language.getLang(Request);
             StudyModel study = DB.StudiesDAO.ReadStudyById(id, langId);
-            if(study.IdStatus != 1)
+            study.OrderedTest = DB.TestsDAO.ReadFullOrderedTestByStudyId((long)study.IdStudy, langId);
+
+            if (study.IdStatus != (long)StatusTypeEnum.Ordered)
             {
                 study.Sample = DB.SamplesDAO.ReadSampleByStudyId((long)study.IdStudy);
-                if (study.IdStatus != 7)
+                if (study.IdStatus != (long)StatusTypeEnum.TakenSample)
                 {
                     EmployeeModel lab = DB.EmployeesDAO.ReadEmployeeByStudyId((long)study.IdStudy, langId);
                     if (lab != null)
                     {
                         study.IdLab = lab.IdEmployee;
                         study.Lab = lab.FirstName + " " + lab.Surname;
+                    }
+                    if (study.IdStatus != (long)StatusTypeEnum.InProgress)
+                    {
+                        study.Result = DB.ResultsDAO.ReadResultByStudyId((long)study.IdStudy);
+                        EmployeeModel resultLab = DB.EmployeesDAO.ReadEmployeeById((long)study.Result.IdEmployee, langId);
+                        study.Result.EmployeeName = resultLab.FirstName + " " + resultLab.Surname;
                     }
                 }
             }

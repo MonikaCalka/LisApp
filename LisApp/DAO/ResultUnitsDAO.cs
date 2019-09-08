@@ -38,6 +38,15 @@ namespace LisApp.DAO
             return BaseDAO.Select(query, ReadResultUnitModel);
         }
 
+        public void InsertResultUnit(ResultUnitModel r)
+        {
+            string query = $@"
+                insert into ResultUnits(IdOrderedTests, IdResult, Value) 
+                    values({r.IdOrderedTest},{r.IdResult},{r.Value});
+            ";
+            BaseDAO.InsertOrUpdate(query, false);
+        }
+
         private ResultUnitModel ReadResultUnitModel(CustomReader reader)
         {
             return new ResultUnitModel
