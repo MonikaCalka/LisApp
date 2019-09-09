@@ -48,6 +48,9 @@ var columns = [
 
 const titleOfTable = <Trans>Patients</Trans>;
 
+const searchableColumn = [{ name: "FirstName", id: 0 }, { name: "Surname", id: 1 }, { name: "Pesel", id: 2 }, { name: "FullAddress", id: 3 }, { name: "Phone", id: 4 }];
+
+
 class RegistrarPage extends React.Component {
 
     constructor(props) {
@@ -179,6 +182,7 @@ class RegistrarPage extends React.Component {
                     data={this.state.data}
                     onRowClicked={this.rowClick}
                     idName="IdPatient"
+                    searchableColumn={searchableColumn}
                 />
             </div>
         );

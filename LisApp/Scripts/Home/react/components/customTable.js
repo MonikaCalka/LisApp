@@ -3,10 +3,36 @@ import DataTable from 'react-data-table-component';
 import { Trans } from 'react-i18next';
 
 class CustomTable extends React.Component {
-    state = {
-        selected: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            selected: null,
+            searchValue: ""
+        };
     }
+
     selectedRowElement = null;
+
+    onChangeSearchValue = (event) => {
+        this.setState({ searchValue: event.target.value });
+    }
+
+    checkSearchValue = (value) => {
+        if (this.state.searchValue === "") {
+            return value;
+        }
+        let values = this.state.searchValue.split(";");
+        let i, j;
+        for (i = 0; i < values.length; i++) {
+            for (j = 0; j < this.props.searchableColumn.length; j++) {
+                if (typeof value[this.props.searchableColumn.find(x => x.id === j).name] === "string") {
+                    if (value[this.props.searchableColumn.find(x => x.id === j).name].toUpperCase().indexOf(values[i].trim().toUpperCase()) > -1) {
+                        return value;
+                    }
+                }
+            }
+        }
+    }
 
     onRowClicked = (row, e) => {
         const { idName } = this.props;
@@ -73,11 +99,13 @@ class CustomTable extends React.Component {
             rowsPerPageText: <Trans>RowsPerPage</Trans>, rangeSeparatorText: ":"
         };
 
+        let filteredData = this.props.data.filter(this.checkSearchValue);
+
         return (
             <DataTable
                 title={titleOfTable}
                 columns={columns}
-                data={data}
+                data={filteredData}
                 onRowClicked={this.onRowClicked}
                 highlightOnHover={!!this.onRowClicked}
                 pointerOnHover={!!this.onRowClicked}
@@ -86,6 +114,8 @@ class CustomTable extends React.Component {
                 paginationComponentOptions={paginationOptions}
                 onSort={this.onSort}
                 onChangePage={this.onChangePage}
+                subHeader
+                subHeaderComponent={<input type="text" value={this.state.searchValue} onChange={this.onChangeSearchValue} name="Search" />}
             />
         );
     }

@@ -55,6 +55,8 @@ const columns = [
 
 const titleOfTable = <Trans>Studies</Trans>;
 
+const searchableColumn = [{ name: "Patient", id: 0 }, { name: "DateOfOrder", id: 1 }, { name: "Profile", id: 2 }, { name: "Status", id: 3 }, { name: "Priority", id: 4 }];
+
 class DoctorStudiesPage extends React.Component {
     constructor(props) {
         super(props);
@@ -139,6 +141,7 @@ class DoctorStudiesPage extends React.Component {
                     data={this.state.data}
                     onRowClicked={this.rowClick}
                     idName="IdStudy"
+                    searchableColumn={searchableColumn}
                 />
             </div>
         );

@@ -54,6 +54,8 @@ const columns = [
 
 const titleOfTable = <Trans>Employees</Trans>;
 
+const searchableColumn = [{ name: "FirstName", id: 0 }, { name: "Surname", id: 1 }, { name: "Login", id: 2 }, { name: "FullAddress", id: 3 }, { name: "Phone", id: 4 }, { name: "Position", id: 5 }, { name: "Email", id: 6 }];
+
 class AdminPage extends React.Component {
 
     constructor(props) {
@@ -209,6 +211,7 @@ class AdminPage extends React.Component {
                     data={this.state.data}
                     onRowClicked={this.rowClick}
                     idName="IdEmployee"
+                    searchableColumn={searchableColumn}
                 />
             </div>
 
