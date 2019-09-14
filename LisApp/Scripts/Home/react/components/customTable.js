@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import DataTable from 'react-data-table-component';
 import { Trans } from 'react-i18next';
+import { withAlert } from 'react-alert';
 
 class CustomTable extends React.Component {
     constructor(props) {
@@ -77,6 +78,10 @@ class CustomTable extends React.Component {
             onRowClicked(newSelected);
     }
 
+    showInfo = () => {
+        this.props.alert.info(<Trans>SearchInfo</Trans>);
+    }
+
     render() {
         const { titleOfTable, columns, data } = this.props;
 
@@ -115,10 +120,13 @@ class CustomTable extends React.Component {
                 onSort={this.onSort}
                 onChangePage={this.onChangePage}
                 subHeader
-                subHeaderComponent={<input type="text" value={this.state.searchValue} onChange={this.onChangeSearchValue} name="Search" />}
+                subHeaderComponent={<div>
+                    <button type="button" onClick={this.showInfo}>?</button>
+                    <input type=" text" value={this.state.searchValue} onChange={this.onChangeSearchValue} name="Search" />
+                    </div>}
             />
         );
     }
 }
 
-export default CustomTable;
+export default withAlert()(CustomTable);

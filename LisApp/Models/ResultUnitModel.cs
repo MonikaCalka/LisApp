@@ -15,6 +15,6 @@ namespace LisApp.Models
 
         public long IdResult { get; set; }
 
-        public double Value { get; set; }
+        public double? Value { get; set; }
     }
 }

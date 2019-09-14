@@ -22,8 +22,6 @@ namespace LisApp.Models
 
         public string Lab { get; set; }
 
-        public EmployeeModel Employee { get; set; }
-
         public long IdOrder { get; set; }
 
         public long IdStatus { get; set; }
@@ -55,6 +53,20 @@ namespace LisApp.Models
         public DateTime DateOfOrder { get; set; }
 
         public string OrderComment { get; set; }
+
+        public string ReasonForRepeat { get; set; }
+
+        public bool? Actual { get; set; }
+
+        public long? PreviousId { get; set; }
+
+        public DateTime? DateOfEnd { get; set; }
+
+        public long? IdRepeatEmployee { get; set; }
+
+        public string RepeatEmployee { get; set; }
+
+        public bool? NeedNewSample { get; set; }
 
     }
 }

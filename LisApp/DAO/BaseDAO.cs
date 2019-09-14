@@ -66,9 +66,16 @@ namespace LisApp.DAO
             return value != null && value != "" ? "'" + value + "'" : "NULL";
         }
 
-        public static string SetDate(DateTime value)
+        public static string SetDate(DateTime? value)
         {
-            return value != null ? "'" + value.ToString("yyyy'-'MM'-'dd HH:mm") + "'" : "NULL";
+            if(value != null)
+            {
+                DateTime val = (DateTime)value;
+                return "'" + val.ToString("yyyy'-'MM'-'dd HH:mm") + "'";
+            } else
+            {
+                return "NULL";
+            }
         }
 
         public static string SetNullableLong(long? value)
@@ -76,9 +83,16 @@ namespace LisApp.DAO
             return value != null ? value.ToString() : "NULL";
         }
 
-        public static string SetBool(bool value)
+        public static string SetBool(bool? value)
         {
-            return value  ? "1" : "0";
+            if (value != null)
+            {
+                return (bool)value ? "1" : "0";
+            }
+            else
+            {
+                return "NULL";
+            }
         }
     }
 }

@@ -122,14 +122,22 @@ namespace LisApp.Controllers
                     }
                     if (study.IdStatus != (long)StatusTypeEnum.InProgress)
                     {
-                        study.Result = DB.ResultsDAO.ReadResultByStudyId((long)study.IdStudy);
-                        EmployeeModel resultLab = DB.EmployeesDAO.ReadEmployeeById((long)study.Result.IdEmployee, langId);
-                        study.Result.EmployeeName = resultLab.FirstName + " " + resultLab.Surname;
-                        study.Result.Verification = new VerificationModel();
-                        if (study.IdStatus != (long)StatusTypeEnum.ToVerify)
+                        try
                         {
-                            study.Result.Verification = DB.VerificationsDAO.ReadVerificationByResultId((long)study.Result.IdResult);
+                            study.Result = DB.ResultsDAO.ReadResultByStudyId((long)study.IdStudy);
+                            EmployeeModel resultLab = DB.EmployeesDAO.ReadEmployeeById((long)study.Result.IdEmployee, langId);
+                            study.Result.EmployeeName = resultLab.FirstName + " " + resultLab.Surname;
+                            study.Result.Verification = new VerificationModel();
+                            if (study.IdStatus != (long)StatusTypeEnum.ToVerify)
+                            {
+                                try
+                                {
+                                    study.Result.Verification = DB.VerificationsDAO.ReadVerificationByResultId((long)study.Result.IdResult);
+                                }
+                                catch (Exception ex) { }
+                            }
                         }
+                        catch (Exception ex) { }
                     }
                 }
             }

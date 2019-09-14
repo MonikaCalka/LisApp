@@ -6,7 +6,7 @@ const requiredMax15 = { validators: ['required', 'maxStringLength:15'], errorMes
 const requiredMax50 = { validators: ['required', 'maxStringLength:50'], errorMessages: [<Trans>RequiredField</Trans>, <Trans>Max50</Trans>], requiredMark: true };
 const requiredPesel = { validators: ['required', 'maxStringLength:11', 'isNumber'], errorMessages: [<Trans>RequiredField</Trans>, <Trans>Max11</Trans>, <Trans>IsNumber</Trans>], requiredMark: true };
 const requiredPhone = { validators: ['required', 'maxStringLength:9', 'isNumber'], errorMessages: [<Trans>RequiredField</Trans>, <Trans>Max9</Trans>, <Trans>IsNumber</Trans>], requiredMark: true };
-const requiredFloat = { validators: ['required', 'IsFloat'], errorMessages: [<Trans>RequiredField</Trans>, <Trans>isFloat</Trans>], requiredMark: true };
+const requiredFloat = { validators: ['required', 'isFloat'], errorMessages: [<Trans>RequiredField</Trans>, <Trans>isFloat</Trans>], requiredMark: true };
 
 const requiredOrNNMax50 = { validators: ['required', 'maxStringLength:50'], errorMessages: [<Trans>RequiredFieldNN</Trans>, <Trans>Max50</Trans>], requiredMark: true };
 const requiredOrNNMax15 = { validators: ['required', 'maxStringLength:15'], errorMessages: [<Trans>RequiredFieldNN</Trans>, <Trans>Max15</Trans>], requiredMark: true };

@@ -70,12 +70,12 @@ class TestElement extends Component {
         return (
             <div className="row">
                 <div className="col-sm-5">
-                    <CustomInput labeltext={test.Name} onChange={this.handleResultChanged} value={test.Result ? test.Result : ""} name="Result" disabled={disable} {... required} />
+                    <CustomInput labeltext={test.Name} onChange={this.handleResultChanged} value={test.Result !== null ? test.Result : ""} name="Result" disabled={disable} {... required} />
                 </div>
-                <div className="col-sm-1 padding-top-30">
+                <div className="col-sm-2 padding-top-30">
                     <label><Trans>{test.Unit}</Trans></label>
                 </div>
-                <div className="col-sm-5">
+                <div className="col-sm-4">
                     <CustomInput labeltext="Standard" value={norm} name="Norm" disabled />
                 </div>
                 <div className="col-sm-1">

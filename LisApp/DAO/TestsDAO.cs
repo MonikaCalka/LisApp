@@ -72,8 +72,7 @@ namespace LisApp.DAO
                 join TestTranslations tr on t.IdTest = tr.IdTest
                 join Languages l on tr.IdLanguage = l.IdLanguage
                 left join ResultUnits ru on o.IdOrderedTest = ru.IdOrderedTests
-                left join Results r on ru.IdResult = r.IdResult
-                where o.IdStudy= {idStudy} and l.code = '{lang}' and (r.Actual = 1 or r.Actual is null)
+                where o.IdStudy= {idStudy} and l.code = '{lang}'
             ";
 
             return BaseDAO.Select(query, ReadOrderedTestModel);

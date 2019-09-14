@@ -19,5 +19,7 @@ namespace LisApp.Models
 
         public string Description { get; set; }
 
+        public bool Positive { get; set; }
+
     }
 }

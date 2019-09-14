@@ -87,7 +87,8 @@ namespace LisApp.Controllers
                     SampleModel sample = new SampleModel();
                     sample.IdEmployee = employeeId;
                     sample.IdStudy = (long)study.IdStudy;
-                    
+                    sample.DateOfCollection = DateTime.Now;
+
                     long idSample = (long)DB.SamplesDAO.InsertSample(sample);
                     sample.Code = study.IdOrder + "-" + study.IdStudy + "-" + idSample;
                     sample.IdSample = idSample;

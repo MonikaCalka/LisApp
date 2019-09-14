@@ -19,10 +19,6 @@ namespace LisApp.Models
 
         public string Description { get; set; }
 
-        public string ReasonForRepeat { get; set; }
-
-        public bool Actual { get; set; }
-
         public List<ResultUnitModel> ResultUnitList { get; set; }
 
         public VerificationModel Verification { get; set; }

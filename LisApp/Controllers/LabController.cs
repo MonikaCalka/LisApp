@@ -81,6 +81,7 @@ namespace LisApp.Controllers
                     long employeeId = 1;
                     study.IdDoctor = employeeId;
                     study.IdStatus = (long)StatusTypeEnum.InProgress;
+                    study.DateOfStudy = DateTime.Now;
                     DB.StudiesDAO.UpdateStudy(study);
                     return Json("Success");
                 }
@@ -143,15 +144,102 @@ namespace LisApp.Controllers
                 {
                     // get User !!!
                     long employeeId = 1;
-
                     study.Result.Verification.IdEmployee = employeeId;
                     study.Result.Verification.IdResult = (long)study.Result.IdResult;
+                    if (study.Result.Verification.Positive)
+                    {
+                        DB.VerificationsDAO.InsertVerify(study.Result.Verification);
 
-                    DB.VerificationsDAO.InsertVerify(study.Result.Verification);
+                        DB.StudiesDAO.ChangeStudyStatus((long)study.IdStudy, (long)StatusTypeEnum.Verified);
 
-                    DB.StudiesDAO.ChangeStudyStatus((long)study.IdStudy, (long)StatusTypeEnum.Verified);
+                        return Json("Success");
+                    }
+                    else 
+                    {
+                        study.Result.Verification.Description = "-";
+                        DB.VerificationsDAO.InsertVerify(study.Result.Verification);
 
-                    return Json("Success");
+                        study.IdRepeatEmployee = employeeId;
+                        DB.StudiesDAO.SetReorederDataOfStudy(study);
+
+                        long idStudy = (long)DB.StudiesDAO.InsertStudy(study);
+
+                        foreach (TestModel test in study.OrderedTest)
+                        {
+                            DB.TestsDAO.InsertOrderedTest(idStudy, test.IdTest);
+                        }
+
+                        if ((bool)study.NeedNewSample)
+                        {
+                            DB.StudiesDAO.ChangeStudyStatus(idStudy, (long)StatusTypeEnum.Ordered);
+                        } else
+                        {
+                            study.Sample.IdStudy = idStudy;
+
+                            long idSample = (long)DB.SamplesDAO.InsertSample(study.Sample);
+                            study.Sample.IdSample = idSample;
+                            DB.SamplesDAO.UpdateSample(study.Sample);
+
+                            DB.StudiesDAO.ChangeStudyStatus(idStudy, (long)StatusTypeEnum.TakenSample);
+                        }
+                        return Json(idStudy);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error");
+                }
+            }
+            else
+            {
+                return Json("Error");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult RepeatStudy(StudyModel study)
+        {
+            if (study != null)
+            {
+                try
+                {
+                    // get User !!!
+                    long employeeId = 1;
+                    study.IdRepeatEmployee = employeeId;
+                    long oldStatusId = study.IdStatus;
+                    DB.StudiesDAO.SetReorederDataOfStudy(study);
+
+                    long idStudy = (long)DB.StudiesDAO.InsertStudy(study);
+
+                    foreach (TestModel test in study.OrderedTest)
+                    {
+                        DB.TestsDAO.InsertOrderedTest(idStudy, test.IdTest);
+                    }
+                    if ((bool)study.NeedNewSample)
+                    {
+                        DB.StudiesDAO.ChangeStudyStatus(idStudy, (long)StatusTypeEnum.Ordered);
+                    }
+                    else
+                    {
+                        study.Sample.IdStudy = idStudy;
+
+                        long idSample = (long)DB.SamplesDAO.InsertSample(study.Sample);
+                        study.Sample.IdSample = idSample;
+                        DB.SamplesDAO.UpdateSample(study.Sample);
+
+                        DB.StudiesDAO.ChangeStudyStatus(idStudy, (long)StatusTypeEnum.TakenSample);
+                    }
+                    if (oldStatusId.Equals((long)StatusTypeEnum.ToVerify))
+                    {
+                        study.Result.Verification.Positive = false;
+                        study.Result.Verification.IdEmployee = employeeId;
+                        study.Result.Verification.IdResult = (long)study.Result.IdResult;
+
+                        study.Result.Verification.Description = "-";
+                        DB.VerificationsDAO.InsertVerify(study.Result.Verification);
+                    }
+
+                    return Json(idStudy);
                 }
                 catch (Exception ex)
                 {

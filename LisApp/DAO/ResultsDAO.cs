@@ -10,7 +10,7 @@ namespace LisApp.DAO
         public ResultModel ReadResultById(long id)
         {
             string query = $@"
-                select IdResult, IdEmployee, IdStudy, DateOfResult, Description, ReasonForRepeat, Actual
+                select IdResult, IdEmployee, IdStudy, DateOfResult, Description
                 from Results
                 where IdResult = {id}
             ";
@@ -21,7 +21,7 @@ namespace LisApp.DAO
         public List<ResultModel> ReadResultsList()
         {
             string query = @"
-                select IdResult, IdEmployee, IdStudy, DateOfResult, Description, ReasonForRepeat, Actual
+                select IdResult, IdEmployee, IdStudy, DateOfResult, Description
                 from Results
             ";
 
@@ -31,9 +31,9 @@ namespace LisApp.DAO
         public ResultModel ReadResultByStudyId(long idStudy)
         {
             string query = $@"
-                select IdResult, IdEmployee, IdStudy, DateOfResult, Description, ReasonForRepeat, Actual
+                select IdResult, IdEmployee, IdStudy, DateOfResult, Description
                 from Results
-                where IdStudy = {idStudy} and Actual = 1
+                where IdStudy = {idStudy}
             ";
 
             return BaseDAO.SelectFirst(query, ReadResultModel);
@@ -42,10 +42,10 @@ namespace LisApp.DAO
         public long? InsertResult(ResultModel r)
         {
             string query = $@"
-                insert into Results(IdEmployee, IdStudy, DateOfResult, Description, Actual) 
+                insert into Results(IdEmployee, IdStudy, DateOfResult, Description) 
                     output INSERTED.IdResult
                     values({r.IdEmployee},{r.IdStudy},{BaseDAO.SetDate(DateTime.Now)},
-                    {BaseDAO.SetString(r.Description)},1);
+                    {BaseDAO.SetString(r.Description)});
             ";
             return BaseDAO.InsertOrUpdate(query, true);
         }
@@ -58,9 +58,7 @@ namespace LisApp.DAO
                 IdEmployee = reader.GetLong("IdEmployee"),
                 IdStudy = reader.GetLong("IdStudy"),
                 DateOfResult = reader.GetDate("DateOfResult"),
-                Description = reader.GetNullableString("Description"),
-                ReasonForRepeat = reader.GetNullableString("ReasonForRepeat"),
-                Actual = reader.GetBool("Actual")
+                Description = reader.GetNullableString("Description")
             };
         }
     }

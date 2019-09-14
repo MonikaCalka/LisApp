@@ -15,5 +15,6 @@ namespace LisApp.IDAO
         void DeleteStudiesByOrder(long idOrder);
         void ChangeStudyStatus(long IdStudy, long IdStatus);
         void UpdateStudy(StudyModel study);
+        void SetReorederDataOfStudy(StudyModel study);
     }
 }

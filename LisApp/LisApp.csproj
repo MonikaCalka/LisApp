@@ -293,6 +293,7 @@
     <Content Include="Scripts\Home\react\components\customButton.js" />
     <Content Include="Scripts\Home\react\components\customInput.js" />
     <Content Include="Scripts\Home\react\components\customModal.js" />
+    <Content Include="Scripts\Home\react\components\yesNoButtons.js" />
     <Content Include="Scripts\Home\react\components\customSelect.js" />
     <Content Include="Scripts\Home\react\components\customTable.js" />
     <Content Include="Scripts\Home\react\components\customTextArea.js" />
@@ -321,6 +322,7 @@
     <Content Include="Scripts\Home\react\pages\doctor\tabs\studyDetailsTab.js" />
     <Content Include="Scripts\Home\react\pages\lab\labForm.js" />
     <Content Include="Scripts\Home\react\pages\lab\labPage.js" />
+    <Content Include="Scripts\Home\react\pages\lab\tabs\repeatTab.js" />
     <Content Include="Scripts\Home\react\pages\lab\tabs\resultTab.js" />
     <Content Include="Scripts\Home\react\pages\lab\tabs\testTab.js" />
     <Content Include="Scripts\Home\react\pages\lab\tabs\verifyTab.js" />

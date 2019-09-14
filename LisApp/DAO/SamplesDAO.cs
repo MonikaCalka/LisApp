@@ -49,7 +49,7 @@ namespace LisApp.DAO
             string query = $@"
                 insert into Samples(IdStudy, IdEmployee, DateOfCollection) 
                     output INSERTED.IdSample
-                    values({s.IdStudy}, {s.IdEmployee},{BaseDAO.SetDate(DateTime.Now)} )  ;
+                    values({s.IdStudy}, {s.IdEmployee},{BaseDAO.SetDate(s.DateOfCollection)} )  ;
             ";
             return BaseDAO.InsertOrUpdate(query, true);
         }

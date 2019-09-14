@@ -12,7 +12,7 @@ namespace LisApp.DAO
         public VerificationModel ReadVerificationByResultId(long id)
         {
             string query = $@"
-                select v.IdVerification, v.IdResult, v.IdEmployee, v.DateOfVerification, v.Description, e.FirstName, e.Surname
+                select v.IdVerification, v.IdResult, v.IdEmployee, v.DateOfVerification, v.Description, e.FirstName, e.Surname, v.Positive
                 from Verifications v
                 join Employees e on v.IdEmployee = e.IdEmployee
                 where IdResult = {id}
@@ -24,8 +24,8 @@ namespace LisApp.DAO
         public void InsertVerify(VerificationModel v)
         {
             string query = $@"
-                insert into Verifications(IdResult, IdEmployee, DateOfVerification, Description) 
-                    values({v.IdResult},{v.IdEmployee},{BaseDAO.SetDate(DateTime.Now)},{BaseDAO.SetString(v.Description)});
+                insert into Verifications(IdResult, IdEmployee, DateOfVerification, Description, Positive) 
+                    values({v.IdResult},{v.IdEmployee},{BaseDAO.SetDate(DateTime.Now)},{BaseDAO.SetString(v.Description)}, {BaseDAO.SetBool(v.Positive)});
             ";
             BaseDAO.InsertOrUpdate(query, false);
         }
@@ -38,7 +38,8 @@ namespace LisApp.DAO
                 IdEmployee = reader.GetLong("IdEmployee"),
                 DateOfVerification = reader.GetDate("DateOfVerification"),
                 Description = reader.GetString("Description"),
-                EmployeeName = reader.GetString("FirstName") + " " + reader.GetString("Surname")
+                EmployeeName = reader.GetString("FirstName") + " " + reader.GetString("Surname"),
+                Positive = reader.GetBool("Positive")
             };
         }
     }

@@ -12,6 +12,7 @@ import TestModel from '../../models/testModel';
 import ResultModel from '../../models/resultModel';
 import ResultTab from './tabs/resultTab';
 import VerifyTab from './tabs/verifyTab';
+import RepeatTab from './tabs/repeatTab';
 
 
 const emptyState = {
@@ -26,6 +27,7 @@ const emptyState = {
     Status: "",
     Lab: "",
     OrderComment: "",
+    ReasonForRepeat: "",
     Sample: new SampleModel(),
     OrderedTest: [new TestModel()],
     Result: new ResultModel(),
@@ -102,14 +104,25 @@ class LabForm extends React.Component {
                 />;
                 break;
             case 4:
-                actualTab = <VerifyTab onTabChange={this.onTabChange}
-                    model={this.state}
-                    onCancel={onCancel}
-                    mode={mode}
-                    tabCount={tabCount}
-                    onModelChange={this.onModelChange}
-                    onAccept={onAccept}
-                />;
+                if (mode != "repeat") {
+                    actualTab = <VerifyTab onTabChange={this.onTabChange}
+                        model={this.state}
+                        onCancel={onCancel}
+                        mode={mode}
+                        tabCount={tabCount}
+                        onModelChange={this.onModelChange}
+                        onAccept={onAccept}
+                    />;
+                } else {
+                    actualTab = <RepeatTab onTabChange={this.onTabChange}
+                        model={this.state}
+                        onCancel={onCancel}
+                        mode={mode}
+                        tabCount={tabCount}
+                        onModelChange={this.onModelChange}
+                        onAccept={onAccept}
+                    />;
+                }
                 break;
         }
 

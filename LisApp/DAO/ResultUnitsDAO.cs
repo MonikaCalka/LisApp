@@ -54,7 +54,7 @@ namespace LisApp.DAO
                 IdResultUnit = reader.GetLong("IdResultUnit"),
                 IdOrderedTest = reader.GetLong("IdOrderedTests"),
                 IdResult = reader.GetLong("IdResult"),
-                Value = reader.GetDouble("Value")
+                Value = reader.GetNullableDouble("Value")
             };
         }
     }

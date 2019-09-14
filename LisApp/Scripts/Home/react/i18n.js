@@ -122,7 +122,17 @@ const resources = {
             "AddResultSuccess": "Results has been added.",
             "AddResultError": "Results adding failed.",
             "VerifySuccess": "Results has been verified.",
-            "VerifyError": "Results verifying failed."
+            "VerifyError": "Results verifying failed.",
+            "SearchInfo": "To search for several phrases enter the separator '/' e.g. Ala / Cat.",
+            "Yes": "Yes",
+            "No": "No",
+            "PositiveVerify": "Positive verification?",
+            "NeedNewSample": "Need to take the sample again?",
+            "ReasonForRepeat": "Reason for retrying",
+            "Repeat": "Repeat study",
+            "Repeating": "Repeating",
+            "RepeatSuccess": "The study was repeated. New study id: {{id}}.",
+            "RepeatError": "Retry failed.",
         }
     },
     pl: {
@@ -245,7 +255,17 @@ const resources = {
             "AddResultSuccess": "Dodano wyniki.",
             "AddResultError": "Dodawanie wyników zakończone niepowodzeniem.",
             "VerifySuccess": "Zweryfikowano wyniki",
-            "VerifyError": "Weryfikacja wyników nie powiodła się."
+            "VerifyError": "Weryfikacja wyników nie powiodła się.",
+            "SearchInfo": "Aby wyszukać kilka fraz wprowadź separator '/' np. Ala/Kot.",
+            "Yes": "Tak",
+            "No": "Nie",
+            "PositiveVerify": "Weryfikacja pozytywna?",
+            "NeedNewSample": "Konieczność ponownego pobrania próbki?",
+            "ReasonForRepeat": "Powód ponowienia testu",
+            "Repeat": "Ponów badanie",
+            "Repeating": "Ponowienie",
+            "RepeatSuccess": "Ponowiono badanie. Nowe id badania: {{id}}.",
+            "RepeatError": "Ponowienie badania zakończone niepowodzeniem.",
         }
     }
 };

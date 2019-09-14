@@ -104,7 +104,6 @@ class NurseStudiesPage extends React.Component {
         getJson("Nurse/GetStudy?id=" + this.state.actualRow.IdStudy, response => {
             this.setState({ selectedData: response });
             this.modalRef.current.openModal();
-            console.log(response);
         });
     }
 

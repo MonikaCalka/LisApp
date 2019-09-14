@@ -5,6 +5,7 @@ import { Trans } from 'react-i18next';
 import CustomInput from '../../../components/customInput';
 import TestElement from '../../../components/testElement';
 import CustomTextArea from '../../../components/customTextArea';
+import { requiredField } from '../../../components/validatorRules';
 
 const propertyName = "OrderedTest";
 
@@ -41,7 +42,7 @@ class TestTab extends Component {
         let disable = mode === "addResult" ? false : true;
         let resultDesc = null;
         if (mode === 'addResult') {
-            resultDesc = <CustomTextArea rows="4" labeltext="ResultDesc" onChange={this.handleResultChange} value={model.Result.Description !== null ? model.Result.Description : ""} name="Result" disabled={disable} />;
+            resultDesc = <CustomTextArea rows="4" labeltext="ResultDesc" onChange={this.handleResultChange} value={model.Result.Description !== null ? model.Result.Description : ""} name="Result" disabled={disable} {...requiredField}/>;
         }
         let male = model.PatientSex === "M" ? true : false;
         return (
