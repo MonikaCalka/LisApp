@@ -6,6 +6,10 @@ import CustomSelect from '../../components/customSelect';
 import { ValidatorForm } from 'react-form-validator-core';
 import { getDic } from '../../services/rests';
 import { requiredField, requiredMax50, requiredPesel, requiredPhone, isEmail, requiredMax15, max50 } from '../../components/validatorRules';
+import TabNavigator from '../../components/tabNavigator';
+import EmployeeContactDataTab from './tabs/employeeContactDataTab';
+import EmployeeAddressTab from './tabs/employeeAddressTab';
+import EmployeeDetailTab from './tabs/employeeDetailsTab';
 
 const emptyState = {
     FirstName: "",
@@ -25,12 +29,14 @@ const emptyState = {
     IdWard: "",
     Login: "",
     positionOptions: [],
-    wardOptions: []
+    wardOptions: [],
+    actualTabIndex: 0
 };
 
-const options = [
-    { value: "F", label: <Trans>Female</Trans> },
-    { value: "M", label: <Trans>Male</Trans> }
+const tabs = [
+    { index: 0, name: 'ContactData' },
+    { index: 1, name: 'Address' },
+    { index: 2, name: 'EmploymentDetails' }
 ];
 
 class EmployeeForm extends React.Component {
@@ -54,67 +60,58 @@ class EmployeeForm extends React.Component {
         });
     }
 
-    handleChange = (event) => {
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
-
+    onModelChange = (name, value) => {
         this.setState({
             [name]: value
         });
     }
 
-    onOptionChange = (selectName, selectedOption) => {
-        this.setState({ [selectName]: selectedOption === null ? "" : selectedOption.value });
-    };
-
     getData = () => {
         return this.state;
     }
 
+    onTabChange = newTabIndex => {
+        this.setState({ actualTabIndex: newTabIndex });
+    }
+
     render() {
         const { title, mode, onAccept, onCancel, onFire } = this.props;
+        const { actualTabIndex } = this.state;
+        let actualTab = null;
 
-        var disable = mode === 'show' ? true : false;
-        var cancelText = mode === 'show' ? <Trans>Back</Trans> : <Trans>Cancel</Trans>;
+        switch (actualTabIndex) {
+            case 0:
+                actualTab = <EmployeeContactDataTab onTabChange={this.onTabChange}
+                    model={this.state}
+                    onCancel={onCancel}
+                    mode={mode}
+                    onModelChange={this.onModelChange}
+                    onFire={onFire}/>;
+                break;
+            case 1:
+                actualTab = <EmployeeAddressTab onTabChange={this.onTabChange}
+                    model={this.state}
+                    onCancel={onCancel}
+                    mode={mode}
+                    onModelChange={this.onModelChange}
+                    onFire={onFire}/>;
+                break;
+            case 2:
+                actualTab = <EmployeeDetailTab onTabChange={this.onTabChange}
+                    model={this.state}
+                    onCancel={onCancel}
+                    mode={mode}
+                    onAccept={onAccept}
+                    onModelChange={this.onModelChange}
+                    onFire={onFire} />;
+                break;
+        }
 
         return (
             <div className="modal-div">
                 <h2><Trans>{title}</Trans></h2>
-                <ValidatorForm id="modalform" onSubmit={onAccept} >
-                    <div className="col-sm-4">
-                        <h4><Trans>ContactData</Trans></h4>
-                        <CustomInput labeltext="FirstName" onChange={this.handleChange} value={this.state.FirstName} name="FirstName" disabled={disable} {...requiredMax50} />/>
-                        <CustomInput labeltext="LastName" onChange={this.handleChange} value={this.state.Surname} name="Surname" disabled={disable} {...requiredMax50} />
-                        <CustomSelect labeltext="Sex" onChange={e => this.onOptionChange("Sex", e)} value={options.filter(option => option.value === this.state.Sex)} selectOptions={options} name="Sex" isDisabled={disable}  {...requiredField} />
-                        <CustomInput labeltext="PESEL" onChange={this.handleChange} value={this.state.Pesel} name="Pesel" disabled={disable} {...requiredPesel} />
-                        <CustomInput labeltext="Phone" onChange={this.handleChange} value={this.state.Phone} name="Phone" disabled={disable} {...requiredPhone} />
-                        <CustomInput labeltext="Email" onChange={this.handleChange} value={this.state.Email} name="Email" disabled={disable} {...isEmail} />
-                    </div>
-
-                    <div className="col-sm-4">
-                        <h4><Trans>Address</Trans></h4>
-                        <CustomInput labeltext="Street" onChange={this.handleChange} value={this.state.Street} name="Street" disabled={disable} {...requiredMax50} />
-                        <CustomInput labeltext="HouseNumber" onChange={this.handleChange} value={this.state.HouseNumber} name="HouseNumber" disabled={disable} {...requiredMax15} />
-                        <CustomInput labeltext="City" onChange={this.handleChange} value={this.state.City} name="City" disabled={disable} {...requiredMax50}/>
-                        <CustomInput labeltext="PostalCode" onChange={this.handleChange} value={this.state.PostalCode} name="PostalCode" disabled={disable} {...requiredMax15} />
-                        <CustomInput labeltext="Country" onChange={this.handleChange} value={this.state.Country} name="Country" disabled={disable} {...requiredMax50} />
-                    </div>
-
-                    <div className="col-sm-4">
-                        <h4><Trans>EmploymentDetails</Trans></h4>
-                        <CustomInput labeltext="Login" onChange={this.handleChange} value={this.state.Login} name="Login" disabled={disable} {...requiredMax50} />
-                        <CustomSelect labeltext="Position" onChange={e => this.onOptionChange("IdPosition", e)} value={this.state.positionOptions.filter(option => option.value === this.state.IdPosition)} selectOptions={this.state.positionOptions} name="IdPosition" isDisabled={disable} {...requiredField} />
-                        <CustomInput labeltext="DateOfEmployment" onChange={this.handleChange} value={this.state.DateOfEmployment} name="DateOfEmployment" disabled />
-                        <CustomInput labeltext="LicenseNumber" onChange={this.handleChange} value={this.state.LicenseNumber} name="LicenseNumber" disabled={disable} {...max50} />
-                        <CustomSelect labeltext="Ward" onChange={e => this.onOptionChange("IdWard", e)} value={this.state.wardOptions.filter(option => option.value === this.state.IdWard)} selectOptions={this.state.wardOptions} name="IdWard" isDisabled={disable} isClearable  /> 
-                    </div>
-                </ValidatorForm>
-                <div className="save-cancel-buttons">
-                    {mode === 'edit' ? <button onClick={onFire}><Trans>Fire</Trans></button> : null}
-                    {mode !== 'show' ? <button type="submit" form="modalform">{<Trans>Save</Trans>}</button> : null}
-                    <button onClick={onCancel}>{cancelText}</button>
-                </div>
+                <TabNavigator tabs={tabs} selectedTab={this.state.actualTabIndex} />
+                {actualTab}
             </div>
         );
     }

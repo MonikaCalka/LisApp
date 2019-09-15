@@ -312,6 +312,9 @@
     <Content Include="Scripts\Home\react\models\verificationModel.js" />
     <Content Include="Scripts\Home\react\pages\admin\employeeForm.js" />
     <Content Include="Scripts\Home\react\pages\admin\adminPage.js" />
+    <Content Include="Scripts\Home\react\pages\admin\tabs\employeeAddressTab.js" />
+    <Content Include="Scripts\Home\react\pages\admin\tabs\employeeContactDataTab.js" />
+    <Content Include="Scripts\Home\react\pages\admin\tabs\employeeDetailsTab.js" />
     <Content Include="Scripts\Home\react\pages\doctor\doctorPage.js" />
     <Content Include="Scripts\Home\react\pages\doctor\doctorStudiesPage.js" />
     <Content Include="Scripts\Home\react\pages\doctor\orderForm.js" />
@@ -334,6 +337,9 @@
     <Content Include="Scripts\Home\react\pages\nurse\tabs\sampleTab.js" />
     <Content Include="Scripts\Home\react\pages\registrar\registrarForm.js" />
     <Content Include="Scripts\Home\react\pages\registrar\registrarPage.js" />
+    <Content Include="Scripts\Home\react\pages\registrar\tabs\patientAddressTab.js" />
+    <Content Include="Scripts\Home\react\pages\registrar\tabs\patientContactDataTab.js" />
+    <Content Include="Scripts\Home\react\pages\registrar\tabs\patientContactPersonTab.js" />
     <Content Include="Scripts\Home\react\services\rests.js" />
     <Content Include="Scripts\Home\react\services\getStateFromPropsData.js" />
     <Content Include="webpack.config.js" />

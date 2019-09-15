@@ -134,7 +134,9 @@ const resources = {
             "RepeatSuccess": "The study was repeated. New study id: {{id}}.",
             "RepeatError": "Retry failed.",
             "PrevStudy": "Previous study",
-            "NextStudy": "Next study"
+            "NextStudy": "Next study",
+            "DateOfEmployment": "Date of employment",
+            "LicenseNumber": "License number"
         }
     },
     pl: {
@@ -269,7 +271,9 @@ const resources = {
             "RepeatSuccess": "Ponowiono badanie. Nowe id badania: {{id}}.",
             "RepeatError": "Ponowienie badania zakończone niepowodzeniem.",
             "PrevStudy": "Poprzednie badanie",
-            "NextStudy": "Następne badanie"
+            "NextStudy": "Następne badanie",
+            "DateOfEmployment": "Data zatrudnienia",
+            "LicenseNumber": "Numer licencji"
         }
     }
 };
