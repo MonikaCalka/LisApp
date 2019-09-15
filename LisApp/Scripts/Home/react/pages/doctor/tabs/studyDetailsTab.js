@@ -18,8 +18,16 @@ class StudyDetailsTab extends Component {
         onTabChange(model.actualTabIndex + 1);
     }
 
+    onNextStudy = () => {
+        this.props.onChangeStudy(this.props.model.NextId);
+    }
+
+    onPrevStudy = () => {
+        this.props.onChangeStudy(this.props.model.PreviousId);
+    }
+
     render() {
-        const { model, mode, onCancel, tabCount } = this.props;
+        const { model, mode, onCancel, tabCount, withoutPrevStudy } = this.props;
         const disable = mode === 'show' ? true : false;
 
         return (
@@ -47,7 +55,7 @@ class StudyDetailsTab extends Component {
                         <CustomTextArea rows="4" labeltext="Comment" onChange={this.handleChange} value={model.OrderComment} name="OrderComment" disabled/>
                     </div>
                 </ValidatorForm>
-                <ModalButtons mode={mode} onCancel={onCancel} actualTabIndex={model.actualTabIndex} tabCount={tabCount} onPrev={this.onPrev} />
+                <ModalButtons mode={mode} onCancel={onCancel} actualTabIndex={model.actualTabIndex} tabCount={tabCount} onPrev={this.onPrev} prevId={model.PreviousId} nextId={model.NextId} onPrevStudy={this.onPrevStudy} onNextStudy={this.onNextStudy} withoutPrevStudy={withoutPrevStudy} />
             </div>
         );
     }

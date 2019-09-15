@@ -121,7 +121,6 @@ class LabPage extends React.Component {
                 { index: 3, name: 'Result' }
             ],
             tabCount: 4
-
         });
         this.getStudyAndOpenModal();
     };
@@ -136,7 +135,6 @@ class LabPage extends React.Component {
                 { index: 2, name: 'Tests' }
             ],
             tabCount: 3
-
         });
         console.log(this.state.tabHeaders);
         this.getStudyAndOpenModal();
@@ -236,7 +234,7 @@ class LabPage extends React.Component {
                 if (response === 'Success') {
                     this.props.alert.success(<Trans>VerifySuccess</Trans>);
                 } else {
-                    this.props.alert.success(<Trans>RepeatSuccess</Trans> + response);
+                    this.props.alert.success(<Trans i18nKey="RepeatSuccess" values={{ id: response }} />);
                 }
                 this.setState({
                     disableStart: true,
@@ -286,6 +284,23 @@ class LabPage extends React.Component {
         }
     };
 
+    onChangeStudy = (id) => {
+        this.modalRef.current.closeModal();
+        this.setState({
+            titleOfModal: "DetailsAndResult",
+            mode: "show",
+            tabHeaders: [
+                { index: 0, name: 'Order' },
+                { index: 1, name: 'Sample' },
+                { index: 2, name: 'Tests' },
+                { index: 3, name: 'Result' },
+                { index: 4, name: 'Repeating' }
+            ],
+            tabCount: 5
+        });
+        this.getStudyAndOpenModal(id);
+    }
+
     render() {
         return (
             <div>
@@ -305,6 +320,7 @@ class LabPage extends React.Component {
                         tabs={this.state.tabHeaders}
                         tabCount={this.state.tabCount}
                         onAccept={this.onAccept}
+                        onChangeStudy={this.onChangeStudy}
                     />
                 </CustomModal>
 

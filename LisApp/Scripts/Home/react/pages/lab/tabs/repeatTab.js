@@ -81,8 +81,8 @@ class RepeatTab extends Component {
                     <div>
                         <div className="col-sm-12">
                             <h4><Trans>Repeat</Trans></h4>
-                            <CustomInput labeltext="LabRepeatName" onChange={this.handleChange} value={model.Result.Verification.EmployeeName ? model.Result.Verification.EmployeeName : ""} name="EmployeeName" disabled />
-                            <CustomInput labeltext="DateOfEnd" onChange={this.handleChange} value={model.Result.DateOfEnd ? model.Result.DateOfEnd : ""} name="DateOfEnd" disabled />
+                            <CustomInput labeltext="LabRepeatName" onChange={this.handleChange} value={model.RepeatEmployee} name="RepeatEmployee" disabled />
+                            <CustomInput labeltext="DateOfEnd" onChange={this.handleChange} value={model.DateOfEnd} name="DateOfEnd" disabled />
                             <CustomTextArea rows="4" labeltext="ReasonForRepeat" onChange={this.handleRepeatChange} value={model.ReasonForRepeat ? model.ReasonForRepeat : ""} name="ReasonForRepeat" disabled={disable} {...requiredField} />
                             {needNewSample}
                         </div>

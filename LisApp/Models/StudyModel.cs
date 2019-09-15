@@ -60,6 +60,8 @@ namespace LisApp.Models
 
         public long? PreviousId { get; set; }
 
+        public long? NextId { get; set; }
+
         public DateTime? DateOfEnd { get; set; }
 
         public long? IdRepeatEmployee { get; set; }

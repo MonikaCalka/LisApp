@@ -98,8 +98,8 @@ class DoctorStudiesPage extends React.Component {
         });
     };
 
-    getStudyAndOpenModal = () => {
-        getJson("Doctor/GetStudy?id=" + this.state.actualRow.IdStudy, response => {
+    getStudyAndOpenModal = (id) => {
+        getJson("Doctor/GetStudy?id=" + id, response => {
             this.setState({ selectedData: response });
             this.modalRef.current.openModal();
             console.log(response);
@@ -111,11 +111,20 @@ class DoctorStudiesPage extends React.Component {
             titleOfModal: "DetailsAndResult",
             mode: "show"
         });
-        this.getStudyAndOpenModal();
+        this.getStudyAndOpenModal(this.state.actualRow.IdStudy);
     };
 
     closeModal = () => {
         this.modalRef.current.closeModal();
+    }
+
+    onChangeStudy = (id) => {
+        this.modalRef.current.closeModal();
+        this.setState({
+            titleOfModal: "DetailsAndResult",
+            mode: "show"
+        });
+        this.getStudyAndOpenModal(id);
     }
 
     render() {
@@ -131,6 +140,7 @@ class DoctorStudiesPage extends React.Component {
                         ref={this.formRef}
                         onAccept={this.onAccept}
                         onCancel={this.closeModal}
+                        onChangeStudy={this.onChangeStudy}
                     />
                 </CustomModal>
                 <br />

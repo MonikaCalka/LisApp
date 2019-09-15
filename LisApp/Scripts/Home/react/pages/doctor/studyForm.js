@@ -29,6 +29,10 @@ const emptyState = {
     ReasonForRepeat: "",
     NeedNewSample: null,
     Actual: null,
+    PreviousId: null,
+    NextId: null,
+    DateOfEnd: null,
+    RepeatEmployee: null,
     Sample: new SampleModel(),
     OrderedTest: [new TestModel()],
     Result: new ResultModel(),
@@ -79,7 +83,7 @@ class StudyForm extends React.Component {
     }
 
     render() {
-        const { title, mode, onAccept, onCancel } = this.props;
+        const { title, mode, onAccept, onCancel, onChangeStudy } = this.props;
         const { actualTabIndex } = this.state;
         let tabCount = this.state.Actual === true ? 5 : 6;
         let actualTab = null;
@@ -89,7 +93,10 @@ class StudyForm extends React.Component {
                     model={this.state}
                     onCancel={onCancel}
                     mode={mode}
-                    tabCount={tabCount}/>;
+                    tabCount={tabCount}
+                    onChangeStudy={onChangeStudy}
+                    withoutPrevStudy={false}
+                />;
                 break;
             case 1: 
                 actualTab = <SampleTab onTabChange={this.onTabChange}

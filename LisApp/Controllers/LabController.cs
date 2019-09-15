@@ -161,6 +161,7 @@ namespace LisApp.Controllers
 
                         study.IdRepeatEmployee = employeeId;
                         DB.StudiesDAO.SetReorederDataOfStudy(study);
+                        study.PreviousId = study.IdStudy;
 
                         long idStudy = (long)DB.StudiesDAO.InsertStudy(study);
 

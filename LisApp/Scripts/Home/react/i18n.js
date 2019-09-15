@@ -133,6 +133,8 @@ const resources = {
             "Repeating": "Repeating",
             "RepeatSuccess": "The study was repeated. New study id: {{id}}.",
             "RepeatError": "Retry failed.",
+            "PrevStudy": "Previous study",
+            "NextStudy": "Next study"
         }
     },
     pl: {
@@ -266,6 +268,8 @@ const resources = {
             "Repeating": "Ponowienie",
             "RepeatSuccess": "Ponowiono badanie. Nowe id badania: {{id}}.",
             "RepeatError": "Ponowienie badania zakończone niepowodzeniem.",
+            "PrevStudy": "Poprzednie badanie",
+            "NextStudy": "Następne badanie"
         }
     }
 };

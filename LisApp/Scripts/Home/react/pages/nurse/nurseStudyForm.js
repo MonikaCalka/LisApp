@@ -91,6 +91,7 @@ class NurseStudyForm extends React.Component {
                     onCancel={this.onCancel}
                     mode={mode}
                     tabCount={2}
+                    withoutPrevStudy={true}
                 />;
                 break;
             case 1:

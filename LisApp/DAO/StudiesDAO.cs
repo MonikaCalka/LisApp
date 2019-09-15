@@ -16,7 +16,7 @@ namespace LisApp.DAO
                 select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, stt.Name as Status, s.DateOfStudy, o.IdPriority, prt.Name as Priority,
                     e.FirstName as DoctorName, e.Surname as DoctorSurname, p.IdPatient, p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, 
                     pft.Name as Profile, o.Comment, sam.Code as Sample, p.Sex as PatientSex, s.ReasonForRepeat, s.Actual, s.PreviousId, s.DateOfEnd, 
-                    e2.FirstName as RepeatFirstName, e2.Surname as RepeatSurname
+                    e2.FirstName as RepeatFirstName, e2.Surname as RepeatSurname, n.IdStudy as NextId
                 from Studies s
                 join Orders o on s.IdOrder = o.IdOrder
                 join Patients p on o.IdPatient = p.IdPatient
@@ -29,6 +29,7 @@ namespace LisApp.DAO
                 join ProfileTranslations pft on pf.IdProfile = pft.IdProfile
                 left join Samples sam on s.IdStudy = sam.IdStudy
                 left join Employees e2 on o.IdEmployee = e2.IdEmployee
+				left join (select * from Studies s2 ) n on s.IdStudy = n.PreviousId
                 where stt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
                     and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
                     and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
@@ -57,6 +58,7 @@ namespace LisApp.DAO
                     and stt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
                     and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
                     and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
+                    and s.IdStatus != {(long)StatusTypeEnum.ReOrdered}
             ";
 
             return BaseDAO.Select(query, ReadStudyModelForList);
@@ -80,7 +82,7 @@ namespace LisApp.DAO
                 where stt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
                     and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
                     and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
-                    and s.IdStatus in (1, 7)
+                    and s.IdStatus in ({(long)StatusTypeEnum.Ordered}, {(long)StatusTypeEnum.TakenSample})
             ";
 
             return BaseDAO.Select(query, ReadStudyModelForList);
@@ -104,7 +106,7 @@ namespace LisApp.DAO
                 where stt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
                     and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
                     and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
-                    and s.IdStatus in (7, 3, 4)
+                    and s.IdStatus in ({(long)StatusTypeEnum.TakenSample}, {(long)StatusTypeEnum.InProgress}, {(long)StatusTypeEnum.ToVerify})
             ";
 
             return BaseDAO.Select(query, ReadStudyModelForList);
@@ -116,7 +118,7 @@ namespace LisApp.DAO
                 select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, s.DateOfStudy, sam.Code as Sample, s.ReasonForRepeat, s.Actual, s.PreviousId, s.DateOfEnd
                 from Studies s
                 left join Samples sam on s.IdStudy = sam.IdStudy
-                where IdOrder = {id}
+                where s.IdOrder = {id} and s.Actual = 1
             ";
 
             return BaseDAO.Select(query, ReadSimpleStudyModel);
@@ -125,9 +127,9 @@ namespace LisApp.DAO
         public long? InsertStudy(StudyModel study)
         {
             string query = $@"
-                insert into Studies(IdOrder, IdProfile, IdStatus, Actual) 
+                insert into Studies(IdOrder, IdProfile, IdStatus, Actual, PreviousId) 
                     output INSERTED.IdStudy
-                    values({study.IdOrder}, {study.IdProfile}, 1, 1 )  ;
+                    values({study.IdOrder}, {study.IdProfile}, {(long)StatusTypeEnum.Ordered}, 1, {BaseDAO.SetNullableLong(study.PreviousId)});
             ";
             return BaseDAO.InsertOrUpdate(query, true);
         }
@@ -215,6 +217,7 @@ namespace LisApp.DAO
                 ReasonForRepeat = reader.GetNullableString("ReasonForRepeat"),
                 Actual = reader.GetNullableBool("Actual"),
                 PreviousId = reader.GetNullableLong("PreviousId"),
+                NextId = reader.GetNullableLong("NextId"),
                 DateOfEnd = reader.GetNullableDate("DateOfEnd"),
                 RepeatEmployee = reader.GetNullableString("RepeatFirstName") + " " + reader.GetNullableString("RepeatSurname")
             };

@@ -28,6 +28,10 @@ const emptyState = {
     Lab: "",
     OrderComment: "",
     ReasonForRepeat: "",
+    PreviousId: null,
+    NextId: null,
+    DateOfEnd: null,
+    RepeatEmployee: null,
     Sample: new SampleModel(),
     OrderedTest: [new TestModel()],
     Result: new ResultModel(),
@@ -62,7 +66,7 @@ class LabForm extends React.Component {
     }
 
     render() {
-        const { title, mode, onAccept, onCancel, tabs, tabCount } = this.props;
+        const { title, mode, onAccept, onCancel, tabs, tabCount, onChangeStudy } = this.props;
         const { actualTabIndex } = this.state;
 
         console.log(tabs);
@@ -74,7 +78,9 @@ class LabForm extends React.Component {
                     model={this.state}
                     onCancel={onCancel}
                     mode={mode}
-                    tabCount={tabCount}/>;
+                    tabCount={tabCount}
+                    onChangeStudy={onChangeStudy}
+                    withoutPrevStudy={false}/>;
                 break;
             case 1:
                 actualTab = <SampleTab onTabChange={this.onTabChange}
