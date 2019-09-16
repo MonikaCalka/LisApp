@@ -28,7 +28,7 @@ namespace LisApp.Models
 
         public string Unit { get; set; }
 
-        public double? Result { get; set; }
+        public string Result { get; set; }
 
         public long? IdOrderedTest { get; set; }
     }

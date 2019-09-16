@@ -3,6 +3,7 @@ using LisApp.Enums;
 using LisApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Web.Mvc;
 
 namespace LisApp.Controllers
@@ -115,7 +116,9 @@ namespace LisApp.Controllers
                         ResultUnitModel resultUnit = new ResultUnitModel();
                         resultUnit.IdResult = idResult;
                         resultUnit.IdOrderedTest = (long)test.IdOrderedTest;
-                        resultUnit.Value = (double)test.Result;
+                        NumberFormatInfo provider = new NumberFormatInfo();
+                        provider.NumberDecimalSeparator = ".";
+                        resultUnit.Value = Convert.ToDouble(test.Result, provider);
 
                         DB.ResultUnitsDAO.InsertResultUnit(resultUnit);
                     }
@@ -151,6 +154,12 @@ namespace LisApp.Controllers
                         DB.VerificationsDAO.InsertVerify(study.Result.Verification);
 
                         DB.StudiesDAO.ChangeStudyStatus((long)study.IdStudy, (long)StatusTypeEnum.Verified);
+
+                        List<StudyModel> otherStudies = DB.StudiesDAO.ReadNotVerifiedStudiesListByOrderId((long)study.IdOrder);
+                        if(otherStudies.Count == 0)
+                        {
+                            DB.OrderDAO.ChangeOrderStatus((long)study.IdOrder, (long)StatusTypeEnum.Ended);
+                        }
 
                         return Json("Success");
                     }

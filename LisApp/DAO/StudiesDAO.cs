@@ -124,6 +124,18 @@ namespace LisApp.DAO
             return BaseDAO.Select(query, ReadSimpleStudyModel);
         }
 
+        public List<StudyModel> ReadNotVerifiedStudiesListByOrderId(long id)
+        {
+            string query = $@"
+                select s.IdStudy, s.IdProfile, s.IdEmployee, s.IdOrder, s.IdStatus, s.DateOfStudy, sam.Code as Sample, s.ReasonForRepeat, s.Actual, s.PreviousId, s.DateOfEnd
+                from Studies s
+                left join Samples sam on s.IdStudy = sam.IdStudy
+                where s.IdOrder = {id} and s.Actual = 1 and IdStatus in ({(long)StatusTypeEnum.Ordered}, {(long)StatusTypeEnum.InProgress}, {(long)StatusTypeEnum.TakenSample}, {(long)StatusTypeEnum.ToVerify})
+            ";
+
+            return BaseDAO.Select(query, ReadSimpleStudyModel);
+        }
+
         public long? InsertStudy(StudyModel study)
         {
             string query = $@"

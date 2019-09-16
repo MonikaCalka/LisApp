@@ -16,5 +16,7 @@ namespace LisApp.IDAO
         void ChangeStudyStatus(long IdStudy, long IdStatus);
         void UpdateStudy(StudyModel study);
         void SetReorederDataOfStudy(StudyModel study);
+
+        List<StudyModel> ReadNotVerifiedStudiesListByOrderId(long id);
     }
 }

@@ -42,7 +42,7 @@ namespace LisApp.DAO
         {
             string query = $@"
                 insert into ResultUnits(IdOrderedTests, IdResult, Value) 
-                    values({r.IdOrderedTest},{r.IdResult},{r.Value});
+                    values({r.IdOrderedTest},{r.IdResult},{BaseDAO.SetNullableDouble(r.Value)});
             ";
             BaseDAO.InsertOrUpdate(query, false);
         }

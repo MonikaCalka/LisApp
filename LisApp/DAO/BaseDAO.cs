@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -88,6 +89,19 @@ namespace LisApp.DAO
             if (value != null)
             {
                 return (bool)value ? "1" : "0";
+            }
+            else
+            {
+                return "NULL";
+            }
+        }
+
+        public static string SetNullableDouble(double? value)
+        {
+            if (value != null) {
+                NumberFormatInfo provider = new NumberFormatInfo();
+                provider.NumberDecimalSeparator = ".";
+                return Convert.ToString(value, provider);
             }
             else
             {

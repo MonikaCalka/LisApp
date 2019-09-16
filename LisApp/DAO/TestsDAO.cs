@@ -2,6 +2,7 @@
 using LisApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -133,7 +134,8 @@ namespace LisApp.DAO
 
         private TestModel ReadTestModel(CustomReader reader)
         {
-
+            NumberFormatInfo provider = new NumberFormatInfo();
+            provider.NumberDecimalSeparator = ".";
             return new TestModel
             {
                 IdTest = reader.GetLong("IdTest"),
@@ -145,13 +147,14 @@ namespace LisApp.DAO
                 NormMaxF = reader.GetDouble("NormMaxF"),
                 Name = reader.GetString("Name"),
                 Unit = reader.GetNullableString("Unit"),
-                Result = reader.GetNullableDouble("Result")
+                Result = Convert.ToString(reader.GetNullableDouble("Result"), provider)
             };
         }
 
         private TestModel ReadOrderedTestModel(CustomReader reader)
         {
-
+            NumberFormatInfo provider = new NumberFormatInfo();
+            provider.NumberDecimalSeparator = ".";
             return new TestModel
             {
                 IdTest = reader.GetLong("IdTest"),
@@ -163,7 +166,7 @@ namespace LisApp.DAO
                 NormMaxF = reader.GetDouble("NormMaxF"),
                 Name = reader.GetString("Name"),
                 Unit = reader.GetNullableString("Unit"),
-                Result = reader.GetNullableDouble("Result"),
+                Result = Convert.ToString(reader.GetNullableDouble("Result"),provider),
                 IdOrderedTest = reader.GetNullableLong("IdOrderedTest")
             };
         }
