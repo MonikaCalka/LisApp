@@ -4,10 +4,10 @@ const getJson = (url, callback) => {
     fetch("http://localhost:2096/" + url, {
         method: 'GET',
         headers: {
-            'Lang': i18n.language
+            'Lang': i18n.language,
+            'Token': localStorage.getItem("token")
         }
-    }).then(response => response.json())
-        .then(callback);
+    }).then(callback);
 };
 
 const postJson = (url, data, callback) => {
@@ -16,10 +16,10 @@ const postJson = (url, data, callback) => {
         body: JSON.stringify(data),
         headers: {
             'Content-type': 'application/json',
-            'Lang': i18n.language
+            'Lang': i18n.language,
+            'Token': localStorage.getItem("token")
         }
-    }).then(response => response.json())
-        .then(callback);
+    }).then(callback);
 };
 
 const getDic = (type, callback) => {

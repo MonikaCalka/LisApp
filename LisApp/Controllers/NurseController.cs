@@ -13,8 +13,8 @@ namespace LisApp.Controllers
         [HttpGet]
         public JsonResult GetOrderList()
         {
-            string langId = Language.getLang(Request);
-            List<OrderModel> orderList = DB.OrderDAO.ReadOrdersListForNurse(langId);
+
+            List<OrderModel> orderList = DB.OrderDAO.ReadOrdersListForNurse(Lang);
 
             return new CustomJsonResult { Data = new { data = orderList } };
         }
@@ -22,8 +22,7 @@ namespace LisApp.Controllers
         [HttpGet]
         public ActionResult GetOrder(long id)
         {
-            string langId = Language.getLang(Request);
-            OrderModel order = DB.OrderDAO.ReadSimpleOrderById(id, langId);
+            OrderModel order = DB.OrderDAO.ReadSimpleOrderById(id, Lang);
 
             order = setStudies(order);
 
@@ -47,8 +46,7 @@ namespace LisApp.Controllers
         [HttpGet]
         public ActionResult GetStudyList()
         { 
-            string langId = Language.getLang(Request);
-            List<StudyModel> studies = DB.StudiesDAO.ReadStudiesListForNurse(langId);
+            List<StudyModel> studies = DB.StudiesDAO.ReadStudiesListForNurse(Lang);
             return new CustomJsonResult { Data = new { data = studies } };
         }
 
@@ -61,8 +59,7 @@ namespace LisApp.Controllers
 
         private StudyModel GetStudyById(long id)
         {
-            string langId = Language.getLang(Request);
-            StudyModel study = DB.StudiesDAO.ReadStudyById(id, langId);
+            StudyModel study = DB.StudiesDAO.ReadStudyById(id, Lang);
             if(study.IdStatus != 1 && study.IdStatus != 7)
             {
                 return null;

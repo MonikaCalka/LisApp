@@ -25,5 +25,7 @@ namespace LisApp.IDAO
         void DeleteConsultantsByOrder(long idOrder);
 
         EmployeeModel ReadEmployeeByStudyId(long? idStudy, string lang);
+
+        EmployeeModel ReadEmployeeByUserId(long? idUser, string lang);
     }
 }

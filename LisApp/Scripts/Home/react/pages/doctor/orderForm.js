@@ -42,7 +42,7 @@ class OrderForm extends React.Component {
         super(props);
 
         if (this.props.mode !== 'add') {
-            this.state = getStateFromPropsData(props.data.data, emptyState);
+            this.state = getStateFromPropsData(props.data, emptyState);
         } else {
             this.state = emptyState;
         }
@@ -50,19 +50,33 @@ class OrderForm extends React.Component {
 
     componentDidMount() {
         getJson("Doctor/GetPatientSelect", response => {
-            this.setState({ patientOptions: response });
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.setState({ patientOptions: responseJson });
+                });
+            }
         });
         getDic("ward", response => {
-            this.setState({ wardOptions: response });
+            response.json().then(responseJson => {
+                this.setState({ wardOptions: responseJson });
+            });
         });
         getDic("priority", response => {
-            this.setState({ priorityOptions: response });
+            response.json().then(responseJson => {
+                this.setState({ priorityOptions: responseJson });
+            });
         });
         getJson("Doctor/GetProfileSelect", response => {
-            this.setState({ profileOptions: response });
+            response.json().then(responseJson => {
+                this.setState({ profileOptions: responseJson });
+            });
         });
         getJson("Doctor/GetConsultantSelect", response => {
-            this.setState({ doctorOptions: response });
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.setState({ doctorOptions: responseJson });
+                });
+            }
         });
     }
 
@@ -74,6 +88,7 @@ class OrderForm extends React.Component {
 
     onPatientChange = selectedPatientData => {
         this.setState(selectedPatientData);
+        console.log(selectedPatientData);
     }
 
     getData = () => {
@@ -111,7 +126,7 @@ class OrderForm extends React.Component {
                     onCancel={onCancel}
                     onAccept={onAccept}
                     mode={mode}
-                    showSamples={false}/>;
+                    showSamples={false} />;
                 break;
         }
 

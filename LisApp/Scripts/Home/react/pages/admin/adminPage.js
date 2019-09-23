@@ -75,11 +75,23 @@ class AdminPage extends React.Component {
     }
 
     componentDidMount() {
-        getJson("Admin/GetEmployeeList", response => this.setState({ data: response }));
+        getJson("Admin/GetEmployeeList", response => {
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.setState({ data: responseJson });
+                });
+            }
+        });
     }
     componentDidUpdate() {
         if (this.state.actualLang !== i18n.language) {
-            getJson("Admin/GetEmployeeList", response => this.setState({ data: response }));
+            getJson("Admin/GetEmployeeList", response => {
+                if (response.status === 200) {
+                    response.json().then(responseJson => {
+                        this.setState({ data: responseJson });
+                    });
+                }
+            });
             this.setLanguage();
         }
     }
@@ -106,8 +118,12 @@ class AdminPage extends React.Component {
 
     getEmployeeAndOpenModal = () => {
         getJson("Admin/GetEmployee?id=" + this.state.actualRow.IdEmployee, response => {
-            this.setState({ selectedData: response });
-            this.modalRef.current.openModal();
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.setState({ selectedData: responseJson });
+                    this.modalRef.current.openModal();
+                });
+            }
         });
     }
 
@@ -130,7 +146,14 @@ class AdminPage extends React.Component {
     addNewEmployee = () => {
         postJson("Admin/AddNewEmployee", this.formRef.current.getData(), response => {
             if (response === "Success") {
-                getJson("Admin/GetEmployeeList", response => this.setState({ data: response }));
+                getJson("Admin/GetEmployeeList", response => {
+                    if (response.status === 200) {
+                        response.json().then(responseJson => {
+                            this.setState({ data: responseJson });
+                        });
+                    }
+                });
+            
                 this.modalRef.current.closeModal();
                 this.props.alert.success(<Trans>AddEmployeeSuccess</Trans>);
             } else {
@@ -147,7 +170,14 @@ class AdminPage extends React.Component {
     editEmployee = () => {
         postJson("Admin/EditEmployee", this.formRef.current.getData(), response => {
             if (response === "Success") {
-                getJson("Admin/GetEmployeeList", response => this.setState({ data: response }));
+                getJson("Admin/GetEmployeeList", response => {
+                    if (response.status === 200) {
+                        response.json().then(responseJson => {
+                            this.setState({ data: responseJson });
+                        });
+                    };
+                });
+            
                 this.modalRef.current.closeModal();
                 this.props.alert.success(<Trans>EditEmployeeSuccess</Trans>);
 
@@ -174,7 +204,13 @@ class AdminPage extends React.Component {
     onFire = () => {
         postJson("Admin/RemoveEmployee", this.formRef.current.getData(), response => {
             if (response === "Success") {
-                getJson("Admin/GetEmployeeList", response => this.setState({ data: response }));
+                getJson("Admin/GetEmployeeList", response => {
+                    if (response.status === 200) {
+                        response.json().then(responseJson => {
+                            this.setState({ data: responseJson });
+                        });
+                    }
+                });
                 this.modalRef.current.closeModal();
                 this.props.alert.success(<Trans>RemoveEmployeeSuccess</Trans>);
 

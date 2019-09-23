@@ -58,7 +58,7 @@ class StudyForm extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = getStateFromPropsData(props.data.data, emptyState);
+        this.state = getStateFromPropsData(props.data, emptyState);
     }
 
     componentDidMount() {

@@ -9,7 +9,7 @@ namespace LisApp.Models
     {
         public long? IdUser { get; set; }
 
-        public long IdEmployee { get; set; }
+        public long? IdEmployee { get; set; }
 
         public EmployeeModel Employee { get; set; }
 
@@ -21,12 +21,15 @@ namespace LisApp.Models
 
         public bool InUse { get; set; }
 
+        public long? IdPatient { get; set; }
+
         public UserModel() { }
 
-        public UserModel(long idEmployee, string login, string password) {
+        public UserModel(long? idEmployee, string login, string password, long? idPatient) {
             this.IdEmployee = idEmployee;
             this.Login = login;
             this.Password = password;
+            this.IdPatient = idPatient;
         }
     }
 }

@@ -73,7 +73,14 @@ class DoctorPage extends React.Component {
     }
 
     setOrderList() {
-        getJson("Doctor/GetOrderList", response => this.setState({ data: response.data }));
+        getJson("Doctor/GetOrderList", response => {
+            console.log(response);
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.setState({ data: responseJson.data });
+                });
+            }
+        });
     }
     setLanguage() {
         this.setState({ actualLang: i18n.language });
@@ -96,9 +103,12 @@ class DoctorPage extends React.Component {
 
     getOrderAndOpenModal = () => {
         getJson("Doctor/GetOrder?id=" + this.state.actualRow.IdOrder, response => {
-            this.setState({ selectedData: response });
-            this.modalRef.current.openModal();
-            console.log(response);
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.setState({ selectedData: responseJson.data });
+                    this.modalRef.current.openModal();
+                });
+            }
         });
     }
 
@@ -120,10 +130,10 @@ class DoctorPage extends React.Component {
 
     addNewOrder = () => {
         postJson("Doctor/AddNewOrder", this.formRef.current.getData(), response => {
-            if (response === "Success") {
-                this.setOrderList();
-                this.modalRef.current.closeModal();
-                this.props.alert.success(<Trans>AddOrderSuccess</Trans>);
+            if (response.status === 200) {
+                    this.setOrderList();
+                    this.modalRef.current.closeModal();
+                    this.props.alert.success(<Trans>AddOrderSuccess</Trans>);
             } else {
                 this.modalRef.current.closeModal();
                 this.props.alert.error(<Trans>AddOrderError</Trans>);
@@ -138,11 +148,10 @@ class DoctorPage extends React.Component {
     editOrder = () => {
         console.log(this.formRef.current.getData());
         postJson("Doctor/EditOrder", this.formRef.current.getData(), response => {
-            if (response === "Success") {
+            if (response.status === 200) {
                 this.setOrderList();
                 this.modalRef.current.closeModal();
                 this.props.alert.success(<Trans>EditOrderSuccess</Trans>);
-
             } else {
                 this.modalRef.current.closeModal();
                 this.props.alert.error(<Trans>EditOrderError</Trans>);

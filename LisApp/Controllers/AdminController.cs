@@ -25,16 +25,14 @@ namespace LisApp.Controllers
         [HttpGet]
         public ActionResult GetEmployeeList()
         {
-            string langId = Language.getLang(Request);
-            List<EmployeeModel> users = DB.EmployeesDAO.ReadEmployeesListForAdmin(langId);
+            List<EmployeeModel> users = DB.EmployeesDAO.ReadEmployeesListForAdmin(Lang);
             return Json(users, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public ActionResult GetEmployee(long id)
         {
-            string langId = Language.getLang(Request);
-            EmployeeModel user = DB.EmployeesDAO.ReadEmployeeById(id, langId);
+            EmployeeModel user = DB.EmployeesDAO.ReadEmployeeById(id, Lang);
             return new CustomJsonResult { Data = new { data = user } };
         }
 
@@ -49,7 +47,7 @@ namespace LisApp.Controllers
                 {
                     long id = (long)DB.EmployeesDAO.InsertEmployee(employee);
 
-                    UserModel user = new UserModel(id, employee.Login, employee.Login);
+                    UserModel user = new UserModel(id, employee.Login, employee.Login, null);
 
                     DB.UserDAO.InsertUser(user);
 
@@ -76,8 +74,7 @@ namespace LisApp.Controllers
                 // TO DO: LOGGED USER
                 try
                 {
-                    string langId = Language.getLang(Request);
-                    EmployeeModel oldData = DB.EmployeesDAO.ReadEmployeeById(employee.IdEmployee, langId);
+                    EmployeeModel oldData = DB.EmployeesDAO.ReadEmployeeById(employee.IdEmployee, Lang);
 
 
                     DB.EmployeesDAO.InsertHistoryDataOfEmployee(oldData, "user");

@@ -19,17 +19,14 @@ namespace LisApp.Controllers
         [HttpGet]
         public ActionResult GetStudyList()
         {
-            string langId = Language.getLang(Request);
-            List<StudyModel> studies = DB.StudiesDAO.ReadStudiesListForLab(langId);
+            List<StudyModel> studies = DB.StudiesDAO.ReadStudiesListForLab(Lang);
             return new CustomJsonResult { Data = new { data = studies } };
         }
 
         [HttpGet]
         public ActionResult GetOrderedTests(long studyId)
         {
-            string langId = Language.getLang(Request);
-
-            List<TestModel> tests = DB.TestsDAO.ReadFullOrderedTestByStudyId(studyId, langId);
+            List<TestModel> tests = DB.TestsDAO.ReadFullOrderedTestByStudyId(studyId, Lang);
 
             return new CustomJsonResult { Data = new { data = tests } };
         }
@@ -37,8 +34,7 @@ namespace LisApp.Controllers
         [HttpGet]
         public ActionResult GetStudy(long id)
         {
-            string langId = Language.getLang(Request);
-            StudyModel study = DB.StudiesDAO.ReadStudyById(id, langId);
+            StudyModel study = DB.StudiesDAO.ReadStudyById(id, Lang);
             if(study.IdStudy == (long)StatusTypeEnum.Ordered || study.IdStudy == (long)StatusTypeEnum.Ended)
             {
                 return null;
@@ -48,11 +44,11 @@ namespace LisApp.Controllers
             {
                 study.Sample = DB.SamplesDAO.ReadSampleByStudyId((long)study.IdStudy);
 
-                study.OrderedTest = DB.TestsDAO.ReadFullOrderedTestByStudyId((long)study.IdStudy, langId);
+                study.OrderedTest = DB.TestsDAO.ReadFullOrderedTestByStudyId((long)study.IdStudy, Lang);
 
                 if (study.IdStatus != (long)StatusTypeEnum.TakenSample)
                 {
-                    EmployeeModel lab = DB.EmployeesDAO.ReadEmployeeByStudyId((long)study.IdStudy, langId);
+                    EmployeeModel lab = DB.EmployeesDAO.ReadEmployeeByStudyId((long)study.IdStudy, Lang);
                     if (lab != null)
                     {
                         study.IdLab = lab.IdEmployee;
@@ -61,7 +57,7 @@ namespace LisApp.Controllers
                     if(study.IdStatus != (long)StatusTypeEnum.InProgress)
                     {
                         study.Result = DB.ResultsDAO.ReadResultByStudyId((long)study.IdStudy);
-                        EmployeeModel resultLab = DB.EmployeesDAO.ReadEmployeeById((long) study.Result.IdEmployee, langId);
+                        EmployeeModel resultLab = DB.EmployeesDAO.ReadEmployeeById((long) study.Result.IdEmployee, Lang);
                         study.Result.EmployeeName = resultLab.FirstName + " " + resultLab.Surname;
                         study.Result.Verification = new VerificationModel();
                     }

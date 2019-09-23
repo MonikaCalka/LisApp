@@ -12,7 +12,7 @@ namespace LisApp.DAO
         public UserModel ReadUserById(long id)
         {
             string query = $@"
-                select IdUser, IdEmployee, Login, Password, DateOfChange, InUse
+                select IdUser, IdEmployee, Login, Password, DateOfChange, InUse, IdPatient
                 from Users
                 where IdUser = {id}
             ";
@@ -23,9 +23,20 @@ namespace LisApp.DAO
         public UserModel ReadUserByEmployeeId(long employeeId)
         {
             string query = $@"
-                select IdUser, IdEmployee, Login, Password, DateOfChange, InUse
+                select IdUser, IdEmployee, Login, Password, DateOfChange, InUse, IdPatient
                 from Users
                 where IdEmployee = {employeeId}
+            ";
+
+            return BaseDAO.SelectFirst(query, ReadUserModel);
+        }
+
+        public UserModel ReadUser(string login, string password)
+        {
+            string query = $@"
+                select IdUser, IdEmployee, Login, Password, DateOfChange, InUse, IdPatient
+                from Users
+                where Login = {BaseDAO.SetString(login)} and Password = {BaseDAO.SetString(password)}
             ";
 
             return BaseDAO.SelectFirst(query, ReadUserModel);
@@ -34,7 +45,7 @@ namespace LisApp.DAO
         public List<UserModel> ReadUsersList()
         {
             string query = @"
-                select IdUser, IdEmployee, Login, Password, DateOfChange, InUse
+                select IdUser, IdEmployee, Login, Password, DateOfChange, InUse, IdPatient
                 from Users
             ";
 
@@ -44,8 +55,8 @@ namespace LisApp.DAO
         public void InsertUser(UserModel u)
         {
             string query = $@"
-                insert into Users(IdEmployee, Login, Password, DateOfChange, InUse) 
-                    values({u.IdEmployee},{BaseDAO.SetString(u.Login)},{BaseDAO.SetString(u.Password)},{BaseDAO.SetDate(DateTime.Now)},1);
+                insert into Users(IdEmployee, Login, Password, DateOfChange, InUse, IdPatient) 
+                    values({BaseDAO.SetNullableLong(u.IdEmployee)},{BaseDAO.SetString(u.Login)},{BaseDAO.SetString(u.Password)},{BaseDAO.SetDate(DateTime.Now)},1,{BaseDAO.SetNullableLong(u.IdPatient)});
             ";
             BaseDAO.InsertOrUpdate(query, false);
         }
@@ -64,11 +75,12 @@ namespace LisApp.DAO
             return new UserModel()
             {
                 IdUser = reader.GetLong("IdUser"),
-                IdEmployee = reader.GetLong("IdEmployee"),
+                IdEmployee = reader.GetNullableLong("IdEmployee"),
                 Login = reader.GetString("Login"),
                 Password = reader.GetString("Password"),
                 DateOfChange = reader.GetDate("DateOfChange"),
-                InUse = reader.GetBool("InUse")
+                InUse = reader.GetBool("InUse"),
+                IdPatient = reader.GetNullableLong("IdPatient")
             };
         }
     }

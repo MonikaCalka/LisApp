@@ -14,32 +14,28 @@ namespace LisApp.Controllers
         [HttpGet]
         public ActionResult GetPositionDic()
         {
-            string langId = Language.getLang(Request);
-            List<DictionaryModel> positions = DB.DictionaryDAO.ReadDictionaryListByType(DictionaryTypesEnum.Positions, langId);
+            List<DictionaryModel> positions = DB.DictionaryDAO.ReadDictionaryListByType(DictionaryTypesEnum.Positions, Lang);
             return Json(positions, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public ActionResult GetWardDic()
         {
-            string langId = Language.getLang(Request);
-            List<DictionaryModel> positions = DB.DictionaryDAO.ReadDictionaryListByType(DictionaryTypesEnum.Ward, langId);
+            List<DictionaryModel> positions = DB.DictionaryDAO.ReadDictionaryListByType(DictionaryTypesEnum.Ward, Lang);
             return Json(positions, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public ActionResult GetPriorityDic()
         {
-            string langId = Language.getLang(Request);
-            List<DictionaryModel> positions = DB.DictionaryDAO.ReadDictionaryListByType(DictionaryTypesEnum.Priorities, langId);
+            List<DictionaryModel> positions = DB.DictionaryDAO.ReadDictionaryListByType(DictionaryTypesEnum.Priorities, Lang);
             return Json(positions, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public ActionResult GetStatusDic()
         {
-            string langId = Language.getLang(Request);
-            List<DictionaryModel> positions = DB.DictionaryDAO.ReadDictionaryListByType(DictionaryTypesEnum.Status, langId);
+            List<DictionaryModel> positions = DB.DictionaryDAO.ReadDictionaryListByType(DictionaryTypesEnum.Status, Lang);
             return Json(positions, JsonRequestBehavior.AllowGet);
         }
     }

@@ -26,6 +26,18 @@ namespace LisApp.DAO
             return BaseDAO.SelectFirst(query, ReadPatientModel);
         }
 
+        public PatientModel ReadPatientByUserId(long? idUser)
+        {
+            string query = $@"
+                select p.IdPatient, p.FirstName, p.Surname, p.Pesel, p.Sex, p.Street, p.HouseNumber, p.City, p.PostalCode, p.Country, p.Phone, p.IdCardNumber,
+                    p.ContactPersonFirstName, p.ContactPersonSurname, p.ContactPersonPesel, p.ContactPersonPhone
+                from Patients p
+                join Users on p.IdPatient = u.IdPatient
+                where u.IdUser = {idUser}
+            ";
+            return BaseDAO.SelectFirst(query, ReadPatientModel);
+        }
+
         public List<PatientModel> ReadPatientsList()
         {
             string query = @"
@@ -78,7 +90,7 @@ namespace LisApp.DAO
             BaseDAO.InsertOrUpdate(query, false);
         }
 
-        public List<SelectOption> ReadPatientsSelect()
+        public List<PatientModel> ReadPatientsSelect()
         {
             string query = @"
                 select IdPatient, FirstName, Surname, Pesel 
@@ -112,9 +124,9 @@ namespace LisApp.DAO
             };
         }
 
-        private SelectOption ReadPatientSelect(CustomReader reader)
+        private PatientModel ReadPatientSelect(CustomReader reader)
         {
-            return new SelectOption()
+            return new PatientModel()
             {
                 value = reader.GetLong("IdPatient"),
                 label = reader.GetLong("IdPatient") + " - " + reader.GetString("FirstName") + " " + reader.GetString("Surname") + "\n" + reader.GetString("Pesel")

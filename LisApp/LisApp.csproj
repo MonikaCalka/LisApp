@@ -210,7 +210,6 @@
     <Compile Include="Common\CustomJsonResult.cs" />
     <Compile Include="Common\DatabaseFacade.cs" />
     <Compile Include="Common\IDatabaseFacade.cs" />
-    <Compile Include="Common\Language.cs" />
     <Compile Include="Common\SelectOption.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -219,6 +218,7 @@
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LabController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NurseController.cs" />
     <Compile Include="Controllers\RegistrarController.cs" />
@@ -232,11 +232,13 @@
     <Compile Include="DAO\ResultsDAO.cs" />
     <Compile Include="DAO\ResultUnitsDAO.cs" />
     <Compile Include="DAO\SamplesDAO.cs" />
+    <Compile Include="DAO\SessionsDAO.cs" />
     <Compile Include="DAO\StudiesDAO.cs" />
     <Compile Include="DAO\TestsDAO.cs" />
     <Compile Include="DAO\UserDAO.cs" />
     <Compile Include="DAO\VerificationsDAO.cs" />
     <Compile Include="Enums\DictionaryTypesEnum.cs" />
+    <Compile Include="Enums\PositionTypeEnum.cs" />
     <Compile Include="Enums\StatusTypeEnum.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -249,6 +251,7 @@
     <Compile Include="IDAO\IResultsDAO.cs" />
     <Compile Include="IDAO\IResultUnitsDAO.cs" />
     <Compile Include="IDAO\ISamplesDAO.cs" />
+    <Compile Include="IDAO\ISessionsDAO.cs" />
     <Compile Include="IDAO\IStudiesDAO.cs" />
     <Compile Include="IDAO\ITestsDAO.cs" />
     <Compile Include="IDAO\IUserDAO.cs" />
@@ -265,6 +268,7 @@
     <Compile Include="Models\ResultModel.cs" />
     <Compile Include="Models\ResultUnitModel.cs" />
     <Compile Include="Models\SampleModel.cs" />
+    <Compile Include="Models\SessionModel.cs" />
     <Compile Include="Models\StudyModel.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -329,6 +333,7 @@
     <Content Include="Scripts\Home\react\pages\lab\tabs\resultTab.js" />
     <Content Include="Scripts\Home\react\pages\lab\tabs\testTab.js" />
     <Content Include="Scripts\Home\react\pages\lab\tabs\verifyTab.js" />
+    <Content Include="Scripts\Home\react\pages\login\loginPage.js" />
     <Content Include="Scripts\Home\react\pages\nurse\nursePage.js" />
     <Content Include="Scripts\Home\react\pages\nurse\nurseOrderForm.js" />
     <Content Include="Scripts\Home\react\pages\nurse\nurseStudiesPage.js" />
@@ -405,7 +410,9 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>

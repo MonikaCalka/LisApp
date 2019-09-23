@@ -85,7 +85,13 @@ class DoctorStudiesPage extends React.Component {
     }
 
     setStudyList() {
-        getJson("Doctor/GetStudyList", response => this.setState({ data: response.data }));
+        getJson("Doctor/GetStudyList", response => {
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.setState({ data: responseJson.data });
+                });
+            }
+        });
     }
     setLanguage() {
         this.setState({ actualLang: i18n.language });
@@ -100,9 +106,13 @@ class DoctorStudiesPage extends React.Component {
 
     getStudyAndOpenModal = (id) => {
         getJson("Doctor/GetStudy?id=" + id, response => {
-            this.setState({ selectedData: response });
-            this.modalRef.current.openModal();
-            console.log(response);
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.setState({ selectedData: responseJson });
+                    this.modalRef.current.openModal();
+                    console.log(response);
+                });
+            }
         });
     }
 

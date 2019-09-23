@@ -12,6 +12,7 @@ import i18n from './i18n';
 import { Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from './components/alertTemplate';
 import Navbar from './components/navbar';
+import LoginPage from './pages/login/loginPage';
 
 
 const options = {
@@ -34,10 +35,6 @@ class App extends React.Component {
         this.state = {
             data: []
         };
-    }
-
-    componentDidMount() {
-        //getJson("Admin/GetUserList", response => this.setState({ data: response }));
     }
 
     setEng = () => {
@@ -95,6 +92,9 @@ class App extends React.Component {
                                     <li>
                                         <Link to="/nursestudies/">NurseStudies</Link>
                                     </li>
+                                    <li>
+                                        <Link to="/login/">Login</Link>
+                                    </li>
                                 </ul>
                             </nav>
 
@@ -106,6 +106,7 @@ class App extends React.Component {
                             <Route path="/lab/" component={LabPage} />
                             <Route path="/admin/" component={AdminPage} />
                             <Route path="/registrar/" component={RegistrarPage} />
+                            <Route path="/login/" component={LoginPage} />
                         </div>
                     </AlertProvider>
                 </Router>

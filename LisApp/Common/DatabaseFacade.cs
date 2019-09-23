@@ -31,7 +31,9 @@ namespace LisApp.Common
 
         public IVerificationsDAO VerificationsDAO { get; private set; }
 
-        public IResultsDAO ResultsDAO { get; private set; }       
+        public IResultsDAO ResultsDAO { get; private set; }   
+        
+        public ISessionsDAO SessionsDAO { get; private set; }
 
         public DatabaseFacade()
         {
@@ -58,6 +60,8 @@ namespace LisApp.Common
             ResultsDAO = new ResultsDAO();
 
             ResultUnitsDAO = new ResultUnitsDAO();
+
+            SessionsDAO = new SessionsDAO();
         }
     }
 }

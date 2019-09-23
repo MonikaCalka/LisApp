@@ -13,5 +13,7 @@ namespace LisApp.IDAO
         void InsertUser(UserModel u);
 
         void UpdateUser(UserModel u);
+
+        UserModel ReadUser(string login, string password);
     }
 }

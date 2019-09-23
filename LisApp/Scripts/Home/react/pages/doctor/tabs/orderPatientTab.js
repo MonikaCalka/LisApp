@@ -37,13 +37,17 @@ class OrderPatientTab extends Component {
 
     getPatientById = (IdPatient) => {
         getJson("Registrar/GetPatient?id=" + IdPatient, response => {
-            this.props.onPatientChange({
-                PatientName: response.FirstName + " " + response.Surname,
-                Sex: response.Sex,
-                Pesel: response.Pesel,
-                IdCardNumber: response.IdCardNumber ? response.IdCardNumber : "" ,
-                IdPatient
-            });
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.props.onPatientChange({
+                        PatientName: responseJson.FirstName + " " + responseJson.Surname,
+                        Sex: responseJson.Sex,
+                        Pesel: responseJson.Pesel,
+                        IdCardNumber: responseJson.IdCardNumber ? responseJson.IdCardNumber : "",
+                        IdPatient
+                    });
+                });
+            }
         });
     }
 
@@ -58,12 +62,12 @@ class OrderPatientTab extends Component {
                     <div className="col-sm-12">
                         <CustomSelect labeltext="IdPatient" onChange={this.handleSelectPatientChanged} value={model.patientOptions.filter(option => option.value === model.IdPatient)} selectOptions={model.patientOptions} name="IdPatient" isDisabled={disableInProgress} {...requiredField} />
                         <CustomInput labeltext="PatientName" onChange={this.handleChange} value={model.PatientName} name="PatientName" disabled />
-                        <CustomSelect labeltext="Sex" onChange={e => this.onOptionChange("Sex", e)} value={options.filter(option => option.value === model.Sex)} selectOptions={options} name="Sex" isDisabled /> 
+                        <CustomSelect labeltext="Sex" onChange={e => this.onOptionChange("Sex", e)} value={options.filter(option => option.value === model.Sex)} selectOptions={options} name="Sex" isDisabled />
                         <CustomInput labeltext="PESEL" onChange={this.handleChange} value={model.Pesel} name="Pesel" disabled />
-                        <CustomInput labeltext="IdCardNumber" onChange={this.handleChange} value={model.IdCardNumber} name="IdCardNumber" disabled/>
+                        <CustomInput labeltext="IdCardNumber" onChange={this.handleChange} value={model.IdCardNumber} name="IdCardNumber" disabled />
                     </div>
                 </ValidatorForm>
-                <ModalButtons mode={mode} onCancel={onCancel} actualTabIndex={model.actualTabIndex} tabCount={3}  />
+                <ModalButtons mode={mode} onCancel={onCancel} actualTabIndex={model.actualTabIndex} tabCount={3} />
             </div>
         )
     }

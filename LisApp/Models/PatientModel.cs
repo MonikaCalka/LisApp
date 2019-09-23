@@ -1,9 +1,10 @@
-﻿using System;
+﻿using LisApp.Common;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace LisApp.Models
 {
-    public class PatientModel
+    public class PatientModel : SelectOption
     {
         public long? IdPatient { get; set; }
 

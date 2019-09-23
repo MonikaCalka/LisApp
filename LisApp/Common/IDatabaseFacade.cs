@@ -27,6 +27,8 @@ namespace LisApp.Common
         IVerificationsDAO VerificationsDAO { get; }
 
         IResultsDAO ResultsDAO { get; }
+
+        ISessionsDAO SessionsDAO { get; }
         //tu wszystkie dao
     }
 }

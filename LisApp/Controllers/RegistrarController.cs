@@ -98,7 +98,7 @@ namespace LisApp.Controllers
             List<ValidationResult> results = new List<ValidationResult>();
             ValidationContext context = new ValidationContext(patient, null, null);
 
-            if (!validPeselOrBirthday(patient.Pesel))
+            if (!validPeselOrBirthday(patient.Pesel, patient.Sex))
             { }
 
             if (patient != null && patient.IdPatient != null && Validator.TryValidateObject(patient, context, results, true))

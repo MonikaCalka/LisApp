@@ -63,13 +63,23 @@ class NursePage extends React.Component {
     }
 
     componentDidMount() {
-        getJson("Nurse/GetOrderList", response => this.setState({ data: response.data }));
+        this.getData();
     }
     componentDidUpdate() {
         if (this.state.actualLang !== i18n.language) {
-            getJson("Nurse/GetOrderList", response => this.setState({ data: response.data }));
+            this.getData();
             this.setLanguage();
         }
+    }
+
+    getData = () => {
+        getJson("Nurse/GetOrderList", response => {
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.setState({ data: responseJson.data });
+                });
+            }
+        });
     }
 
     setLanguage() {
@@ -85,9 +95,12 @@ class NursePage extends React.Component {
 
     getOrderAndOpenModal = () => {
         getJson("Nurse/GetOrder?id=" + this.state.actualRow.IdOrder, response => {
-            this.setState({ selectedData: response });
-            this.modalRef.current.openModal();
-            console.log(response);
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.setState({ selectedData: responseJson });
+                    this.modalRef.current.openModal();
+                });
+            }
         });
     }
 

@@ -85,7 +85,13 @@ class LabPage extends React.Component {
     }
 
     setStudyList = () => {
-        getJson("Lab/GetStudyList", response => this.setState({ data: response.data }));
+        getJson("Lab/GetStudyList", response => {
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.setState({ data: responseJson.data });
+                });
+            }
+        });
     }
 
     setLanguage() {
@@ -104,9 +110,12 @@ class LabPage extends React.Component {
 
     getStudyAndOpenModal = () => {
         getJson("Lab/GetStudy?id=" + this.state.actualRow.IdStudy, response => {
-            this.setState({ selectedData: response });
-            this.modalRef.current.openModal();
-            console.log(response);
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.setState({ selectedData: responseJson });
+                    this.modalRef.current.openModal();
+                });
+            }
         });
     }
 
@@ -114,7 +123,7 @@ class LabPage extends React.Component {
         this.setState({
             titleOfModal: "Details",
             mode: "show",
-            tabHeaders : [
+            tabHeaders: [
                 { index: 0, name: 'Order' },
                 { index: 1, name: 'Sample' },
                 { index: 2, name: 'Tests' },
@@ -257,7 +266,7 @@ class LabPage extends React.Component {
                 this.setState({
                     actualRow: null
                 });
-                this.props.alert.success(<Trans i18nKey="RepeatSuccess" values={{ id: response }}/>);
+                this.props.alert.success(<Trans i18nKey="RepeatSuccess" values={{ id: response }} />);
             } else {
                 this.modalRef.current.closeModal();
                 this.props.alert.error(<Trans>VerifyError</Trans>);
