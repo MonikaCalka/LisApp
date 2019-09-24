@@ -145,7 +145,6 @@ class LabPage extends React.Component {
             ],
             tabCount: 3
         });
-        console.log(this.state.tabHeaders);
         this.getStudyAndOpenModal();
     };
 
@@ -201,7 +200,7 @@ class LabPage extends React.Component {
 
     onStartStudy = () => {
         postJson("Lab/StartStudy", this.formRef.current.getData(), response => {
-            if (response === "Success") {
+            if (response.status === 200) {
                 this.setStudyList();
                 this.modalRef.current.closeModal();
                 this.props.alert.info(<Trans>StartStudyInfo</Trans>);
@@ -219,7 +218,7 @@ class LabPage extends React.Component {
 
     onAddResult = () => {
         postJson("Lab/AddResult", this.formRef.current.getData(), response => {
-            if (response === "Success") {
+            if (response.status === 200) {
                 this.setStudyList();
                 this.modalRef.current.closeModal();
                 this.props.alert.success(<Trans>AddResultSuccess</Trans>);
@@ -237,19 +236,21 @@ class LabPage extends React.Component {
 
     onVerify = () => {
         postJson("Lab/AddVerify", this.formRef.current.getData(), response => {
-            if (response !== "Error") {
-                this.setStudyList();
-                this.modalRef.current.closeModal();
-                if (response === 'Success') {
-                    this.props.alert.success(<Trans>VerifySuccess</Trans>);
-                } else {
-                    this.props.alert.success(<Trans i18nKey="RepeatSuccess" values={{ id: response }} />);
-                }
-                this.setState({
-                    disableStart: true,
-                    disableAddResult: true,
-                    disableVerify: true,
-                    actualRow: null
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.setStudyList();
+                    this.modalRef.current.closeModal();
+                    if (responseJson === 'Success') {
+                        this.props.alert.success(<Trans>VerifySuccess</Trans>);
+                    } else {
+                        this.props.alert.success(<Trans i18nKey="RepeatSuccess" values={{ id: responseJson }} />);
+                    }
+                    this.setState({
+                        disableStart: true,
+                        disableAddResult: true,
+                        disableVerify: true,
+                        actualRow: null
+                    });
                 });
             } else {
                 this.modalRef.current.closeModal();
@@ -260,13 +261,15 @@ class LabPage extends React.Component {
 
     onRepeat = () => {
         postJson("Lab/RepeatStudy", this.formRef.current.getData(), response => {
-            if (response !== "Error") {
-                this.setStudyList();
-                this.modalRef.current.closeModal();
-                this.setState({
-                    actualRow: null
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.setStudyList();
+                    this.modalRef.current.closeModal();
+                    this.setState({
+                        actualRow: null
+                    });
+                    this.props.alert.success(<Trans i18nKey="RepeatSuccess" values={{ id: responseJson }} />);
                 });
-                this.props.alert.success(<Trans i18nKey="RepeatSuccess" values={{ id: response }} />);
             } else {
                 this.modalRef.current.closeModal();
                 this.props.alert.error(<Trans>VerifyError</Trans>);

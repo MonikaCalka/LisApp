@@ -18,7 +18,7 @@ namespace LisApp.Models
 
         [Required]
         [StringLength(11)]
-        [RegularExpression("^([0-9]{11})$")]
+        [RegularExpression("^(([0-9]{4}[0-3][0-9]{6})|NN|([1-2][0-9]{3}-[0-1][0-9]-[0-3][0-9]))$")]
         public string Pesel { get; set; }
 
         [Required]
@@ -47,7 +47,7 @@ namespace LisApp.Models
 
         [Required]
         [StringLength(9)]
-        [RegularExpression("^([0-9]{9})$")]
+        [RegularExpression("^(([0-9]*|NN))$")]
         public string Phone { get; set; }
 
         [StringLength(50)]
@@ -60,7 +60,7 @@ namespace LisApp.Models
         public string ContactPersonSurname { get; set; }
 
         [StringLength(11)]
-        [RegularExpression("^([0-9]{11})$")]
+        [RegularExpression("^(([0-9]{4}[0-3][0-9]{6}))$")]
         public string ContactPersonPesel { get; set; }
 
         [StringLength(9)]

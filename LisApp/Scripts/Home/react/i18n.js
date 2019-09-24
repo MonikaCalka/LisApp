@@ -136,7 +136,9 @@ const resources = {
             "PrevStudy": "Previous study",
             "NextStudy": "Next study",
             "DateOfEmployment": "Date of employment",
-            "LicenseNumber": "License number"
+            "LicenseNumber": "License number",
+            "WrongPesel": "Please enter a valid pesel.",
+            "WrongPeselOrBirthDay": "Please enter a valid pesel or date of birth."
         }
     },
     pl: {
@@ -273,7 +275,9 @@ const resources = {
             "PrevStudy": "Poprzednie badanie",
             "NextStudy": "Następne badanie",
             "DateOfEmployment": "Data zatrudnienia",
-            "LicenseNumber": "Numer licencji"
+            "LicenseNumber": "Numer licencji",
+            "WrongPesel": "Wprowadź prawidłowy pesel.",
+            "WrongPeselOrBirthDay": "Wprowadź prawidłowy pesel lub datę urodzenia."
         }
     }
 };

@@ -69,7 +69,13 @@ class RegistrarPage extends React.Component {
     }
 
     componentDidMount() {
-        getJson("Registrar/GetPatientList", response => this.setState({ data: response }));
+        getJson("Registrar/GetPatientList", response => {
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.setState({ data: responseJson });
+                });
+            }
+        });
     }
 
     setLanguage() {
@@ -93,8 +99,12 @@ class RegistrarPage extends React.Component {
 
     getPatientAndOpenModal = () => {
         getJson("Registrar/GetPatient?id=" + this.state.actualRow.IdPatient, response => {
-            this.setState({ selectedData: response });
-            this.modalRef.current.openModal();
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.setState({ selectedData: responseJson });
+                    this.modalRef.current.openModal();
+                });
+            }
         });
     }
 
@@ -113,18 +123,30 @@ class RegistrarPage extends React.Component {
         });
         this.getPatientAndOpenModal();
     };
-    
+
     addNewPatient = () => {
         postJson("Registrar/AddNewPatient", this.formRef.current.getData(), response => {
-            if (response === "Success") {
-                getJson("Registrar/GetPatientList", response => this.setState({ data: response }));
+            if (response.status === 200) {
+                getJson("Registrar/GetPatientList", response => {
+                    if (response.status === 200) {
+                        response.json().then(responseJson => {
+                            this.setState({ data: responseJson });
+                        });
+                    }
+                });
                 this.modalRef.current.closeModal();
                 this.props.alert.success(<Trans>AddPatientSuccess</Trans>);
             } else {
-                this.modalRef.current.closeModal();
-                this.props.alert.error(<Trans>AddPatientError</Trans>);
+                response.json().then(responseJson => {
+                    if (responseJson.message === "Wrong pesel")
+                        this.props.alert.error(<Trans>WrongPeselOrBirthDay</Trans>);
+                    else {
+                        this.modalRef.current.closeModal();
+                        this.props.alert.error(<Trans>AddPatientError</Trans>);
+                    }
+                });
             }
-        });   
+        });
     };
 
     closeModal = () => {
@@ -133,16 +155,27 @@ class RegistrarPage extends React.Component {
 
     editPatient = () => {
         postJson("Registrar/EditPatient", this.formRef.current.getData(), response => {
-            if (response === "Success") {
-                getJson("Registrar/GetPatientList", response => this.setState({ data: response }));
+            if (response.status === 200) {
+                getJson("Registrar/GetPatientList", response => {
+                    if (response.status === 200) {
+                        response.json().then(responseJson => {
+                            this.setState({ data: responseJson });
+                        });
+                    }
+                });
                 this.modalRef.current.closeModal();
                 this.props.alert.success(<Trans>EditPatientSuccess</Trans>);
-
             } else {
-                this.modalRef.current.closeModal();
-                this.props.alert.error(<Trans>EditPatientError</Trans>);
+                response.json().then(responseJson => {
+                    if (responseJson.message === "Wrong pesel")
+                        this.props.alert.error(<Trans>WrongPeselOrBirthDay</Trans>);
+                    else {
+                        this.modalRef.current.closeModal();
+                        this.props.alert.error(<Trans>EditPatientError</Trans>);
+                    }
+                });
             }
-        }); 
+        });
     };
 
     onAccept = () => {

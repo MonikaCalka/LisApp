@@ -19,6 +19,10 @@ namespace LisApp.Controllers
         [HttpGet]
         public ActionResult GetStudyList()
         {
+            ActionResult wrongAuthorization = checkEmployeeAutorization((long)PositionTypeEnum.Lab);
+            if (wrongAuthorization != null)
+                return wrongAuthorization;
+
             List<StudyModel> studies = DB.StudiesDAO.ReadStudiesListForLab(Lang);
             return new CustomJsonResult { Data = new { data = studies } };
         }
@@ -26,16 +30,23 @@ namespace LisApp.Controllers
         [HttpGet]
         public ActionResult GetOrderedTests(long studyId)
         {
-            List<TestModel> tests = DB.TestsDAO.ReadFullOrderedTestByStudyId(studyId, Lang);
+            ActionResult wrongAuthorization = checkEmployeeAutorization((long)PositionTypeEnum.Lab);
+            if (wrongAuthorization != null)
+                return wrongAuthorization;
 
+            List<TestModel> tests = DB.TestsDAO.ReadFullOrderedTestByStudyId(studyId, Lang);
             return new CustomJsonResult { Data = new { data = tests } };
         }
 
         [HttpGet]
         public ActionResult GetStudy(long id)
         {
+            ActionResult wrongAuthorization = checkEmployeeAutorization((long)PositionTypeEnum.Lab);
+            if (wrongAuthorization != null)
+                return wrongAuthorization;
+
             StudyModel study = DB.StudiesDAO.ReadStudyById(id, Lang);
-            if(study.IdStudy == (long)StatusTypeEnum.Ordered || study.IdStudy == (long)StatusTypeEnum.Ended)
+            if (study.IdStudy == (long)StatusTypeEnum.Ordered || study.IdStudy == (long)StatusTypeEnum.Ended)
             {
                 return null;
             }
@@ -54,10 +65,10 @@ namespace LisApp.Controllers
                         study.IdLab = lab.IdEmployee;
                         study.Lab = lab.FirstName + " " + lab.Surname;
                     }
-                    if(study.IdStatus != (long)StatusTypeEnum.InProgress)
+                    if (study.IdStatus != (long)StatusTypeEnum.InProgress)
                     {
                         study.Result = DB.ResultsDAO.ReadResultByStudyId((long)study.IdStudy);
-                        EmployeeModel resultLab = DB.EmployeesDAO.ReadEmployeeById((long) study.Result.IdEmployee, Lang);
+                        EmployeeModel resultLab = DB.EmployeesDAO.ReadEmployeeById((long)study.Result.IdEmployee, Lang);
                         study.Result.EmployeeName = resultLab.FirstName + " " + resultLab.Surname;
                         study.Result.Verification = new VerificationModel();
                     }
@@ -70,44 +81,46 @@ namespace LisApp.Controllers
         [HttpPost]
         public ActionResult StartStudy(StudyModel study)
         {
+            ActionResult wrongAuthorization = checkEmployeeAutorization((long)PositionTypeEnum.Lab);
+            if (wrongAuthorization != null)
+                return wrongAuthorization;
+
             if (study != null)
             {
                 try
                 {
-                    // get User !!!
-                    long employeeId = 1;
-                    study.IdDoctor = employeeId;
+                    EmployeeModel employee = getEmployeeByUserId((long)IdUser);
+                    study.IdDoctor = (long)employee.IdEmployee;
                     study.IdStatus = (long)StatusTypeEnum.InProgress;
                     study.DateOfStudy = DateTime.Now;
                     DB.StudiesDAO.UpdateStudy(study);
-                    return Json("Success");
+                    return new HttpStatusCodeResult(200);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    return Json("Error");
+                    return throwBadRequest();
                 }
             }
-            else
-            {
-                return Json("Error");
-            }
+            return throwValidateError();
         }
 
         [HttpPost]
         public ActionResult AddResult(StudyModel study)
         {
+            ActionResult wrongAuthorization = checkEmployeeAutorization((long)PositionTypeEnum.Lab);
+            if (wrongAuthorization != null)
+                return wrongAuthorization;
+
             if (study != null)
             {
                 try
                 {
-                    // get User !!!
-                    long employeeId = 1;
-                    
-                    study.Result.IdEmployee = employeeId;
+                    EmployeeModel employee = getEmployeeByUserId((long)IdUser);
+                    study.Result.IdEmployee = (long)employee.IdEmployee;
                     study.Result.IdStudy = (long)study.IdStudy;
 
                     long idResult = (long)DB.ResultsDAO.InsertResult(study.Result);
-                    foreach(TestModel test in study.OrderedTest)
+                    foreach (TestModel test in study.OrderedTest)
                     {
                         ResultUnitModel resultUnit = new ResultUnitModel();
                         resultUnit.IdResult = idResult;
@@ -121,29 +134,29 @@ namespace LisApp.Controllers
 
                     DB.StudiesDAO.ChangeStudyStatus((long)study.IdStudy, (long)StatusTypeEnum.ToVerify);
 
-                    return Json("Success");
+                    return new HttpStatusCodeResult(200);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    return Json("Error");
+                    return throwBadRequest();
                 }
             }
-            else
-            {
-                return Json("Error");
-            }
+            return throwValidateError();
         }
 
         [HttpPost]
         public ActionResult AddVerify(StudyModel study)
         {
+            ActionResult wrongAuthorization = checkEmployeeAutorization((long)PositionTypeEnum.Lab);
+            if (wrongAuthorization != null)
+                return wrongAuthorization;
+
             if (study != null)
             {
                 try
                 {
-                    // get User !!!
-                    long employeeId = 1;
-                    study.Result.Verification.IdEmployee = employeeId;
+                    EmployeeModel employee = getEmployeeByUserId((long)IdUser);
+                    study.Result.Verification.IdEmployee = (long)employee.IdEmployee;
                     study.Result.Verification.IdResult = (long)study.Result.IdResult;
                     if (study.Result.Verification.Positive)
                     {
@@ -152,19 +165,19 @@ namespace LisApp.Controllers
                         DB.StudiesDAO.ChangeStudyStatus((long)study.IdStudy, (long)StatusTypeEnum.Verified);
 
                         List<StudyModel> otherStudies = DB.StudiesDAO.ReadNotVerifiedStudiesListByOrderId((long)study.IdOrder);
-                        if(otherStudies.Count == 0)
+                        if (otherStudies.Count == 0)
                         {
                             DB.OrderDAO.ChangeOrderStatus((long)study.IdOrder, (long)StatusTypeEnum.Ended);
                         }
 
                         return Json("Success");
                     }
-                    else 
+                    else
                     {
                         study.Result.Verification.Description = "-";
                         DB.VerificationsDAO.InsertVerify(study.Result.Verification);
 
-                        study.IdRepeatEmployee = employeeId;
+                        study.IdRepeatEmployee = (long)employee.IdEmployee;
                         DB.StudiesDAO.SetReorederDataOfStudy(study);
                         study.PreviousId = study.IdStudy;
 
@@ -178,7 +191,8 @@ namespace LisApp.Controllers
                         if ((bool)study.NeedNewSample)
                         {
                             DB.StudiesDAO.ChangeStudyStatus(idStudy, (long)StatusTypeEnum.Ordered);
-                        } else
+                        }
+                        else
                         {
                             study.Sample.IdStudy = idStudy;
 
@@ -191,27 +205,27 @@ namespace LisApp.Controllers
                         return Json(idStudy);
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    return Json("Error");
+                    return throwBadRequest();
                 }
             }
-            else
-            {
-                return Json("Error");
-            }
+            return throwValidateError();
         }
 
         [HttpPost]
         public ActionResult RepeatStudy(StudyModel study)
         {
+            ActionResult wrongAuthorization = checkEmployeeAutorization((long)PositionTypeEnum.Lab);
+            if (wrongAuthorization != null)
+                return wrongAuthorization;
+
             if (study != null)
             {
                 try
                 {
-                    // get User !!!
-                    long employeeId = 1;
-                    study.IdRepeatEmployee = employeeId;
+                    EmployeeModel employee = getEmployeeByUserId((long)IdUser);
+                    study.IdRepeatEmployee = (long)employee.IdEmployee;
                     long oldStatusId = study.IdStatus;
                     DB.StudiesDAO.SetReorederDataOfStudy(study);
 
@@ -238,7 +252,7 @@ namespace LisApp.Controllers
                     if (oldStatusId.Equals((long)StatusTypeEnum.ToVerify))
                     {
                         study.Result.Verification.Positive = false;
-                        study.Result.Verification.IdEmployee = employeeId;
+                        study.Result.Verification.IdEmployee = (long)employee.IdEmployee;
                         study.Result.Verification.IdResult = (long)study.Result.IdResult;
 
                         study.Result.Verification.Description = "-";
@@ -247,15 +261,12 @@ namespace LisApp.Controllers
 
                     return Json(idStudy);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    return Json("Error");
+                    return throwBadRequest();
                 }
             }
-            else
-            {
-                return Json("Error");
-            }
+            return throwValidateError();
         }
     }
 }

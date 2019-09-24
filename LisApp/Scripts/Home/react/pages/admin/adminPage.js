@@ -145,7 +145,7 @@ class AdminPage extends React.Component {
 
     addNewEmployee = () => {
         postJson("Admin/AddNewEmployee", this.formRef.current.getData(), response => {
-            if (response === "Success") {
+            if (response.status === 200) {
                 getJson("Admin/GetEmployeeList", response => {
                     if (response.status === 200) {
                         response.json().then(responseJson => {
@@ -153,12 +153,18 @@ class AdminPage extends React.Component {
                         });
                     }
                 });
-            
+
                 this.modalRef.current.closeModal();
                 this.props.alert.success(<Trans>AddEmployeeSuccess</Trans>);
             } else {
-                this.modalRef.current.closeModal();
-                this.props.alert.error(<Trans>AddEmployeeError</Trans>);
+                response.json().then(responseJson => {
+                    if (responseJson.message === "Wrong pesel")
+                        this.props.alert.error(<Trans>WrongPesel</Trans>);
+                    else {
+                        this.modalRef.current.closeModal();
+                        this.props.alert.error(<Trans>AddEmployeeError</Trans>);
+                    }
+                });
             }
         });
     };
@@ -169,7 +175,7 @@ class AdminPage extends React.Component {
 
     editEmployee = () => {
         postJson("Admin/EditEmployee", this.formRef.current.getData(), response => {
-            if (response === "Success") {
+            if (response.status === 200) {
                 getJson("Admin/GetEmployeeList", response => {
                     if (response.status === 200) {
                         response.json().then(responseJson => {
@@ -177,13 +183,18 @@ class AdminPage extends React.Component {
                         });
                     };
                 });
-            
+
                 this.modalRef.current.closeModal();
                 this.props.alert.success(<Trans>EditEmployeeSuccess</Trans>);
-
             } else {
-                this.modalRef.current.closeModal();
-                this.props.alert.error(<Trans>EditEmployeeError</Trans>);
+                response.json().then(responseJson => {
+                    if (responseJson.message === "Wrong pesel")
+                        this.props.alert.error(<Trans>WrongPesel</Trans>);
+                    else {
+                        this.modalRef.current.closeModal();
+                        this.props.alert.error(<Trans>EditEmployeeError</Trans>);
+                    }
+                });
             }
         });
     };
@@ -203,7 +214,7 @@ class AdminPage extends React.Component {
 
     onFire = () => {
         postJson("Admin/RemoveEmployee", this.formRef.current.getData(), response => {
-            if (response === "Success") {
+            if (response.status === 200) {
                 getJson("Admin/GetEmployeeList", response => {
                     if (response.status === 200) {
                         response.json().then(responseJson => {

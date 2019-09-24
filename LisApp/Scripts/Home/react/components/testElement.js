@@ -25,7 +25,7 @@ class TestElement extends Component {
     }
 
     checkValue = (resultValue) => {
-        if (resultValue !== null) {
+        if (resultValue != null && resultValue !== "") {
             const { male, test } = this.props;
             if (male) {
                 if (resultValue < test.NormMinM)

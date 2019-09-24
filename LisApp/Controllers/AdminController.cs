@@ -1,4 +1,5 @@
 ﻿using LisApp.Common;
+using LisApp.Enums;
 using LisApp.Models;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,10 @@ namespace LisApp.Controllers
         [HttpGet]
         public ActionResult GetUserList()
         {
+            ActionResult wrongAuthorization = checkEmployeeAutorization((long)PositionTypeEnum.Admin);
+            if (wrongAuthorization != null)
+                return wrongAuthorization;
+
             List<UserModel> users = DB.UserDAO.ReadUsersList();
             return Json(users, JsonRequestBehavior.AllowGet);
         }
@@ -25,6 +30,10 @@ namespace LisApp.Controllers
         [HttpGet]
         public ActionResult GetEmployeeList()
         {
+            ActionResult wrongAuthorization = checkEmployeeAutorization((long)PositionTypeEnum.Admin);
+            if (wrongAuthorization != null)
+                return wrongAuthorization;
+
             List<EmployeeModel> users = DB.EmployeesDAO.ReadEmployeesListForAdmin(Lang);
             return Json(users, JsonRequestBehavior.AllowGet);
         }
@@ -32,6 +41,10 @@ namespace LisApp.Controllers
         [HttpGet]
         public ActionResult GetEmployee(long id)
         {
+            ActionResult wrongAuthorization = checkEmployeeAutorization((long)PositionTypeEnum.Admin);
+            if (wrongAuthorization != null)
+                return wrongAuthorization;
+
             EmployeeModel user = DB.EmployeesDAO.ReadEmployeeById(id, Lang);
             return new CustomJsonResult { Data = new { data = user } };
         }
@@ -39,10 +52,17 @@ namespace LisApp.Controllers
         [HttpPost]
         public ActionResult AddNewEmployee(EmployeeModel employee)
         {
+            ActionResult wrongAuthorization = checkEmployeeAutorization((long)PositionTypeEnum.Admin);
+            if (wrongAuthorization != null)
+                return wrongAuthorization;
+
             List<ValidationResult> results = new List<ValidationResult>();
             ValidationContext context = new ValidationContext(employee, null, null);
             if (employee != null && Validator.TryValidateObject(employee, context, results, true))
             {
+                ActionResult wrongPesel = checkPesel(employee.Pesel, employee.Sex);
+                if (wrongPesel != null)
+                    return wrongPesel;
                 try
                 {
                     long id = (long)DB.EmployeesDAO.InsertEmployee(employee);
@@ -51,76 +71,67 @@ namespace LisApp.Controllers
 
                     DB.UserDAO.InsertUser(user);
 
-                    return Json("Success");
+                    return new HttpStatusCodeResult(200);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    return Json("Error");
+                    return throwBadRequest();
                 }
             }
-            else
-            {
-                return Json("Error");
-            }
+            return throwValidateError();
         }
 
         [HttpPost]
         public ActionResult EditEmployee(EmployeeModel employee)
         {
+            ActionResult wrongAuthorization = checkEmployeeAutorization((long)PositionTypeEnum.Admin);
+            if (wrongAuthorization != null)
+                return wrongAuthorization;
+
             List<ValidationResult> results = new List<ValidationResult>();
             ValidationContext context = new ValidationContext(employee, null, null);
             if (employee != null && employee.IdEmployee != null && Validator.TryValidateObject(employee, context, results, true))
             {
-                // TO DO: LOGGED USER
+                ActionResult wrongPesel = checkPesel(employee.Pesel, employee.Sex);
+                if (wrongPesel != null)
+                    return wrongPesel;
                 try
                 {
+                    EmployeeModel employeeChanger = getEmployeeByUserId((long)IdUser);
                     EmployeeModel oldData = DB.EmployeesDAO.ReadEmployeeById(employee.IdEmployee, Lang);
-
-
-                    DB.EmployeesDAO.InsertHistoryDataOfEmployee(oldData, "user");
+                    DB.EmployeesDAO.InsertHistoryDataOfEmployee(oldData, employeeChanger.FirstName + employeeChanger.Surname);
                     DB.EmployeesDAO.UpdateEmployee(employee);
-                    return Json("Success");
+                    return new HttpStatusCodeResult(200);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    return Json("Error");
+                    return throwBadRequest();
                 }
             }
-            else
-            {
-                return Json("Error");
-            }
+            return throwValidateError();
         }
 
         [HttpPost]
         public ActionResult RemoveEmployee(EmployeeModel employee)
         {
+            ActionResult wrongAuthorization = checkEmployeeAutorization((long)PositionTypeEnum.Admin);
+            if (wrongAuthorization != null)
+                return wrongAuthorization;
+
             List<ValidationResult> results = new List<ValidationResult>();
             ValidationContext context = new ValidationContext(employee, null, null);
             if (employee != null && employee.IdEmployee != null && Validator.TryValidateObject(employee, context, results, true))
             {
-                // TO DO: LOGGED USER
-         //       try
-         //       {
-                    employee.DateOfLaying = DateTime.Now;
-                    UserModel user = DB.UserDAO.ReadUserByEmployeeId((long)employee.IdEmployee);
-                    user.InUse = false;
+                employee.DateOfLaying = DateTime.Now;
+                UserModel user = DB.UserDAO.ReadUserByEmployeeId((long)employee.IdEmployee);
+                user.InUse = false;
 
-                    DB.EmployeesDAO.UpdateEmployee(employee);
-                    DB.UserDAO.UpdateUser(user);
-                    
-                    return Json("Success");
-     //           }
-      //          catch (Exception ex)
-      //          {
-     //               return Json("Error");
-      //          }
+                DB.EmployeesDAO.UpdateEmployee(employee);
+                DB.UserDAO.UpdateUser(user);
+
+                return new HttpStatusCodeResult(200);
             }
-            else
-            {
-                return Json("Error");
-            }
+            return throwValidateError();
         }
-
     }
 }

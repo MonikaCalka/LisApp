@@ -1,6 +1,7 @@
 ﻿using LisApp.Common;
 using LisApp.Enums;
 using LisApp.Models;
+using System;
 using System.Collections.Specialized;
 using System.Net;
 using System.Web.Mvc;
@@ -15,15 +16,15 @@ namespace LisApp.Controllers
             get
             {
                 NameValueCollection headers = Request.Headers;
-
                 string[] allKeys = headers.AllKeys;
                 foreach (string key in allKeys)
                 {
                     if (key.Equals("Token"))
                     {
                         string[] values = headers.GetValues(key);
-                        long user = DB.SessionsDAO.ReadSessionByToken(values[0]).IdUser;
-                        return user;
+                        SessionModel session = DB.SessionsDAO.ReadSessionByToken(values[0]);
+                        if (session != null)
+                            return session.IdUser;
                     }
                 }
                 return null;
@@ -35,7 +36,6 @@ namespace LisApp.Controllers
             get
             {
                 NameValueCollection headers = Request.Headers;
-
                 string[] allKeys = headers.AllKeys;
                 foreach (string key in allKeys)
                 {
@@ -115,6 +115,38 @@ namespace LisApp.Controllers
         {
             Response.StatusCode = (int)HttpStatusCode.BadRequest;
             return Json(new { message = "Validation Error", description = "Incorrect data or incomplete model." }, JsonRequestBehavior.AllowGet);
+        }
+
+        private bool correctPesel(string pesel, string sex)
+        {
+            char[] chars = pesel.ToCharArray();
+            if (!(Char.GetNumericValue(chars[4]) >= 0 && Char.GetNumericValue(chars[4]) <= 3))
+                return false;
+            if ((Char.GetNumericValue(chars[9]) % 2 == 0 && sex == "M") || (Char.GetNumericValue(chars[9]) % 2 != 0 && sex == "F"))
+                return false;
+            int sum = 0;
+            int[] weights = new int[10] { 1, 3, 7, 9, 1, 3, 7, 9, 1, 3 };
+            for (int i = 0; i < chars.Length - 1; i++)
+            {
+                int charWithWeight = (int)Char.GetNumericValue(chars[i]) * weights[i];
+                sum += charWithWeight % 10;
+            }
+            int endChar = 10 - (sum % 10);
+            if (Char.GetNumericValue(chars[10]) != endChar)
+                return false;
+            return true;
+        }
+
+        public ActionResult checkPesel(string pesel, string sex)
+        {
+            bool validPesel = correctPesel(pesel, sex);
+            if (!validPesel)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(new { message = "Wrong pesel", description = "Incorrect pesel." }, JsonRequestBehavior.AllowGet);
+            }
+            else
+                return null;
         }
     }
 }

@@ -53,10 +53,14 @@ class EmployeeForm extends React.Component {
 
     componentDidMount() {
         getDic("position", response => {
-            this.setState({ positionOptions: response });
+            response.json().then(responseJson => {
+                this.setState({ positionOptions: responseJson });
+            });
         });
         getDic("ward", response => {
-            this.setState({ wardOptions: response });
+            response.json().then(responseJson => {
+                this.setState({ wardOptions: responseJson });
+            });
         });
     }
 

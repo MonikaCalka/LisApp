@@ -12,6 +12,9 @@ class EmployeeDetailTab extends Component {
         const target = event.target;
         this.props.onModelChange(target.name, target.value);
     }
+    onOptionChange = (selectName, selectedOption) => {
+        this.props.onModelChange(selectName, selectedOption === null ? "" : selectedOption.value);
+    };
 
     onNext = () => {
         const { onTabChange, model } = this.props;

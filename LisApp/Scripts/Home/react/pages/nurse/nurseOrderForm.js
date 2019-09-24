@@ -30,13 +30,17 @@ class NurseOrderForm extends React.Component {
 
     constructor(props) {
         super(props);
-        
+
         this.state = getStateFromPropsData(props.data.data, emptyState);
     }
 
     componentDidMount() {
         getJson("Doctor/GetProfileSelect", response => {
-            this.setState({ profileOptions: response });
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.setState({ profileOptions: responseJson });
+                });
+            }
         });
     }
 

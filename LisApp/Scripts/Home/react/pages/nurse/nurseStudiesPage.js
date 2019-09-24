@@ -86,8 +86,15 @@ class NurseStudiesPage extends React.Component {
     }
 
     setStudyList() {
-        getJson("Nurse/GetStudyList", response => this.setState({ data: response.data }));
+        getJson("Nurse/GetStudyList", response => {
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.setState({ data: responseJson.data });
+                });
+            }
+        });
     }
+
     setLanguage() {
         this.setState({ actualLang: i18n.language });
     }
@@ -102,8 +109,12 @@ class NurseStudiesPage extends React.Component {
 
     getStudyAndOpenModal = () => {
         getJson("Nurse/GetStudy?id=" + this.state.actualRow.IdStudy, response => {
-            this.setState({ selectedData: response });
-            this.modalRef.current.openModal();
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.setState({ selectedData: responseJson });
+                    this.modalRef.current.openModal();
+                });
+            }
         });
     }
 

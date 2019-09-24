@@ -22,7 +22,7 @@ namespace LisApp.Models
 
         [Required]
         [StringLength(11)]
-        [RegularExpression("^([0-9]{11})$")]
+        [RegularExpression("^(([0-9]{4}[0-3][0-9]{6}))$")]
         public string Pesel { get; set; }
 
         [Required]

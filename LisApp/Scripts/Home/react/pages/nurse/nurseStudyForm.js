@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import { Trans } from 'react-i18next';
 import { getStateFromPropsData } from '../../services/getStateFromPropsData';
-import { getJson, postJson } from '../../services/rests';
+import { postJson } from '../../services/rests';
 import StudyDetailsTab from '../doctor/tabs/studyDetailsTab';
 import TabNavigator from '../../components/tabNavigator';
 import SampleTab from './tabs/sampleTab';
@@ -49,17 +49,18 @@ class NurseStudyForm extends React.Component {
 
     onRegisterSample = () => {
         postJson("Nurse/RegisterSample", this.state, response => {
-            if (response === "Error") {
-                this.props.alert.error(<Trans>RegisterSampleError</Trans>);
+            if (response.status === 200) {
+                response.json().then(responseJson => {
+                    this.props.alert.info(<Trans>MarkSample</Trans>);
+                    this.setState(getStateFromPropsData(responseJson.data, emptyState));
+                    this.setState({
+                        actualTabIndex: 1,
+                        refreshTable: true
+                    });
+                });
             }
             else {
-                console.log(response);
-                this.props.alert.info(<Trans>MarkSample</Trans>);
-                this.setState(getStateFromPropsData(response.data, emptyState));
-                this.setState({
-                    actualTabIndex: 1,
-                    refreshTable: true
-                });
+                this.props.alert.error(<Trans>RegisterSampleError</Trans>);
             }
         });
     };
@@ -80,7 +81,7 @@ class NurseStudyForm extends React.Component {
     }
 
     render() {
-        const { title, mode, onAccept, onCancel } = this.props;
+        const { title, mode } = this.props;
         const { actualTabIndex } = this.state;
 
         let actualTab = null;
