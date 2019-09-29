@@ -8,6 +8,8 @@ namespace LisApp.IDAO
         List<StudyModel> ReadStudiesListForDoctors(long idEmployee, string lang);
         List<StudyModel> ReadStudiesListForNurse(string lang);
         List<StudyModel> ReadStudiesListForLab(string lang);
+        List<StudyModel> ReadStudiesListForPatient(long idPatient, string lang);
+
         StudyModel ReadStudyById(long? id, string lang);
         List<StudyModel> ReadStudiesListByOrderId(long? id);
 

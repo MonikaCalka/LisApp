@@ -67,6 +67,7 @@ class DoctorStudiesPage extends React.Component {
             actualRow: null,
             actualLang: 'pl',
             disableMode: true,
+            disableReport: true,
             titleOfModal: "",
             mode: "",
             postResult: "",
@@ -100,7 +101,8 @@ class DoctorStudiesPage extends React.Component {
     rowClick = (row) => {
         this.setState({
             actualRow: row,
-            disableMode: row === null
+            disableMode: row === null,
+            disableReport: row === null || row.IdStatus !== 5
         });
     };
 
@@ -125,55 +127,6 @@ class DoctorStudiesPage extends React.Component {
         win.focus;
 
     }
-
-    //getReport = () => {
-    //    var win = window.open();
-
-    //    getJson("Doctor/GetReport?id=" + this.state.actualRow.IdStudy, response => {
-    //        //var data = new Blob([res.response], { type: 'application/pdf' });
-    //        //var csvURL = window.URL.createObjectURL(data);
-    //        //var tempLink = document.createElement('a');
-    //        //tempLink.href = csvURL;
-    //        //tempLink.setAttribute('download', 'filename.pdf');
-    //        //tempLink.click();
-
-    //        win.location = response.url;
-    //      //  win.Blob = new Blow(response);
-
-    //        win.focus();
-
-    //    });
-
-
-    //}
-
-    //getReport = () => {
-
-    //    getJson("Doctor/GetReport?id=" + this.state.actualRow.IdStudy, response => {
-
-    //        response.text().then(function (text) {
-    //            var binaryString = text;
-    //            var binaryLen = binaryString.length;
-    //            var bytes = new Uint8Array(binaryLen);
-    //            for (var i = 0; i < binaryLen; i++) {
-    //                var ascii = binaryString.charCodeAt(i);
-    //                bytes[i] = ascii;
-    //            }
-
-
-    //            var data = new Blob([bytes], { type: 'application/pdf' });
-    //            var csvURL = window.URL.createObjectURL(data);
-    //            var tempLink = document.createElement('a');
-    //            tempLink.href = csvURL;
-    //            tempLink.setAttribute('download', 'filename.pdf');
-    //            tempLink.click();
-    //        });
-
-    //    });
-
-
-    //}
-
 
     openShowModal = () => {
         this.setState({
@@ -200,7 +153,7 @@ class DoctorStudiesPage extends React.Component {
         return (
             <div>
                 <CustomButton onClick={this.openShowModal} text={<Trans>DetailsAndResult</Trans>} disable={this.state.disableMode} />
-                <CustomButton onClick={this.getReport} text={<Trans>Report</Trans>} disable={this.state.disableMode} />
+                <CustomButton onClick={this.getReport} text={<Trans>Report</Trans>} disable={this.state.disableReport} />
 
 
                 <CustomModal ref={this.modalRef}>

@@ -8,6 +8,7 @@ import NurseStudiesPage from './pages/nurse/nurseStudiesPage';
 import LabPage from './pages/lab/labPage';
 import AdminPage from './pages/admin/adminPage';
 import RegistrarPage from './pages/registrar/registrarPage';
+import PatientPage from './pages/patient/patientPage';
 import i18n from './i18n';
 import { Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from './components/alertTemplate';
@@ -93,6 +94,9 @@ class App extends React.Component {
                                         <Link to="/nursestudies/">NurseStudies</Link>
                                     </li>
                                     <li>
+                                        <Link to="/patient/">Patient</Link>
+                                    </li>
+                                    <li>
                                         <Link to="/login/">Login</Link>
                                     </li>
                                 </ul>
@@ -107,6 +111,7 @@ class App extends React.Component {
                             <Route path="/admin/" component={AdminPage} />
                             <Route path="/registrar/" component={RegistrarPage} />
                             <Route path="/login/" component={LoginPage} />
+                            <Route path="/patient/" component={PatientPage} />
                         </div>
                     </AlertProvider>
                 </Router>

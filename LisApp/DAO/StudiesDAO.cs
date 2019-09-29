@@ -112,6 +112,30 @@ namespace LisApp.DAO
             return BaseDAO.Select(query, ReadStudyModelForList);
         }
 
+        public List<StudyModel> ReadStudiesListForPatient(long idPatient, string lang)
+        {
+            string query = $@"
+                select s.IdStudy, s.IdOrder, s.IdStatus, stt.Name as Status, prt.Name as Priority,
+                    p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, 
+                    pft.Name as Profile
+                from Studies s
+                join Orders o on s.IdOrder = o.IdOrder
+                join Patients p on o.IdPatient = p.IdPatient
+                join Status st on s.IdStatus = st.IdStatus
+                join StatusTranslations stt on st.IdStatus = stt.IdStatus
+                join Priorities pr on o.IdPriority = pr.IdPriority
+                join PriorityTranslations prt on pr.IdPriority = prt.IdPriority
+                join Profiles pf on s.IdProfile = pf.IdProfile
+                join ProfileTranslations pft on pf.IdProfile = pft.IdProfile
+                where stt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
+                    and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
+                    and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
+                    and o.IdPatient = {idPatient}
+            ";
+
+            return BaseDAO.Select(query, ReadStudyModelForList);
+        }
+
         public List<StudyModel> ReadStudiesListByOrderId(long? id)
         {
             string query = $@"

@@ -258,6 +258,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NurseController.cs" />
+    <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\RegistrarController.cs" />
     <Compile Include="DAO\BaseDAO.cs" />
     <Compile Include="DAO\CustomReader.cs" />
@@ -379,6 +380,8 @@
     <Content Include="Scripts\Home\react\pages\nurse\nurseStudyForm.js" />
     <Content Include="Scripts\Home\react\pages\nurse\tabs\nurseOrderDetailsTab.js" />
     <Content Include="Scripts\Home\react\pages\nurse\tabs\sampleTab.js" />
+    <Content Include="Scripts\Home\react\pages\patient\patientPage.js" />
+    <Content Include="Scripts\Home\react\pages\patient\patientStudyForm.js" />
     <Content Include="Scripts\Home\react\pages\registrar\registrarForm.js" />
     <Content Include="Scripts\Home\react\pages\registrar\registrarPage.js" />
     <Content Include="Scripts\Home\react\pages\registrar\tabs\patientAddressTab.js" />
