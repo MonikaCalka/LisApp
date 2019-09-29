@@ -39,4 +39,6 @@ const getDic = (type, callback) => {
     }
 };
 
-export { getJson, postJson, getDic };
+const getUrl = "http://localhost:2096/";
+
+export { getJson, postJson, getDic, getUrl };

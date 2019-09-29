@@ -3,8 +3,12 @@ using LisApp.Enums;
 using LisApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
+using System.Net.Http;
+using System.Web;
+using System.Web.Http.Results;
 using System.Web.Mvc;
 
 namespace LisApp.Controllers
@@ -119,15 +123,23 @@ namespace LisApp.Controllers
             if (wrongAuthorization != null)
                 return wrongAuthorization;
 
-            StudyModel study = DB.StudiesDAO.ReadStudyById(id, Lang);
-            study.OrderedTest = DB.TestsDAO.ReadFullOrderedTestByStudyId((long)study.IdStudy, Lang);
+            StudyModel study = getStudyModel(id, Lang);
+            if (study == null)
+                return throwBadRequest();
+            return new CustomJsonResult { Data = new { data = study } };
+        }
+
+        private StudyModel getStudyModel(long id, string lang)
+        {
+            StudyModel study = DB.StudiesDAO.ReadStudyById(id, lang);
+            study.OrderedTest = DB.TestsDAO.ReadFullOrderedTestByStudyId((long)study.IdStudy, lang);
 
             if (study.IdStatus != (long)StatusTypeEnum.Ordered)
             {
                 study.Sample = DB.SamplesDAO.ReadSampleByStudyId((long)study.IdStudy);
                 if (study.IdStatus != (long)StatusTypeEnum.TakenSample)
                 {
-                    EmployeeModel lab = DB.EmployeesDAO.ReadEmployeeByStudyId((long)study.IdStudy, Lang);
+                    EmployeeModel lab = DB.EmployeesDAO.ReadEmployeeByStudyId((long)study.IdStudy, lang);
                     if (lab != null)
                     {
                         study.IdLab = lab.IdEmployee;
@@ -138,7 +150,7 @@ namespace LisApp.Controllers
                         try
                         {
                             study.Result = DB.ResultsDAO.ReadResultByStudyId((long)study.IdStudy);
-                            EmployeeModel resultLab = DB.EmployeesDAO.ReadEmployeeById((long)study.Result.IdEmployee, Lang);
+                            EmployeeModel resultLab = DB.EmployeesDAO.ReadEmployeeById((long)study.Result.IdEmployee, lang);
                             study.Result.EmployeeName = resultLab.FirstName + " " + resultLab.Surname;
                             study.Result.Verification = new VerificationModel();
                             if (study.IdStatus != (long)StatusTypeEnum.ToVerify)
@@ -149,18 +161,17 @@ namespace LisApp.Controllers
                                 }
                                 catch (Exception)
                                 {
-                                    return throwBadRequest();
+                                    return null;
                                 }
                             }
                         }
                         catch (Exception)
                         {
-                            return throwBadRequest();
+                            return null;
                         }
                     }
                 }
-            }
-            return new CustomJsonResult { Data = new { data = study } };
+            } return study;
         }
 
         [HttpPost]
@@ -285,6 +296,30 @@ namespace LisApp.Controllers
             }
             else
                 return throwValidateError();
+        }
+
+        [HttpGet]
+        public ActionResult GetReport(long id, string lang, string t)
+        {
+            string token = t.Replace("xMl3Jkaaswss", "+").Replace("Por21Ld105sE78", "/").Replace("Ml32XXASsd1dd", "=");
+            SessionModel session = DB.SessionsDAO.ReadSessionByToken(token);
+            if (session == null)
+                return throwValidateError();
+
+            EmployeeModel employee = DB.EmployeesDAO.ReadEmployeeByUserId(session.IdUser, lang);
+            if (employee == null || employee.IdEmployee == null || employee.IdPosition != (long)PositionTypeEnum.Doctor)
+                return throwValidateError();
+
+            ReportGenerator rg = new ReportGenerator();
+
+            StudyModel study = getStudyModel(id, lang);
+            if (study == null)
+                return throwBadRequest();
+
+            byte[] report = rg.createPdf(study, lang);
+         //   return report;
+            return File(report, "application/pdf");
+
         }
     }
 }

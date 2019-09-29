@@ -3,7 +3,7 @@ import { Trans } from 'react-i18next';
 import CustomModal from '../../components/customModal';
 import CustomTable from '../../components/customTable';
 import CustomButton from '../../components/customButton';
-import { getJson } from '../../services/rests';
+import { getJson, getUrl } from '../../services/rests';
 import { withAlert } from 'react-alert';
 import i18n from '../../i18n';
 import StudyForm from './studyForm';
@@ -108,13 +108,72 @@ class DoctorStudiesPage extends React.Component {
         getJson("Doctor/GetStudy?id=" + id, response => {
             if (response.status === 200) {
                 response.json().then(responseJson => {
-                    this.setState({ selectedData: responseJson });
+                    this.setState({ selectedData: responseJson.data });
                     this.modalRef.current.openModal();
                     console.log(response);
                 });
             }
+            console.log(response);
         });
     }
+
+    getReport = () => {
+
+        let win = window.open(getUrl + "Doctor/GetReport?id=" + this.state.actualRow.IdStudy + "&lang=" + i18n.language + "&t="
+            + localStorage.getItem("token").toString().replace('+', 'xMl3Jkaaswss').replace('/', 'Por21Ld105sE78').replace('=', 'Ml32XXASsd1dd')
+            , "_blank");
+        win.focus;
+
+    }
+
+    //getReport = () => {
+    //    var win = window.open();
+
+    //    getJson("Doctor/GetReport?id=" + this.state.actualRow.IdStudy, response => {
+    //        //var data = new Blob([res.response], { type: 'application/pdf' });
+    //        //var csvURL = window.URL.createObjectURL(data);
+    //        //var tempLink = document.createElement('a');
+    //        //tempLink.href = csvURL;
+    //        //tempLink.setAttribute('download', 'filename.pdf');
+    //        //tempLink.click();
+
+    //        win.location = response.url;
+    //      //  win.Blob = new Blow(response);
+
+    //        win.focus();
+
+    //    });
+
+
+    //}
+
+    //getReport = () => {
+
+    //    getJson("Doctor/GetReport?id=" + this.state.actualRow.IdStudy, response => {
+
+    //        response.text().then(function (text) {
+    //            var binaryString = text;
+    //            var binaryLen = binaryString.length;
+    //            var bytes = new Uint8Array(binaryLen);
+    //            for (var i = 0; i < binaryLen; i++) {
+    //                var ascii = binaryString.charCodeAt(i);
+    //                bytes[i] = ascii;
+    //            }
+
+
+    //            var data = new Blob([bytes], { type: 'application/pdf' });
+    //            var csvURL = window.URL.createObjectURL(data);
+    //            var tempLink = document.createElement('a');
+    //            tempLink.href = csvURL;
+    //            tempLink.setAttribute('download', 'filename.pdf');
+    //            tempLink.click();
+    //        });
+
+    //    });
+
+
+    //}
+
 
     openShowModal = () => {
         this.setState({
@@ -141,6 +200,8 @@ class DoctorStudiesPage extends React.Component {
         return (
             <div>
                 <CustomButton onClick={this.openShowModal} text={<Trans>DetailsAndResult</Trans>} disable={this.state.disableMode} />
+                <CustomButton onClick={this.getReport} text={<Trans>Report</Trans>} disable={this.state.disableMode} />
+
 
                 <CustomModal ref={this.modalRef}>
                     <StudyForm
