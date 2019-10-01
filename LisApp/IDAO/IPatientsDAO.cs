@@ -11,7 +11,7 @@ namespace LisApp.IDAO
         List<PatientModel> ReadPatientsList();
         PatientModel ReadPatientById(long? id);
 
-        void InsertPatient(PatientModel p);
+        long? InsertPatient(PatientModel p);
 
         void UpdatePatient(PatientModel p);
         void InsertHistoryDataOfPatient(PatientModel p, string user);

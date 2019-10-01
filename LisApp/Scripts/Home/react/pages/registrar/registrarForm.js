@@ -26,6 +26,7 @@ const emptyState  = {
     ContactPersonSurname: "",
     ContactPersonPesel: "",
     ContactPersonPhone: "",
+    Password: "",
     actualTabIndex: 0
 };
 

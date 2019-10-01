@@ -3,10 +3,11 @@ import { Trans } from 'react-i18next';
 import CustomModal from '../../components/customModal';
 import CustomTable from '../../components/customTable';
 import CustomButton from '../../components/customButton';
-import { getJson, postJson } from '../../services/rests';
+import { getJson } from '../../services/rests';
 import { withAlert } from 'react-alert';
 import i18n from '../../i18n';
 import NurseOrderForm from './nurseOrderForm';
+import { withRouter } from 'react-router-dom';
 
 const columns = [
     {
@@ -116,10 +117,15 @@ class NursePage extends React.Component {
         this.modalRef.current.closeModal();
     }
 
+    goToStudyList = () => {
+        this.props.history.push("/nursestudies");
+    }
+
     render() {
         return (
             <div>
-                <CustomButton onClick={this.openShowModal} text={<Trans>Details</Trans>} disable={this.state.disableMode} />
+                <CustomButton onClick={this.openShowModal} text={<Trans>Details</Trans>} disable={this.state.disableMode} image="order_show.png" />
+                <CustomButton onClick={this.goToStudyList} text={<Trans>ListOfStudy</Trans>} image="study_go_to.png" />
 
                 <CustomModal ref={this.modalRef}>
                     <NurseOrderForm
@@ -146,4 +152,4 @@ class NursePage extends React.Component {
     }
 }
 
-export default withAlert()(NursePage);
+export default withRouter(withAlert()(NursePage));

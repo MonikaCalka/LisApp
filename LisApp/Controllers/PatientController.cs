@@ -15,26 +15,28 @@ namespace LisApp.Controllers
         [HttpGet]
         public ActionResult GetStudyList()
         {
-            //ActionResult wrongAuthorization = checkEmployeeAutorization((long)PositionTypeEnum.Doctor);
-            //if (wrongAuthorization != null)
-            //    return wrongAuthorization;
+            ActionResult wrongAuthorization = checkPatient();
+            if (wrongAuthorization != null)
+                return wrongAuthorization;
 
-            //  EmployeeModel employee = getEmployeeByUserId((long)IdUser);
-            long patientId = 1;
-            List<StudyModel> studies = DB.StudiesDAO.ReadStudiesListForPatient((long)patientId, Lang);
+            PatientModel patient = getPatientByUserId((long)IdUser);
+            List<StudyModel> studies = DB.StudiesDAO.ReadStudiesListForPatient((long)patient.IdPatient, Lang);
             return new CustomJsonResult { Data = new { data = studies } };
         }
 
         [HttpGet]
         public ActionResult GetStudy(long id)
         {
-            //ActionResult wrongAuthorization = checkEmployeeAutorization((long)PositionTypeEnum.Doctor);
-            //if (wrongAuthorization != null)
-            //    return wrongAuthorization;
+            ActionResult wrongAuthorization = checkPatient();
+            if (wrongAuthorization != null)
+                return wrongAuthorization;
 
+            PatientModel patient = getPatientByUserId((long)IdUser);
             StudyModel study = getStudyModel(id, Lang);
             if (study == null)
                 return throwBadRequest();
+            if (patient.IdPatient != study.IdPatient)
+                return throwValidateError();
             return new CustomJsonResult { Data = new { data = study } };
         }
 
@@ -75,23 +77,21 @@ namespace LisApp.Controllers
         [HttpGet]
         public ActionResult GetReport(long id, string lang, string t)
         {
-            //string token = t.Replace("xMl3Jkaaswss", "+").Replace("Por21Ld105sE78", "/").Replace("Ml32XXASsd1dd", "=");
-            //SessionModel session = DB.SessionsDAO.ReadSessionByToken(token);
-            //if (session == null)
-            //    return throwValidateError();
+            ActionResult wrongAuthorization = checkPatient();
+            if (wrongAuthorization != null)
+                return wrongAuthorization;
 
-            //EmployeeModel employee = DB.EmployeesDAO.ReadEmployeeByUserId(session.IdUser, lang);
-            //if (employee == null || employee.IdEmployee == null || employee.IdPosition != (long)PositionTypeEnum.Doctor)
-            //    return throwValidateError();
+            PatientModel patient = getPatientByUserId((long)IdUser);
 
             ReportGenerator rg = new ReportGenerator();
 
             StudyModel study = getStudyModel(id, lang);
             if (study == null)
                 return throwBadRequest();
+            if (patient.IdPatient != study.IdPatient)
+                return throwValidateError();
 
             byte[] report = rg.createPdf(study, lang);
-            //   return report;
             return File(report, "application/pdf");
 
         }

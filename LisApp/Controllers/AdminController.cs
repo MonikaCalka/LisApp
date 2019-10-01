@@ -67,7 +67,8 @@ namespace LisApp.Controllers
                 {
                     long id = (long)DB.EmployeesDAO.InsertEmployee(employee);
 
-                    UserModel user = new UserModel(id, employee.Login, employee.Login, null);
+                    UserModel user = new UserModel(id, createLogin(employee.FirstName, employee.Surname), 
+                        DB.DictionaryDAO.ReadDictionaryById(DictionaryTypesEnum.Positions, employee.IdPosition, "pl").label, null);
 
                     DB.UserDAO.InsertUser(user);
 

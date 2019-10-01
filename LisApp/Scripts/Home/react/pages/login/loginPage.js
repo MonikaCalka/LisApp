@@ -26,10 +26,10 @@ class LoginPage extends React.Component {
             if (response.status === 200) {
                 response.json().then(responseJson => {
                     localStorage.setItem("token", responseJson);
-                    this.props.alert.success(<Trans i18nKey="RepeatSuccess" values={{ id: responseJson }} />);
+                    this.props.alert.success(<Trans>LoginSuccess</Trans>);
                 });
             } else {
-                this.props.alert.error(<Trans>VerifyError</Trans>);
+                this.props.alert.error(<Trans>LoginError</Trans>);
             }
         });
     }
@@ -42,7 +42,7 @@ class LoginPage extends React.Component {
                 <ValidatorForm id="modalform" onSubmit={this.onLogin} >
                     <div>
                         <CustomInput labeltext="Login" onChange={this.handleChange} value={this.state.Login} name="Login" />
-                        <CustomInput labeltext="Password" onChange={this.handleChange} value={this.state.Password} name="Password" />
+                        <CustomInput labeltext="Password" onChange={this.handleChange} value={this.state.Password} name="Password" type="password" />
                         <button type="submit">Login</button>
                     </div>
                 </ValidatorForm>

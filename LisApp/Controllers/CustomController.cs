@@ -90,6 +90,22 @@ namespace LisApp.Controllers
                 return checkUser();
         }
 
+        public ActionResult checkPatient()
+        {
+            if (checkUser() == null)
+            {
+                PatientModel patient = getPatientByUserId((long)IdUser);
+                if (patient == null || patient.IdPatient == null)
+                {
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json(new { message = "Authorization failed", description = "Is not patient" }, JsonRequestBehavior.AllowGet);
+                }
+                return null;
+            }
+            else
+                return checkUser();
+        }
+
         public ActionResult checkEmployeeAutorization(long position)
         {
             if (checkUser() == null)
@@ -147,6 +163,27 @@ namespace LisApp.Controllers
             }
             else
                 return null;
+        }
+
+        protected string createLogin(string firstName, string lastName)
+        {
+            string login = firstName[0] + lastName;
+            login = login.ToLower();
+
+            UserModel user = DB.UserDAO.checkLogin(login);
+            if (user != null)
+            {
+                int i = 0;
+                string newLogin = "";
+                while (user != null)
+                {
+                    i++;
+                    newLogin = login + i;
+                    user = DB.UserDAO.checkLogin(newLogin);
+                }
+                login = newLogin;
+            }
+            return login;
         }
     }
 }

@@ -143,8 +143,8 @@ class PatientPage extends React.Component {
     render() {
         return (
             <div>
-                <CustomButton onClick={this.openShowModal} text={<Trans>DetailsAndResult</Trans>} disable={this.state.disableMode} />
-                <CustomButton onClick={this.getReport} text={<Trans>Report</Trans>} disable={this.state.disableReport} />
+                <CustomButton onClick={this.openShowModal} text={<Trans>DetailsAndResult</Trans>} disable={this.state.disableMode} image="study_show.png"/>
+                <CustomButton onClick={this.getReport} text={<Trans>Report</Trans>} disable={this.state.disableReport} image="result_report.png"/>
 
                 <CustomModal ref={this.modalRef}>
                     <PatientStudyForm

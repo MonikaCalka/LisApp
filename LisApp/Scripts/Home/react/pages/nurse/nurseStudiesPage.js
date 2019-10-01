@@ -3,10 +3,11 @@ import { Trans } from 'react-i18next';
 import CustomModal from '../../components/customModal';
 import CustomTable from '../../components/customTable';
 import CustomButton from '../../components/customButton';
-import { getJson, postJson } from '../../services/rests';
+import { getJson } from '../../services/rests';
 import { withAlert } from 'react-alert';
 import i18n from '../../i18n';
 import NurseStudyForm from './nurseStudyForm';
+import { withRouter } from 'react-router-dom';
 
 
 const columns = [
@@ -142,12 +143,16 @@ class NurseStudiesPage extends React.Component {
         }
     }
 
+    goToOrderList = () => {
+        this.props.history.push("/nurse");
+    }
 
     render() {
         return (
             <div>
-                <CustomButton onClick={this.openRegisterSampleModal} text={<Trans>RegisterSample</Trans>} disable={this.state.disableRegister} />
-                <CustomButton onClick={this.openShowModal} text={<Trans>Details</Trans>} disable={this.state.disableMode} />
+                <CustomButton onClick={this.openRegisterSampleModal} text={<Trans>RegisterSample</Trans>} disable={this.state.disableRegister} image="sample_add.png" />
+                <CustomButton onClick={this.openShowModal} text={<Trans>Details</Trans>} disable={this.state.disableMode} image="study_show.png" />
+                <CustomButton onClick={this.goToOrderList} text={<Trans>ListOfOrder</Trans>} image="order_go_to.png" />
 
                 <CustomModal ref={this.modalRef}>
                     <NurseStudyForm
@@ -173,4 +178,4 @@ class NurseStudiesPage extends React.Component {
     }
 }
 
-export default withAlert()(NurseStudiesPage);
+export default withRouter(withAlert()(NurseStudiesPage));

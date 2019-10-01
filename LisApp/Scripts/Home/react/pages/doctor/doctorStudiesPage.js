@@ -7,6 +7,7 @@ import { getJson, getUrl } from '../../services/rests';
 import { withAlert } from 'react-alert';
 import i18n from '../../i18n';
 import StudyForm from './studyForm';
+import { withRouter } from 'react-router-dom';
 
 
 const columns = [
@@ -149,11 +150,16 @@ class DoctorStudiesPage extends React.Component {
         this.getStudyAndOpenModal(id);
     }
 
+    goToOrderList = () => {
+        this.props.history.push("/doctor");
+    }
+
     render() {
         return (
             <div>
-                <CustomButton onClick={this.openShowModal} text={<Trans>DetailsAndResult</Trans>} disable={this.state.disableMode} />
-                <CustomButton onClick={this.getReport} text={<Trans>Report</Trans>} disable={this.state.disableReport} />
+                <CustomButton onClick={this.openShowModal} text={<Trans>DetailsAndResult</Trans>} disable={this.state.disableMode} image="study_show.png"/>
+                <CustomButton onClick={this.getReport} text={<Trans>Report</Trans>} disable={this.state.disableReport} image="result_report.png" />
+                <CustomButton onClick={this.goToOrderList} text={<Trans>ListOfOrder</Trans>} image="order_go_to.png" />
 
 
                 <CustomModal ref={this.modalRef}>
@@ -182,4 +188,4 @@ class DoctorStudiesPage extends React.Component {
     }
 }
 
-export default withAlert()(DoctorStudiesPage);
+export default withRouter(withAlert()(DoctorStudiesPage));

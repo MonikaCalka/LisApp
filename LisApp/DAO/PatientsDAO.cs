@@ -18,10 +18,11 @@ namespace LisApp.DAO
         public PatientModel ReadPatientById(long? id)
         {
             string query = $@"
-                select IdPatient, FirstName, Surname, Pesel, Sex, Street, HouseNumber, City, PostalCode, Country, Phone, IdCardNumber,
-                    ContactPersonFirstName, ContactPersonSurname, ContactPersonPesel, ContactPersonPhone
-                from Patients 
-                where IdPatient = {id}
+                select p.IdPatient, p.FirstName, p.Surname, p.Pesel, p.Sex, p.Street, p.HouseNumber, p.City, p.PostalCode, p.Country, p.Phone, p.IdCardNumber,
+                    p.ContactPersonFirstName, p.ContactPersonSurname, p.ContactPersonPesel, p.ContactPersonPhone, u.Login
+                from Patients p
+                join Users u on p.IdPatient = u.IdPatient
+                where p.IdPatient = {id}
             ";
             return BaseDAO.SelectFirst(query, ReadPatientModel);
         }
@@ -30,9 +31,9 @@ namespace LisApp.DAO
         {
             string query = $@"
                 select p.IdPatient, p.FirstName, p.Surname, p.Pesel, p.Sex, p.Street, p.HouseNumber, p.City, p.PostalCode, p.Country, p.Phone, p.IdCardNumber,
-                    p.ContactPersonFirstName, p.ContactPersonSurname, p.ContactPersonPesel, p.ContactPersonPhone
+                    p.ContactPersonFirstName, p.ContactPersonSurname, p.ContactPersonPesel, p.ContactPersonPhone, u.Login
                 from Patients p
-                join Users on p.IdPatient = u.IdPatient
+                join Users u on p.IdPatient = u.IdPatient
                 where u.IdUser = {idUser}
             ";
             return BaseDAO.SelectFirst(query, ReadPatientModel);
@@ -41,26 +42,28 @@ namespace LisApp.DAO
         public List<PatientModel> ReadPatientsList()
         {
             string query = @"
-                select IdPatient, FirstName, Surname, Pesel, Sex, Street, HouseNumber, City, PostalCode, Country, Phone, IdCardNumber,
-                    ContactPersonFirstName, ContactPersonSurname, ContactPersonPesel, ContactPersonPhone 
-                from Patients
+                select p.IdPatient, p.FirstName, p.Surname, p.Pesel, p.Sex, p.Street, p.HouseNumber, p.City, p.PostalCode, p.Country, p.Phone, p.IdCardNumber,
+                    p.ContactPersonFirstName, p.ContactPersonSurname, p.ContactPersonPesel, p.ContactPersonPhone, u.Login
+                from Patients p
+                join Users u on p.IdPatient = u.IdPatient
             ";
 
             return BaseDAO.Select(query, ReadPatientModel);
         }
 
-        public void InsertPatient(PatientModel p)
+        public long? InsertPatient(PatientModel p)
         {
             string query = $@"
                 insert into Patients(FirstName, Surname, Pesel, Sex, Street, HouseNumber, City, PostalCode, Country, Phone, IdCardNumber,
                     ContactPersonFirstName, ContactPersonSurname, ContactPersonPesel, ContactPersonPhone) 
+                    output INSERTED.IdPatient
                     values({BaseDAO.SetString(p.FirstName)},{BaseDAO.SetString(p.Surname)},{BaseDAO.SetString(p.Pesel)},{BaseDAO.SetString(p.Sex)},
                     {BaseDAO.SetString(p.Street)},{BaseDAO.SetString(p.HouseNumber)},{BaseDAO.SetString(p.City)},{BaseDAO.SetString(p.PostalCode)},
                     {BaseDAO.SetString(p.Country)},{BaseDAO.SetString(p.Phone)},{BaseDAO.SetString(p.IdCardNumber)},
                     {BaseDAO.SetString(p.ContactPersonFirstName)},{BaseDAO.SetString(p.ContactPersonSurname)},{BaseDAO.SetString(p.ContactPersonPesel)},
                     {BaseDAO.SetString(p.ContactPersonPhone)});
             ";
-            BaseDAO.InsertOrUpdate(query, false);
+            return BaseDAO.InsertOrUpdate(query, true);
         }
 
         public void UpdatePatient(PatientModel p)
@@ -120,7 +123,8 @@ namespace LisApp.DAO
                 ContactPersonSurname = reader.GetNullableString("ContactPersonSurname"),
                 ContactPersonPesel = reader.GetNullableString("ContactPersonPesel"),
                 ContactPersonPhone = reader.GetNullableString("ContactPersonPhone"),
-                FullAddress = reader.GetString("Street") + " " + reader.GetString("HouseNumber") + ", " + reader.GetString("PostalCode") + " " + reader.GetString("City") + ", " + reader.GetString("Country")
+                FullAddress = reader.GetString("Street") + " " + reader.GetString("HouseNumber") + ", " + reader.GetString("PostalCode") + " " + reader.GetString("City") + ", " + reader.GetString("Country"),
+                Login = reader.GetString("Login")
             };
         }
 

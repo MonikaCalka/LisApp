@@ -36,7 +36,7 @@ class EmployeeDetailTab extends Component {
                     <div>
                         <div className="col-sm-12">
                             <h4><Trans>EmploymentDetails</Trans></h4>
-                            <CustomInput labeltext="Login" onChange={this.handleChange} value={model.Login} name="Login" disabled={disable} {...requiredMax50} />
+                            <CustomInput labeltext="Login" onChange={this.handleChange} value={model.Login} name="Login" disabled/>
                             <CustomSelect labeltext="Position" onChange={e => this.onOptionChange("IdPosition", e)} value={model.positionOptions.filter(option => option.value === model.IdPosition)} selectOptions={model.positionOptions} name="IdPosition" isDisabled={disable} {...requiredField} />
                             <CustomInput labeltext="DateOfEmployment" onChange={this.handleChange} value={model.DateOfEmployment} name="DateOfEmployment" disabled />
                             <CustomInput labeltext="LicenseNumber" onChange={this.handleChange} value={model.LicenseNumber} name="LicenseNumber" disabled={disable} {...max50} />

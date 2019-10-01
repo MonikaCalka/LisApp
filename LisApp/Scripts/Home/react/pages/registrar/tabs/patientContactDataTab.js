@@ -31,7 +31,9 @@ class PatientContactDataTab extends Component {
     render() {
         const { model, mode, onCancel } = this.props;
         var disable = mode === 'show' ? true : false;
-
+        var pin = null;
+        if (mode === 'add')
+            pin = <CustomInput labeltext="Pin" onChange={this.handleChange} value={model.Password} name="Password" disabled={disable} {...requiredField} type="password" />;
         return (
             <div className="row">
                 <ValidatorForm id="modalform" onSubmit={this.onNext} >
@@ -44,6 +46,7 @@ class PatientContactDataTab extends Component {
                             <CustomInput labeltext="PESEL" onChange={this.handleChange} value={model.Pesel} name="Pesel" disabled={disable} {...requiredPeselOrNN} />
                             <CustomInput labeltext="Phone" onChange={this.handleChange} value={model.Phone} name="Phone" disabled={disable} {...requiredPhoneOnNN} />
                             <CustomInput labeltext="IdCardNumber" onChange={this.handleChange} value={model.IdCardNumber} name="IdCardNumber" disabled={disable} {...max50} />
+                            {pin}
                         </div>
                     </div>
                 </ValidatorForm>

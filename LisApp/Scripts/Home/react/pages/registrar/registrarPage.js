@@ -194,9 +194,9 @@ class RegistrarPage extends React.Component {
     render() {
         return (
             <div>
-                <CustomButton onClick={this.openAddModal} text={<Trans>AddPatient</Trans>} />
-                <CustomButton onClick={this.openEditModal} text={<Trans>EditPatient</Trans>} disable={this.state.disableMode} />
-                <CustomButton onClick={this.openShowModal} text={<Trans>Details</Trans>} disable={this.state.disableMode} />
+                <CustomButton onClick={this.openAddModal} text={<Trans>AddPatient</Trans>} image="patient_add.png"/>
+                <CustomButton onClick={this.openEditModal} text={<Trans>EditPatient</Trans>} disable={this.state.disableMode} image="patient_edit.png"/>
+                <CustomButton onClick={this.openShowModal} text={<Trans>Details</Trans>} disable={this.state.disableMode} image="patient_show.png"/>
 
                 <CustomModal ref={this.modalRef}>
                     <RegistrarForm

@@ -42,6 +42,17 @@ namespace LisApp.DAO
             return BaseDAO.SelectFirst(query, ReadUserModel);
         }
 
+        public UserModel checkLogin(string login)
+        {
+            string query = $@"
+                select IdUser, IdEmployee, Login, Password, DateOfChange, InUse, IdPatient
+                from Users
+                where Login = {BaseDAO.SetString(login)}
+            ";
+
+            return BaseDAO.SelectFirst(query, ReadUserModel);
+        }
+
         public List<UserModel> ReadUsersList()
         {
             string query = @"

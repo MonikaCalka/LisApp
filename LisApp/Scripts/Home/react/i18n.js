@@ -138,7 +138,12 @@ const resources = {
             "DateOfEmployment": "Date of employment",
             "LicenseNumber": "License number",
             "WrongPesel": "Please enter a valid pesel.",
-            "WrongPeselOrBirthDay": "Please enter a valid pesel or date of birth."
+            "WrongPeselOrBirthDay": "Please enter a valid pesel or date of birth.",
+            "Report": "Report",
+            "ListOfOrder": "List of order",
+            "ListOfStudy": "List od study",
+            "LoginSuccess": "The user has been successfully logged in.",
+            "LoginError": "Invalid user or password."
         }
     },
     pl: {
@@ -277,7 +282,12 @@ const resources = {
             "DateOfEmployment": "Data zatrudnienia",
             "LicenseNumber": "Numer licencji",
             "WrongPesel": "Wprowadź prawidłowy pesel.",
-            "WrongPeselOrBirthDay": "Wprowadź prawidłowy pesel lub datę urodzenia."
+            "WrongPeselOrBirthDay": "Wprowadź prawidłowy pesel lub datę urodzenia.",
+            "Report": "Raport",
+            "ListOfOrder": "Lista zleceń",
+            "ListOfStudy": "Lista badań",
+            "LoginSuccess": "Użytkownik został pomyślnie zalogowany.",
+            "LoginError": "Błędny użytkownik lub hasło."
         }
     }
 };

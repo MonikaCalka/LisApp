@@ -68,5 +68,9 @@ namespace LisApp.Models
         public string ContactPersonPhone { get; set; }
 
         public string FullAddress { get; set; }
+
+        public string Login { get; set; }
+
+        public string Password { get; set; }
     }
 }

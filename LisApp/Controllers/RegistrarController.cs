@@ -73,6 +73,7 @@ namespace LisApp.Controllers
             if (wrongAuthorization != null)
                 return wrongAuthorization;
 
+
             List<ValidationResult> results = new List<ValidationResult>();
             ValidationContext context = new ValidationContext(patient, null, null);
 
@@ -83,7 +84,10 @@ namespace LisApp.Controllers
                     return wrongPesel;
                 try
                 {
-                    DB.PatientsDAO.InsertPatient(patient);
+                    long? patientId = DB.PatientsDAO.InsertPatient(patient);
+
+                    UserModel user = new UserModel(null, createLogin(patient.FirstName, patient.Surname), patient.Password, patientId);
+                    DB.UserDAO.InsertUser(user);
                     return new HttpStatusCodeResult(200);
                 }
                 catch (Exception)
