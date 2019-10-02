@@ -1,4 +1,5 @@
 ﻿using LisApp.Common;
+using LisApp.Enums;
 using LisApp.Models;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace LisApp.Controllers
                 try
                 {
                     UserModel userModel = DB.UserDAO.ReadUser(user.Login, user.Password);
+                    EmployeeModel employee = DB.EmployeesDAO.ReadEmployeeByUserId(userModel.IdUser, "en");
 
                     if (userModel != null)
                     {
@@ -28,8 +30,13 @@ namespace LisApp.Controllers
                         session.Token = token;
                         session.ExpirationDate = DateTime.Now.AddHours(6);
                         DB.SessionsDAO.InsertSession(session);
+                        session.Login = userModel.Login;
+                        if (employee != null)
+                            session.UserType = DB.DictionaryDAO.ReadDictionaryById(DictionaryTypesEnum.Positions, employee.IdPosition, "en").label;
+                        else
+                            session.UserType = "Patient";
 
-                        return Json(token);
+                        return Json(session);
                     }
                     else
                         return new HttpStatusCodeResult(404);

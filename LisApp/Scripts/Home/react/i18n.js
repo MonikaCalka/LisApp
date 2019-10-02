@@ -143,7 +143,9 @@ const resources = {
             "ListOfOrder": "List of order",
             "ListOfStudy": "List od study",
             "LoginSuccess": "The user has been successfully logged in.",
-            "LoginError": "Invalid user or password."
+            "LoginError": "Invalid user or password.",
+            "LIS": "Laboratory Information System",
+            "Password": "Password"
         }
     },
     pl: {
@@ -287,7 +289,9 @@ const resources = {
             "ListOfOrder": "Lista zleceń",
             "ListOfStudy": "Lista badań",
             "LoginSuccess": "Użytkownik został pomyślnie zalogowany.",
-            "LoginError": "Błędny użytkownik lub hasło."
+            "LoginError": "Błędny użytkownik lub hasło.",
+            "LIS": "Laboratoryjny System Informacyjny",
+            "Password": "Hasło"
         }
     }
 };

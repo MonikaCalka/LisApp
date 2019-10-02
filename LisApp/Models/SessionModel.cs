@@ -16,5 +16,9 @@ namespace LisApp.Models
         public long IdUser { get; set; }
 
         public bool? InUse { get; set; }
+
+        public string Login { get; set; }
+
+        public string UserType { get; set; }
     }
 }

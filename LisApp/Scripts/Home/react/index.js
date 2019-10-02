@@ -57,17 +57,40 @@ class App extends React.Component {
     }
 
     render() {
-        const indexComponent = DoctorPage;
+        let indexComponent = null;
+        if (localStorage.getItem("userType") === "" || localStorage.getItem("userType") == null) {
+            indexComponent = LoginPage;
+        }
+        switch (localStorage.getItem("userType")) {
+            case "Doctor":
+                indexComponent = DoctorPage;
+                break;
+            case "Nurse":
+                indexComponent = NursePage;
+                break;
+            case "Lab":
+                indexComponent = LabPage;
+                break;
+            case "Admin":
+                indexComponent = AdminPage;
+                break;
+            case "Registrar":
+                indexComponent = RegistrarPage;
+                break;
+            case "Patient":
+                indexComponent = PatientPage;
+                break;
+        }
 
         const language = localStorage.getItem('lisLanguage') || 'pl';
 
         return (
             <>
-                <Navbar />
                 <Router>
+                <Navbar setEng={this.setEng} setPl={this.setPl} disabledEn={language === 'en'} disabledPl={language === 'pl'}/>
                     <AlertProvider template={AlertTemplate} {...options}>
                         <div>
-                            <nav>
+                            {/*  <nav>
                                 <ul>
                                     <li>
                                         <Link to="/">Home</Link>
@@ -100,7 +123,7 @@ class App extends React.Component {
                                         <Link to="/login/">Login</Link>
                                     </li>
                                 </ul>
-                            </nav>
+                            </nav> */}
 
                             <Route path="/" exact component={indexComponent} />
                             <Route path="/doctor/" component={DoctorPage} />
@@ -115,8 +138,6 @@ class App extends React.Component {
                         </div>
                     </AlertProvider>
                 </Router>
-                <button onClick={this.setEng} disabled={language === 'en'}>en</button>
-                <button onClick={this.setPl} disabled={language === 'pl'}>pl</button>
             </>
         );
     }
