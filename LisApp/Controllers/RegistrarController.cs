@@ -117,7 +117,7 @@ namespace LisApp.Controllers
                 PatientModel oldData = DB.PatientsDAO.ReadPatientById(patient.IdPatient);
                 try
                 {
-                    EmployeeModel employeeChanger = getEmployeeByUserId((long)IdUser);
+                    EmployeeModel employeeChanger = getEmployeeByUserId();
                     DB.PatientsDAO.InsertHistoryDataOfPatient(oldData, employeeChanger.FirstName + employeeChanger.Surname);
                     DB.PatientsDAO.UpdatePatient(patient);
                     return new HttpStatusCodeResult(200);

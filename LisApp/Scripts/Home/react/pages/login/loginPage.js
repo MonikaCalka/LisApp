@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import { Trans } from 'react-i18next';
-import { getJson, postJson } from '../../services/rests';
+import { postJson } from '../../services/rests';
 import { withAlert } from 'react-alert';
 import { ValidatorForm } from 'react-form-validator-core';
 import CustomInput from '../../components/customInput';
@@ -64,9 +64,12 @@ class LoginPage extends React.Component {
             <div className="login-page">
                 <ValidatorForm id="modalform" onSubmit={this.onLogin} >
                     <div className="col-sm-6 col-sm-offset-3 login-div">
+                        <img src="/Content/Images/LIS3.png" className="logo-login" />
+                        <div className="login-input">
                         <CustomInput labeltext="Login" onChange={this.handleChange} value={this.state.Login} name="Login" />
-                        <CustomInput labeltext="Password" onChange={this.handleChange} value={this.state.Password} name="Password" type="password" />
-                        <button type="submit">Login</button>
+                            <CustomInput labeltext="Password" onChange={this.handleChange} value={this.state.Password} name="Password" type="password" />
+                        </div>
+                        <button type="submit" className="login-buton"><Trans>LoginTo</Trans></button>
                     </div>
                 </ValidatorForm>
                 

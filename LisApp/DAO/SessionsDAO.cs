@@ -29,11 +29,11 @@ namespace LisApp.DAO
             BaseDAO.InsertOrUpdate(query, false);
         }
 
-        public void SetNotUseSession(SessionModel s)
+        public void SetNotUseSession(long idUser)
         {
             string query = $@"
                 update Sessions set InUse = 0 
-                where Token = {BaseDAO.SetString(s.Token)}
+                where IdUser = {idUser}
             ";
             BaseDAO.InsertOrUpdate(query, false);
         }

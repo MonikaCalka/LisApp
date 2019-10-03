@@ -36,7 +36,7 @@ class OrderPatientTab extends Component {
     };
 
     getPatientById = (IdPatient) => {
-        getJson("Registrar/GetPatient?id=" + IdPatient, response => {
+        getJson("Doctor/GetPatient?id=" + IdPatient, response => {
             if (response.status === 200) {
                 response.json().then(responseJson => {
                     this.props.onPatientChange({

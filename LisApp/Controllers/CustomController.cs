@@ -54,11 +54,11 @@ namespace LisApp.Controllers
             DB = new DatabaseFacade();
         }
 
-        public EmployeeModel getEmployeeByUserId(long idUser)
+        public EmployeeModel getEmployeeByUserId()
         {
             return DB.EmployeesDAO.ReadEmployeeByUserId(IdUser, Lang);
         }
-        public PatientModel getPatientByUserId(long idUser)
+        public PatientModel getPatientByUserId()
         {
             return DB.PatientsDAO.ReadPatientByUserId(IdUser);
         }
@@ -68,7 +68,7 @@ namespace LisApp.Controllers
             if (IdUser == null)
             {
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json(new { message = "Authorization failed", description = "Nobody is logged in" }, JsonRequestBehavior.AllowGet);
+                return Json(new { message = "Authorization failed", description = "Nobody is logged in", needLogin = true }, JsonRequestBehavior.AllowGet);
             }
             else
                 return null;
@@ -78,11 +78,11 @@ namespace LisApp.Controllers
         {
             if (checkUser() == null)
             {
-                EmployeeModel employee = getEmployeeByUserId((long)IdUser);
+                EmployeeModel employee = getEmployeeByUserId();
                 if (employee == null || employee.IdEmployee == null)
                 {
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    return Json(new { message = "Authorization failed", description = "Is not employee" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { message = "Authorization failed", description = "Is not employee", needLogin = true }, JsonRequestBehavior.AllowGet);
                 }
                 return null;
             }
@@ -94,11 +94,11 @@ namespace LisApp.Controllers
         {
             if (checkUser() == null)
             {
-                PatientModel patient = getPatientByUserId((long)IdUser);
+                PatientModel patient = getPatientByUserId();
                 if (patient == null || patient.IdPatient == null)
                 {
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    return Json(new { message = "Authorization failed", description = "Is not patient" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { message = "Authorization failed", description = "Is not patient", needLogin = true }, JsonRequestBehavior.AllowGet);
                 }
                 return null;
             }
@@ -110,7 +110,7 @@ namespace LisApp.Controllers
         {
             if (checkUser() == null)
             {
-                EmployeeModel employee = getEmployeeByUserId((long)IdUser);
+                EmployeeModel employee = getEmployeeByUserId();
                 if (employee == null || employee.IdEmployee == null || employee.IdPosition != position)
                 {
                     Response.StatusCode = (int)HttpStatusCode.BadRequest;

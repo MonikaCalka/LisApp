@@ -29,10 +29,10 @@ textarea {
 }
 
 .button {
-    color: #26d5fe;
+    color: #138efc;
     background: #ffffff;
     padding: 10px;
-    border: 3px solid #26d5fe;
+    border: 3px solid #138efc;
     border-radius: 20px;
     display: inline-block;
     font-size: 12px;
@@ -47,8 +47,8 @@ textarea {
 
     .button:hover {
         color: #ffffff !important;
-        background: #26d5fe;
-        border-color: #26d5fe;
+        background: #138efc;
+        border-color: #138efc;
         transition: all 0.3s ease 0s;
     }
 
@@ -99,7 +99,7 @@ textarea {
 
 .alert-div-info {
     background-color: aliceblue;
-    border: 3px solid #26d5fe;
+    border: 3px solid #138efc;
 }
 
 .alert-div-success {
@@ -143,11 +143,11 @@ textarea {
 }
 
 .rdt_TableRow.selected-custom-table-row {
-    background-color: #fffedb !important;
+    background-color: #ffeadb !important;
 }
 
     .rdt_TableRow.selected-custom-table-row:hover {
-        background-color: #e6e5c8 !important;
+        background-color: #e3cfc1 !important;
     }
 
 .width-100-proc {
@@ -161,14 +161,14 @@ textarea {
     padding: 10px;
 }
 .selected-tab {
-    background-color: #26d5fe !important;
+    background-color: #138efc !important;
     color: white;
     border-radius: 15px 15px 0px 0px;
 }
 
 .not-selected-tab {
     background-color: white !important;
-    color: #26d5fe;
+    color: #138efc;
 }
 
 .div-tabs {
@@ -229,8 +229,8 @@ textarea {
 
 .navbar {
     overflow: auto;
-    background-color: #26d5fe;
-    border: 1px solid #26d5fe;
+    background-color: #138efc;
+    border: 1px solid #138efc;
     border-radius: 0px 0px 20px 20px;
     color: white;
 }
@@ -250,7 +250,7 @@ textarea {
     background-size: 95px 70px;
     width: 100px;
     height: 70px;
-    border: 2px solid #26d5fe;
+    border: 2px solid #138efc;
     border-radius: 40px;
     position: absolute;
     top: 15px;
@@ -283,7 +283,62 @@ textarea {
 
 .login-div {
     max-width: 600px;
-    border: 3px solid #26d5fe;
+    border: 3px solid #138efc;
     border-radius: 20px;
     padding: 30px;
+    min-width: 465px;
+}
+
+.data-table {
+    border: 3px solid #138efc;
+    border-radius: 20px;
+    padding: 10px;
+    margin-top: 15px;
+}
+
+.search-input {
+    width: 75%;
+    display: inline;
+}
+
+.search-button {
+    background: url("/Content/Images/alert_info.png");
+    background-size: 25px 25px;
+    width: 30px;
+    height: 30px;
+    border: 2px solid #138efc;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-left: 10px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.logo-login {
+    width: 300px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-input {
+    width: 400px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-buton {
+    width: 150px;
+    height: 40px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: 3px solid #138efc;
+    border-radius: 30px;
+    background: white;
+    font-weight: bold;
+    font-size: 14px;
+    color: #138efc;
+    margin-top: 20px;
 }

@@ -16,6 +16,12 @@ class CustomTable extends React.Component {
 
     onChangeSearchValue = (event) => {
         this.setState({ searchValue: event.target.value });
+        if (!!this.state.selected) {
+            if (!!this.selectedRowElement)
+                this.selectedRowElement.classList.remove("selected-custom-table-row");
+
+            this.onSelectedChange(null);
+        }
     }
 
     checkSearchValue = (value) => {
@@ -107,24 +113,26 @@ class CustomTable extends React.Component {
         let filteredData = this.props.data.filter(this.checkSearchValue);
 
         return (
-            <DataTable
-                title={titleOfTable}
-                columns={columns}
-                data={filteredData}
-                onRowClicked={this.onRowClicked}
-                highlightOnHover={!!this.onRowClicked}
-                pointerOnHover={!!this.onRowClicked}
-                pagination
-                customTheme={rowTheme}
-                paginationComponentOptions={paginationOptions}
-                onSort={this.onSort}
-                onChangePage={this.onChangePage}
-                subHeader
-                subHeaderComponent={<div>
-                    <button type="button" onClick={this.showInfo}>?</button>
-                    <input type=" text" value={this.state.searchValue} onChange={this.onChangeSearchValue} name="Search" />
+            <div className="data-table">
+                <DataTable
+                    title={titleOfTable}
+                    columns={columns}
+                    data={filteredData}
+                    onRowClicked={this.onRowClicked}
+                    highlightOnHover={!!this.onRowClicked}
+                    pointerOnHover={!!this.onRowClicked}
+                    pagination
+                    customTheme={rowTheme}
+                    paginationComponentOptions={paginationOptions}
+                    onSort={this.onSort}
+                    onChangePage={this.onChangePage}
+                    subHeader
+                    subHeaderComponent={<div>
+                        <button className="search-button" type="button" onClick={this.showInfo}></button>
+                        <input className="form-control custom-form search-input" type="text" value={this.state.searchValue} onChange={this.onChangeSearchValue} name="Search" />
                     </div>}
-            />
+                />
+            </div>
         );
     }
 }

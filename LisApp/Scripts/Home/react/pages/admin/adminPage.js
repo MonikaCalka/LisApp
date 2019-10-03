@@ -7,6 +7,7 @@ import { getJson, postJson } from '../../services/rests';
 import i18n from '../../i18n';
 import EmployeeForm from './employeeForm';
 import { withAlert } from 'react-alert';
+import { withRouter } from 'react-router-dom';
 
 const columns = [
     {
@@ -79,6 +80,15 @@ class AdminPage extends React.Component {
             if (response.status === 200) {
                 response.json().then(responseJson => {
                     this.setState({ data: responseJson });
+                });
+            } else {
+                response.json().then(responseJson => {
+                    if (responseJson.needLogin === true) {
+                        localStorage.setItem("token", null);
+                        localStorage.setItem("login", "");
+                        localStorage.setItem("userType", null);
+                        this.props.history.push("/login");
+                    }
                 });
             }
         });
@@ -266,4 +276,4 @@ class AdminPage extends React.Component {
     }
 }
 
-export default withAlert()(AdminPage);
+export default withRouter(withAlert()(AdminPage));

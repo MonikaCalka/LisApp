@@ -98,7 +98,7 @@ namespace LisApp.Controllers
                     return wrongPesel;
                 try
                 {
-                    EmployeeModel employeeChanger = getEmployeeByUserId((long)IdUser);
+                    EmployeeModel employeeChanger = getEmployeeByUserId();
                     EmployeeModel oldData = DB.EmployeesDAO.ReadEmployeeById(employee.IdEmployee, Lang);
                     DB.EmployeesDAO.InsertHistoryDataOfEmployee(oldData, employeeChanger.FirstName + employeeChanger.Surname);
                     DB.EmployeesDAO.UpdateEmployee(employee);

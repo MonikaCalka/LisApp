@@ -10,6 +10,6 @@ namespace LisApp.IDAO
     {
         SessionModel ReadSessionByToken(string token);
         void InsertSession(SessionModel s);
-        void SetNotUseSession(SessionModel s);
+        void SetNotUseSession(long idUser);
     }
 }

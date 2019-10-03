@@ -19,7 +19,7 @@ namespace LisApp.Controllers
             if (wrongAuthorization != null)
                 return wrongAuthorization;
 
-            PatientModel patient = getPatientByUserId((long)IdUser);
+            PatientModel patient = getPatientByUserId();
             List<StudyModel> studies = DB.StudiesDAO.ReadStudiesListForPatient((long)patient.IdPatient, Lang);
             return new CustomJsonResult { Data = new { data = studies } };
         }
@@ -31,7 +31,7 @@ namespace LisApp.Controllers
             if (wrongAuthorization != null)
                 return wrongAuthorization;
 
-            PatientModel patient = getPatientByUserId((long)IdUser);
+            PatientModel patient = getPatientByUserId();
             StudyModel study = getStudyModel(id, Lang);
             if (study == null)
                 return throwBadRequest();
@@ -81,7 +81,7 @@ namespace LisApp.Controllers
             if (wrongAuthorization != null)
                 return wrongAuthorization;
 
-            PatientModel patient = getPatientByUserId((long)IdUser);
+            PatientModel patient = getPatientByUserId();
 
             ReportGenerator rg = new ReportGenerator();
 

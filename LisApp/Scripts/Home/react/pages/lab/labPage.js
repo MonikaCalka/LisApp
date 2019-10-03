@@ -7,6 +7,7 @@ import { getJson, postJson } from '../../services/rests';
 import { withAlert } from 'react-alert';
 import i18n from '../../i18n';
 import LabForm from './labForm';
+import { withRouter } from 'react-router-dom';
 
 const columns = [
     {
@@ -89,6 +90,15 @@ class LabPage extends React.Component {
             if (response.status === 200) {
                 response.json().then(responseJson => {
                     this.setState({ data: responseJson.data });
+                });
+            } else {
+                response.json().then(responseJson => {
+                    if (responseJson.needLogin === true) {
+                        localStorage.setItem("token", null);
+                        localStorage.setItem("login", "");
+                        localStorage.setItem("userType", null);
+                        this.props.history.push("/login");
+                    }
                 });
             }
         });
@@ -349,4 +359,4 @@ class LabPage extends React.Component {
     }
 }
 
-export default withAlert()(LabPage);
+export default withRouter(withAlert()(LabPage));

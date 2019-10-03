@@ -7,6 +7,7 @@ import { getJson, postJson } from '../../services/rests';
 import RegistrarForm from './registrarForm';
 import { withAlert } from 'react-alert';
 import i18n from '../../i18n';
+import { withRouter } from 'react-router-dom';
 
 var columns = [
     {
@@ -73,6 +74,15 @@ class RegistrarPage extends React.Component {
             if (response.status === 200) {
                 response.json().then(responseJson => {
                     this.setState({ data: responseJson });
+                });
+            } else {
+                response.json().then(responseJson => {
+                    if (responseJson.needLogin === true) {
+                        localStorage.setItem("token", null);
+                        localStorage.setItem("login", "");
+                        localStorage.setItem("userType", null);
+                        this.props.history.push("/login");
+                    }
                 });
             }
         });
@@ -222,4 +232,4 @@ class RegistrarPage extends React.Component {
     }
 }
 
-export default withAlert()(RegistrarPage);
+export default withRouter(withAlert()(RegistrarPage));

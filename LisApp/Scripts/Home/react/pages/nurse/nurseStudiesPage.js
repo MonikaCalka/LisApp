@@ -92,6 +92,15 @@ class NurseStudiesPage extends React.Component {
                 response.json().then(responseJson => {
                     this.setState({ data: responseJson.data });
                 });
+            } else {
+                response.json().then(responseJson => {
+                    if (responseJson.needLogin === true) {
+                        localStorage.setItem("token", null);
+                        localStorage.setItem("login", "");
+                        localStorage.setItem("userType", null);
+                        this.props.history.push("/login");
+                    }
+                });
             }
         });
     }

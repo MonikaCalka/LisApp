@@ -23,7 +23,7 @@ namespace LisApp.Controllers
             if (wrongAuthorization != null)
                 return wrongAuthorization;
 
-            EmployeeModel employee = getEmployeeByUserId((long)IdUser);
+            EmployeeModel employee = getEmployeeByUserId();
             List<OrderModel> orderList = DB.OrderDAO.ReadOrdersList((long)employee.IdEmployee, Lang);
             return new CustomJsonResult { Data = new { data = orderList } };
         }
@@ -82,6 +82,17 @@ namespace LisApp.Controllers
         }
 
         [HttpGet]
+        public ActionResult GetPatient(long id)
+        {
+            ActionResult wrongAuthorization = checkEmployeeAutorization((long)PositionTypeEnum.Doctor);
+            if (wrongAuthorization != null)
+                return wrongAuthorization;
+
+            PatientModel patient = DB.PatientsDAO.ReadPatientById(id);
+            return Json(patient, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
         public ActionResult GetProfileSelect()
         {
             List<ProfileModel> select = DB.ProfilesDAO.ReadProfilesList(Lang);
@@ -111,7 +122,7 @@ namespace LisApp.Controllers
             if (wrongAuthorization != null)
                 return wrongAuthorization;
 
-            EmployeeModel employee = getEmployeeByUserId((long)IdUser);
+            EmployeeModel employee = getEmployeeByUserId();
             List<StudyModel> studies = DB.StudiesDAO.ReadStudiesListForDoctors((long)employee.IdEmployee, Lang);
             return new CustomJsonResult { Data = new { data = studies } };
         }
@@ -187,7 +198,7 @@ namespace LisApp.Controllers
             {
                 try
                 {
-                    EmployeeModel employee = getEmployeeByUserId((long)IdUser);
+                    EmployeeModel employee = getEmployeeByUserId();
                     order.IdEmployee = (long)employee.IdEmployee;
 
                     long idOrder = (long)DB.OrderDAO.InsertOrder(order);
@@ -239,7 +250,7 @@ namespace LisApp.Controllers
             {
                 try
                 {
-                    EmployeeModel employee = getEmployeeByUserId((long)IdUser);
+                    EmployeeModel employee = getEmployeeByUserId();
                     order.IdEmployee = (long)employee.IdEmployee;
 
                     DB.EmployeesDAO.DeleteConsultantsByOrder((long)order.IdOrder);

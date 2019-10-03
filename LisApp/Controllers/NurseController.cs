@@ -91,7 +91,7 @@ namespace LisApp.Controllers
             {
                 try
                 {
-                    EmployeeModel employee = getEmployeeByUserId((long)IdUser);
+                    EmployeeModel employee = getEmployeeByUserId();
                     SampleModel sample = new SampleModel();
                     sample.IdEmployee = (long)employee.IdEmployee;
                     sample.IdStudy = (long)study.IdStudy;

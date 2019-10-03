@@ -145,7 +145,8 @@ const resources = {
             "LoginSuccess": "The user has been successfully logged in.",
             "LoginError": "Invalid user or password.",
             "LIS": "Laboratory Information System",
-            "Password": "Password"
+            "Password": "Password",
+            "LoginTo": "Log in"
         }
     },
     pl: {
@@ -291,7 +292,8 @@ const resources = {
             "LoginSuccess": "Użytkownik został pomyślnie zalogowany.",
             "LoginError": "Błędny użytkownik lub hasło.",
             "LIS": "Laboratoryjny System Informacyjny",
-            "Password": "Hasło"
+            "Password": "Hasło",
+            "LoginTo": "Zaloguj"
         }
     }
 };

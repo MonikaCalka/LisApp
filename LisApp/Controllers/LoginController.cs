@@ -26,7 +26,7 @@ namespace LisApp.Controllers
                         string token = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
 
                         SessionModel session = new SessionModel();
-                        session.IdUser = (long) userModel.IdUser;
+                        session.IdUser = (long)userModel.IdUser;
                         session.Token = token;
                         session.ExpirationDate = DateTime.Now.AddHours(6);
                         DB.SessionsDAO.InsertSession(session);
@@ -48,6 +48,15 @@ namespace LisApp.Controllers
             }
             else
                 return new HttpStatusCodeResult(400);
+        }
+
+        [HttpPost]
+        public ActionResult Logout()
+        {
+            if (IdUser != null)
+                DB.SessionsDAO.SetNotUseSession((long)IdUser);
+
+            return new HttpStatusCodeResult(200);
         }
     }
 }

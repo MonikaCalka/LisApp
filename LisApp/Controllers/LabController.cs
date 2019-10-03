@@ -89,7 +89,7 @@ namespace LisApp.Controllers
             {
                 try
                 {
-                    EmployeeModel employee = getEmployeeByUserId((long)IdUser);
+                    EmployeeModel employee = getEmployeeByUserId();
                     study.IdDoctor = (long)employee.IdEmployee;
                     study.IdStatus = (long)StatusTypeEnum.InProgress;
                     study.DateOfStudy = DateTime.Now;
@@ -115,7 +115,7 @@ namespace LisApp.Controllers
             {
                 try
                 {
-                    EmployeeModel employee = getEmployeeByUserId((long)IdUser);
+                    EmployeeModel employee = getEmployeeByUserId();
                     study.Result.IdEmployee = (long)employee.IdEmployee;
                     study.Result.IdStudy = (long)study.IdStudy;
 
@@ -155,7 +155,7 @@ namespace LisApp.Controllers
             {
                 try
                 {
-                    EmployeeModel employee = getEmployeeByUserId((long)IdUser);
+                    EmployeeModel employee = getEmployeeByUserId();
                     study.Result.Verification.IdEmployee = (long)employee.IdEmployee;
                     study.Result.Verification.IdResult = (long)study.Result.IdResult;
                     if (study.Result.Verification.Positive)
@@ -224,7 +224,7 @@ namespace LisApp.Controllers
             {
                 try
                 {
-                    EmployeeModel employee = getEmployeeByUserId((long)IdUser);
+                    EmployeeModel employee = getEmployeeByUserId();
                     study.IdRepeatEmployee = (long)employee.IdEmployee;
                     long oldStatusId = study.IdStatus;
                     DB.StudiesDAO.SetReorederDataOfStudy(study);
