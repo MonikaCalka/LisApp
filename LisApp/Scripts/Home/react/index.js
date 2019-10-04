@@ -71,7 +71,7 @@ class App extends React.Component {
             case "Lab":
                 indexComponent = LabPage;
                 break;
-            case "Admin":
+            case "Administrator":
                 indexComponent = AdminPage;
                 break;
             case "Registrar":

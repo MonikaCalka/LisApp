@@ -4,6 +4,8 @@ import StudyModel from '../../../models/studyModel';
 import StudyElement from '../../../components/studyElement';
 import ModalButtons from '../../../components/modalButtons';
 import { ValidatorForm } from 'react-form-validator-core';
+import { getUrl } from '../../../services/rests';
+import i18n from '../../../i18n';
 
 const propertyName = "Studies";
 
@@ -53,6 +55,14 @@ class OrderStudiesTab extends Component {
         }
     }
 
+    onReport = (id) => {
+        let win = window.open(getUrl + "Doctor/GetReport?id=" + id + "&lang=" + i18n.language + "&t="
+            + localStorage.getItem("token").toString().replace('+', 'xMl3Jkaaswss').replace('/', 'Por21Ld105sE78').replace('=', 'Ml32XXASsd1dd')
+            , "_blank");
+        win.focus;
+    }
+
+
     render() {
         const { mode, onCancel, model, showSample } = this.props;
         const disableInProgress = mode === 'show' || (mode !== 'add' && model.IdStatus !== 1) ? true : false;
@@ -72,8 +82,9 @@ class OrderStudiesTab extends Component {
                             onChange={this.onStudyChange}
                             disable={disableInProgress}
                             onDelete={this.onDeleteStudy}
-                            showSample={showSample}/>)
-                        }
+                            showSample={showSample} 
+                            onReport={this.onReport} />
+                        )}
                         {addButton}
                         <div style={{ color: 'red' }}>
                             <Trans>{this.state.error}</Trans>

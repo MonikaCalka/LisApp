@@ -9,6 +9,8 @@ import PatientContactDataTab from './tabs/patientContactDataTab';
 import PatientAddressTab from './tabs/patientAddressTab';
 import PatientContactPersonTab from './tabs/patientContactPersonTab';
 import TabNavigator from '../../components/tabNavigator';
+import { postJson } from '../../services/rests';
+import { withAlert } from 'react-alert';
 
 const emptyState  = {
     FirstName: "",
@@ -62,6 +64,19 @@ class RegistrarForm extends React.Component {
         this.setState({ actualTabIndex: newTabIndex });
     }
 
+    onCheckPeselAndTabChange = newTabIndex => {
+        postJson("Registrar/CheckPesel", this.getData(), response => {
+            if (response.status === 200) {
+                this.setState({ actualTabIndex: newTabIndex });
+            } else {
+                response.json().then(responseJson => {
+                    if (responseJson.message === "Wrong pesel")
+                        this.props.alert.error(<Trans>WrongPeselOrBirthDay</Trans>);
+                });
+            }
+        });
+    }
+
     render() {
         const { title, mode, onAccept, onCancel } = this.props;
         const { actualTabIndex } = this.state;
@@ -69,7 +84,7 @@ class RegistrarForm extends React.Component {
 
         switch (actualTabIndex) {
             case 0:
-                actualTab = <PatientContactDataTab onTabChange={this.onTabChange}
+                actualTab = <PatientContactDataTab onCheckPeselAndTabChange={this.onCheckPeselAndTabChange}
                     model={this.state}
                     onCancel={onCancel}
                     mode={mode}
@@ -102,4 +117,4 @@ class RegistrarForm extends React.Component {
     }
 }
 
-export default RegistrarForm;
+export default withAlert()(RegistrarForm);

@@ -1,15 +1,12 @@
 ﻿import React from 'react';
 import { Trans } from 'react-i18next';
 import { getStateFromPropsData } from '../../services/getStateFromPropsData';
-import CustomInput from '../../components/customInput';
-import CustomSelect from '../../components/customSelect';
-import { ValidatorForm } from 'react-form-validator-core';
-import { getDic } from '../../services/rests';
-import { requiredField, requiredMax50, requiredPesel, requiredPhone, isEmail, requiredMax15, max50 } from '../../components/validatorRules';
+import { postJson, getDic } from '../../services/rests';
 import TabNavigator from '../../components/tabNavigator';
 import EmployeeContactDataTab from './tabs/employeeContactDataTab';
 import EmployeeAddressTab from './tabs/employeeAddressTab';
 import EmployeeDetailTab from './tabs/employeeDetailsTab';
+import { withAlert } from 'react-alert';
 
 const emptyState = {
     FirstName: "",
@@ -78,6 +75,19 @@ class EmployeeForm extends React.Component {
         this.setState({ actualTabIndex: newTabIndex });
     }
 
+    onCheckPeselAndTabChange = newTabIndex => {
+        postJson("Admin/CheckPesel", this.getData(), response => {
+            if (response.status === 200) {
+                this.setState({ actualTabIndex: newTabIndex });
+            } else {
+                response.json().then(responseJson => {
+                    if (responseJson.message === "Wrong pesel")
+                        this.props.alert.error(<Trans>WrongPesel</Trans>);
+                });
+            }
+        });
+    }
+
     render() {
         const { title, mode, onAccept, onCancel, onFire } = this.props;
         const { actualTabIndex } = this.state;
@@ -85,7 +95,7 @@ class EmployeeForm extends React.Component {
 
         switch (actualTabIndex) {
             case 0:
-                actualTab = <EmployeeContactDataTab onTabChange={this.onTabChange}
+                actualTab = <EmployeeContactDataTab onCheckPeselAndTabChange={this.onCheckPeselAndTabChange}
                     model={this.state}
                     onCancel={onCancel}
                     mode={mode}
@@ -121,4 +131,4 @@ class EmployeeForm extends React.Component {
     }
 }
 
-export default EmployeeForm;
+export default withAlert()(EmployeeForm);

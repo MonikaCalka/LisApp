@@ -85,17 +85,19 @@ textarea {
     margin-bottom: 13px;
     font-size: 14px;
     font-family: inherit;
+    
 }
 
-.custom-select:disabled {
-    background-color: #eeeeee !important;
-    opacity: 1 !important;
-    line-height: 1.42857143 !important;
-    color: #555555 !important;
-    border: 1px solid #ccc !important;
-    border-radius: 4px !important;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075) !important;
-}
+    .custom-select:disabled {
+        background-color: #eeeeee !important;
+        opacity: 1 !important;
+        line-height: 1.42857143 !important;
+        color: #555555 !important;
+        border: 1px solid #ccc !important;
+        border-radius: 4px !important;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075) !important;
+        cursor: not-allowed;
+    }
 
 .alert-div-info {
     background-color: aliceblue;
@@ -167,13 +169,20 @@ textarea {
 }
 
 .not-selected-tab {
-    background-color: white !important;
+    background-color: transparent !important;
     color: #138efc;
 }
 
 .div-tabs {
-    margin-bottom: 10px;
     margin-top: 20px;
+}
+
+.line-tabs {
+    margin-top: 4px;
+    height: 5px;
+    width: auto;
+    border-bottom: 5px solid #2a9bff;
+    border-radius: 40px;
 }
 
 .register-sample-button {
@@ -303,7 +312,7 @@ textarea {
 
 .search-button {
     background: url("/Content/Images/alert_info.png");
-    background-size: 25px 25px;
+    background-size: 26px 26px;
     width: 30px;
     height: 30px;
     border: 2px solid #138efc;
@@ -341,4 +350,55 @@ textarea {
     font-size: 14px;
     color: #138efc;
     margin-top: 20px;
+}
+
+.modal-buton {
+    width: 100px;
+    height: 40px;
+    margin-left: 10px;
+    border: 3px solid #138efc;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+    .modal-buton:disabled {
+        opacity: 0.8;
+        cursor: not-allowed;
+    }
+
+.action-modal-button {
+    color: white;
+    background: #36a0ff;
+}
+
+.cancel-modal-button {
+    color: #138efc;
+    background: white;
+}
+
+h2 {
+    color: #0a4880;
+}
+
+.study-action-button {
+    width: 30px;
+    height: 30px;
+    border: 2px solid #138efc;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-left: 10px;
+    display: table-cell;
+    vertical-align: middle;
+    margin-top: 20px;
+}
+
+.x-button {
+    background: url("/Content/Images/alert_error.png");
+    background-size: 26px 26px;
+}
+
+.report-button {
+    background: url("/Content/Images/mini_report.png");
+    background-size: 26px 26px;
 }

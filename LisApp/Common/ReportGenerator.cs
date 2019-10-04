@@ -1,6 +1,4 @@
-﻿
-
-using iText.IO.Font;
+﻿using iText.IO.Font;
 using iText.IO.Image;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
@@ -16,6 +14,8 @@ using System.Net.Http.Headers;
 using System.Web.Http.Results;
 using System.Web.Mvc;
 using System.Web;
+using System.Globalization;
+using System;
 
 namespace LisApp.Common
 {
@@ -64,20 +64,24 @@ namespace LisApp.Common
                 table.AddCell(new Cell().Add(new Paragraph(test.Name))).SetFont(font);
                 table.AddCell(new Cell().Add(new Paragraph(test.Result))).SetFont(font);
                 table.AddCell(new Cell().Add(new Paragraph(test.Unit))).SetFont(font);
+
+                NumberFormatInfo provider = new NumberFormatInfo();
+                provider.NumberDecimalSeparator = ".";
+
                 if (study.PatientSex == "M")
                 {
-                    if (double.Parse(test.Result) < test.NormMinM)
+                    if (Convert.ToDouble(test.Result, provider) < test.NormMinM)
                         table.AddCell(new Cell().Add(new Paragraph("(v) " + (Lang == "pl" ? "Za niski" : "Too low")))).SetFont(font).SetTextAlignment(TextAlignment.CENTER);
-                    else if (double.Parse(test.Result) > test.NormMaxM)
+                    else if (Convert.ToDouble(test.Result, provider) > test.NormMaxM)
                         table.AddCell(new Cell().Add(new Paragraph("(^) " + (Lang == "pl" ? "Za wysoki" : "Too high")))).SetFont(font).SetTextAlignment(TextAlignment.CENTER);
                     else
                         table.AddCell(new Cell().Add(new Paragraph("W normie"))).SetFont(font).SetTextAlignment(TextAlignment.CENTER);
                 }
                 else
                 {
-                    if (double.Parse(test.Result) < test.NormMinF)
+                    if (Convert.ToDouble(test.Result, provider) < test.NormMinF)
                         table.AddCell(new Cell().Add(new Paragraph("(v) " + (Lang == "pl" ? "Za niski" : "Too low")))).SetFont(font).SetTextAlignment(TextAlignment.CENTER);
-                    else if (double.Parse(test.Result) > test.NormMaxF)
+                    else if (Convert.ToDouble(test.Result, provider) > test.NormMaxF)
                         table.AddCell(new Cell().Add(new Paragraph("(^) " + (Lang == "pl" ? "Za wysoki" : "Too high")))).SetFont(font).SetTextAlignment(TextAlignment.CENTER);
                     else
                         table.AddCell(new Cell().Add(new Paragraph((Lang == "pl" ? "W normie" : "Normal")))).SetFont(font).SetTextAlignment(TextAlignment.CENTER);

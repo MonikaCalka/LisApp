@@ -40,7 +40,7 @@ class LoginPage extends React.Component {
                         case "Lab":
                             this.props.history.push("/lab");
                             break;
-                        case "Admin":
+                        case "Administrator":
                             this.props.history.push("/admin");
                             break;
                         case "Registrar":

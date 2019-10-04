@@ -24,8 +24,8 @@ class PatientContactDataTab extends Component {
     };
 
     onNext = () => {
-        const { onTabChange, model } = this.props;
-        onTabChange(model.actualTabIndex + 1);
+        const { model, onCheckPeselAndTabChange } = this.props;
+        onCheckPeselAndTabChange(model.actualTabIndex + 1);
     }
 
     render() {

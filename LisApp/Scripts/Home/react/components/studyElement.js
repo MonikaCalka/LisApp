@@ -48,14 +48,19 @@ class StudyElement extends Component {
         onDelete(index);
     }
 
+    onReport = () => {
+        const { onReport, study } = this.props;
+        onReport(study.IdStudy);
+    }
+
     render() {
         const { profileOptions, study, disable, showSample } = this.props;
         const { testOptions } = this.state;
         let buttons = null;
         if (!disable) {
-            buttons = <button type="button" onClick={this.onDeleteStudy}>X</button>;
-        } else {
-            //TODO
+            buttons = <button type="button" onClick={this.onDeleteStudy} className="study-action-button x-button"></button>;
+        } else if (study !== null && study.IdStatus === 5 && !showSample) {
+            buttons = <button type="button" onClick={this.onReport} className="study-action-button report-button" ></button >;
         }
         let sample = null;
         if (showSample) {

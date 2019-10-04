@@ -129,5 +129,14 @@ namespace LisApp.Controllers
             }
             return throwValidateError();
         }
+
+        [HttpPost]
+        public ActionResult CheckPesel(PatientModel patient)
+        {
+            ActionResult wrongPesel = validPeselOrBirthday(patient.Pesel, patient.Sex);
+            if (wrongPesel != null)
+                return wrongPesel;
+            return new HttpStatusCodeResult(200);
+        }
     }
 }

@@ -7,8 +7,11 @@ class TabNavigator extends Component {
         const { tabs, selectedTab } = this.props;
 
         return (
-            <div className="div-tabs">
-                {tabs.map((t) => <div key={t.index} className={(t.index === selectedTab ? "selected-tab" : "not-selected-tab") + " all-tab"}><Trans>{t.name}</Trans></div>)}
+            <div>
+                <div className="div-tabs">
+                    {tabs.map((t) => <div key={t.index} className={(t.index === selectedTab ? "selected-tab" : "not-selected-tab") + " all-tab"}><Trans>{t.name}</Trans></div>)}
+                </div>
+                <div className="line-tabs"></div>
             </div>
         );
     }
