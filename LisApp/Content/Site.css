@@ -68,11 +68,11 @@ textarea {
     overflow: auto;
     max-height: 800px;
     max-width: 900px;
-    min-height: 450px;
+    min-height: 470px;
     min-width: 650px;
     height: 70vh;
     width: 60vw;
-    padding-bottom: 50px;
+    padding-bottom: 60px;
 }
 
 .custom-select {
@@ -186,9 +186,10 @@ textarea {
 }
 
 .register-sample-button {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 200px !important;
 }
 
 .padding-top-30 {
@@ -377,6 +378,10 @@ textarea {
     background: white;
 }
 
+.big-modal-button {
+    width: 170px !important;
+}
+
 h2 {
     color: #0a4880;
 }
@@ -402,3 +407,65 @@ h2 {
     background: url("/Content/Images/mini_report.png");
     background-size: 26px 26px;
 }
+
+.form-radio {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: inline-block;
+    position: relative;
+    background-color: #f1f1f1;
+    color: #666;
+    top: 10px;
+    height: 30px;
+    width: 30px;
+    border: 0;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-right: 7px;
+    outline: none;
+}
+
+    .form-radio:checked::before {
+        position: absolute;
+        font: 13px/1 'Open Sans', sans-serif;
+        left: 11px;
+        top: 7px;
+        content: '\02143';
+        transform: rotate(40deg);
+    }
+
+    .form-radio:hover {
+        background-color: #f7f7f7;
+    }
+
+    .form-radio:checked {
+        background-color: #f1f1f1;
+    }
+
+.test-indicator {
+    margin-top: 16px;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #dff7f7;
+    border-radius: 10px;
+    margin-left: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #9fddfc;
+    border-radius: 10px;
+}
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #2185b8
+    }

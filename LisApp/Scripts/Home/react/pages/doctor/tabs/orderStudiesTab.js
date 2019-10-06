@@ -68,7 +68,7 @@ class OrderStudiesTab extends Component {
         const disableInProgress = mode === 'show' || (mode !== 'add' && model.IdStatus !== 1) ? true : false;
         let addButton = null;
         if (!disableInProgress) {
-            addButton = <button type="button" onClick={this.onAddStudy}>Add</button>;
+            addButton = <button type="button" onClick={this.onAddStudy} className="modal-buton action-modal-button"><Trans>Add</Trans></button>;
         }
         return (
             <div>

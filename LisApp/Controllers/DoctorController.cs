@@ -172,13 +172,13 @@ namespace LisApp.Controllers
                                 }
                                 catch (Exception)
                                 {
-                                    return null;
+                                    return study;
                                 }
                             }
                         }
                         catch (Exception)
                         {
-                            return null;
+                            return study;
                         }
                     }
                 }
@@ -226,7 +226,7 @@ namespace LisApp.Controllers
                             }
                         }
                     }
-                    return new HttpStatusCodeResult(200);
+                    return Json(idOrder);
                 }
                 catch (Exception)
                 {
@@ -298,7 +298,7 @@ namespace LisApp.Controllers
                             }
                         }
                     }
-                    return new HttpStatusCodeResult(200);
+                    return Json(order.IdOrder);
                 }
                 catch (Exception)
                 {
@@ -328,9 +328,7 @@ namespace LisApp.Controllers
                 return throwBadRequest();
 
             byte[] report = rg.createPdf(study, lang);
-         //   return report;
             return File(report, "application/pdf");
-
         }
     }
 }

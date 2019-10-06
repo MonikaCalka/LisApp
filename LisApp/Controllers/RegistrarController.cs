@@ -88,7 +88,7 @@ namespace LisApp.Controllers
 
                     UserModel user = new UserModel(null, createLogin(patient.FirstName, patient.Surname), patient.Password, patientId);
                     DB.UserDAO.InsertUser(user);
-                    return new HttpStatusCodeResult(200);
+                    return Json(patientId);
                 }
                 catch (Exception)
                 {
@@ -120,7 +120,7 @@ namespace LisApp.Controllers
                     EmployeeModel employeeChanger = getEmployeeByUserId();
                     DB.PatientsDAO.InsertHistoryDataOfPatient(oldData, employeeChanger.FirstName + employeeChanger.Surname);
                     DB.PatientsDAO.UpdatePatient(patient);
-                    return new HttpStatusCodeResult(200);
+                    return Json(patient.IdPatient);
                 }
                 catch (Exception)
                 {

@@ -28,7 +28,7 @@ namespace LisApp.DAO
                 join Profiles pf on s.IdProfile = pf.IdProfile
                 join ProfileTranslations pft on pf.IdProfile = pft.IdProfile
                 left join Samples sam on s.IdStudy = sam.IdStudy
-                left join Employees e2 on o.IdEmployee = e2.IdEmployee
+                left join Employees e2 on s.IdRepeatEmployee = e2.IdEmployee
 				left join (select * from Studies s2 ) n on s.IdStudy = n.PreviousId
                 where stt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
                     and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')

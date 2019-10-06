@@ -119,7 +119,11 @@ class LabPage extends React.Component {
     };
 
     getStudyAndOpenModal = () => {
-        getJson("Lab/GetStudy?id=" + this.state.actualRow.IdStudy, response => {
+        this.getStudyByIdAndOpenModal(this.state.actualRow.IdStudy);
+    }
+
+    getStudyByIdAndOpenModal = (id) => {
+        getJson("Lab/GetStudy?id=" + id, response => {
             if (response.status === 200) {
                 response.json().then(responseJson => {
                     this.setState({ selectedData: responseJson });
@@ -231,11 +235,14 @@ class LabPage extends React.Component {
             if (response.status === 200) {
                 this.setStudyList();
                 this.modalRef.current.closeModal();
-                this.props.alert.success(<Trans>AddResultSuccess</Trans>);
                 this.setState({
                     disableStart: true,
                     disableAddResult: true,
                     disableVerify: false
+                });
+
+                response.json().then(responseJson => {
+                    this.props.alert.success(<Trans i18nKey="AddResultSuccess" values={{ id: responseJson }} />);
                 });
             } else {
                 this.modalRef.current.closeModal();
@@ -250,8 +257,8 @@ class LabPage extends React.Component {
                 response.json().then(responseJson => {
                     this.setStudyList();
                     this.modalRef.current.closeModal();
-                    if (responseJson === 'Success') {
-                        this.props.alert.success(<Trans>VerifySuccess</Trans>);
+                    if (responseJson.Result !== null ) {
+                        this.props.alert.success(<Trans i18nKey="VerifySuccess" values = {{ id: responseJson.IdStudy }} />);
                     } else {
                         this.props.alert.success(<Trans i18nKey="RepeatSuccess" values={{ id: responseJson }} />);
                     }
@@ -320,7 +327,7 @@ class LabPage extends React.Component {
             ],
             tabCount: 5
         });
-        this.getStudyAndOpenModal(id);
+        this.getStudyByIdAndOpenModal(id);
     }
 
     render() {

@@ -156,16 +156,18 @@ class AdminPage extends React.Component {
     addNewEmployee = () => {
         postJson("Admin/AddNewEmployee", this.formRef.current.getData(), response => {
             if (response.status === 200) {
-                getJson("Admin/GetEmployeeList", response => {
-                    if (response.status === 200) {
-                        response.json().then(responseJson => {
-                            this.setState({ data: responseJson });
-                        });
-                    }
-                });
+                response.json().then(responseJson => {
+                    this.props.alert.success(<Trans i18nKey="AddEmployeeSuccess" values={{ login: responseJson }} />);
 
+                    getJson("Admin/GetEmployeeList", response => {
+                        if (response.status === 200) {
+                            response.json().then(responseJson => {
+                                this.setState({ data: responseJson });
+                            });
+                        }
+                    });
+                });
                 this.modalRef.current.closeModal();
-                this.props.alert.success(<Trans>AddEmployeeSuccess</Trans>);
             } else {
                 response.json().then(responseJson => {
                     if (responseJson.message === "Wrong pesel")
@@ -186,16 +188,18 @@ class AdminPage extends React.Component {
     editEmployee = () => {
         postJson("Admin/EditEmployee", this.formRef.current.getData(), response => {
             if (response.status === 200) {
-                getJson("Admin/GetEmployeeList", response => {
-                    if (response.status === 200) {
-                        response.json().then(responseJson => {
-                            this.setState({ data: responseJson });
-                        });
-                    };
-                });
+                response.json().then(responseJson => {
+                    this.props.alert.success(<Trans i18nKey="EditEmployeeSuccess" values={{ login: responseJson }} />);
+                    getJson("Admin/GetEmployeeList", response => {
 
+                        if (response.status === 200) {
+                            response.json().then(responseJson => {
+                                this.setState({ data: responseJson });
+                            });
+                        }
+                    });
+                });
                 this.modalRef.current.closeModal();
-                this.props.alert.success(<Trans>EditEmployeeSuccess</Trans>);
             } else {
                 response.json().then(responseJson => {
                     if (responseJson.message === "Wrong pesel")
@@ -246,9 +250,9 @@ class AdminPage extends React.Component {
     render() {
         return (
             <div>
-                <CustomButton onClick={this.openAddModal} text={<Trans>AddEmployee</Trans>} image="employee_add.png"/>
-                <CustomButton onClick={this.openEditModal} text={<Trans>EditEmployee</Trans>} disable={this.state.disableMode} image="employee_edit.png"/>
-                <CustomButton onClick={this.openShowModal} text={<Trans>Details</Trans>} disable={this.state.disableMode} image="employee_show.png"/>
+                <CustomButton onClick={this.openAddModal} text={<Trans>AddEmployee</Trans>} image="employee_add.png" />
+                <CustomButton onClick={this.openEditModal} text={<Trans>EditEmployee</Trans>} disable={this.state.disableMode} image="employee_edit.png" />
+                <CustomButton onClick={this.openShowModal} text={<Trans>Details</Trans>} disable={this.state.disableMode} image="employee_show.png" />
 
                 <CustomModal ref={this.modalRef}>
                     <EmployeeForm

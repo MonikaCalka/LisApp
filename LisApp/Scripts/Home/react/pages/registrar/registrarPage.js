@@ -137,15 +137,17 @@ class RegistrarPage extends React.Component {
     addNewPatient = () => {
         postJson("Registrar/AddNewPatient", this.formRef.current.getData(), response => {
             if (response.status === 200) {
-                getJson("Registrar/GetPatientList", response => {
-                    if (response.status === 200) {
-                        response.json().then(responseJson => {
-                            this.setState({ data: responseJson });
-                        });
-                    }
+                response.json().then(responseJson => {
+                    this.props.alert.success(<Trans i18nKey="AddPatientSuccess" values={{ login: responseJson }} />);
+                    getJson("Registrar/GetPatientList", response => {
+                        if (response.status === 200) {
+                            response.json().then(responseJson => {
+                                this.setState({ data: responseJson });
+                            });
+                        }
+                    });
+                    this.modalRef.current.closeModal();
                 });
-                this.modalRef.current.closeModal();
-                this.props.alert.success(<Trans>AddPatientSuccess</Trans>);
             } else {
                 response.json().then(responseJson => {
                     if (responseJson.message === "Wrong pesel")
@@ -166,15 +168,17 @@ class RegistrarPage extends React.Component {
     editPatient = () => {
         postJson("Registrar/EditPatient", this.formRef.current.getData(), response => {
             if (response.status === 200) {
-                getJson("Registrar/GetPatientList", response => {
-                    if (response.status === 200) {
-                        response.json().then(responseJson => {
-                            this.setState({ data: responseJson });
-                        });
-                    }
+                response.json().then(responseJson => {
+                    this.props.alert.success(<Trans i18nKey="EditPatientSuccess" values={{ login: responseJson }} />);
+                    getJson("Registrar/GetPatientList", response => {
+                        if (response.status === 200) {
+                            response.json().then(responseJson => {
+                                this.setState({ data: responseJson });
+                            });
+                        }
+                    });
+                    this.modalRef.current.closeModal();
                 });
-                this.modalRef.current.closeModal();
-                this.props.alert.success(<Trans>EditPatientSuccess</Trans>);
             } else {
                 response.json().then(responseJson => {
                     if (responseJson.message === "Wrong pesel")

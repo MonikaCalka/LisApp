@@ -4,7 +4,7 @@ import CustomInput from '../../../components/customInput';
 import CustomSelect from '../../../components/customSelect';
 import { ValidatorForm } from 'react-form-validator-core';
 import ModalButtons from '../../../components/modalButtons';
-import { requiredField, max50, requiredOrNNMax50, requiredPeselOrNN, requiredPhoneOnNN } from '../../../components/validatorRules';
+import { requiredField, max50, requiredOrNNMax50, requiredPeselOrNN, requiredPhoneOnNN, requiredMax4Number } from '../../../components/validatorRules';
 
 
 const options = [
@@ -33,7 +33,7 @@ class PatientContactDataTab extends Component {
         var disable = mode === 'show' ? true : false;
         var pin = null;
         if (mode === 'add')
-            pin = <CustomInput labeltext="Pin" onChange={this.handleChange} value={model.Password} name="Password" disabled={disable} {...requiredField} type="password" />;
+            pin = <CustomInput labeltext="Pin" onChange={this.handleChange} value={model.Password} name="Password" disabled={disable} {...requiredMax4Number} type="password" />;
         return (
             <div className="row">
                 <ValidatorForm id="modalform" onSubmit={this.onNext} >

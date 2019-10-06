@@ -50,10 +50,10 @@ class SampleTab extends Component {
         let printButton = null;
         if (nurseMode) {
             if (enableRegister && model.IdStatus === 1) {
-                registerButton = <button type="button" className="register-sample-button" onClick={this.onRegisterSample} disabled={mode === 'show'} ><Trans>RegisterSample</Trans></button>;
+                registerButton = <button type="button" className="register-sample-button modal-buton action-modal-button" onClick={this.onRegisterSample} disabled={mode === 'show'} ><Trans>RegisterSample</Trans></button>;
             }
             if (model.Sample.Code !== null && model.Sample.Code !== "") {
-                printButton = <button type="button" className="register-sample-button" onClick={this.onPrint}><Trans>PrintCode</Trans></button>;
+                printButton = <button type="button" className="register-sample-button modal-buton cancel-modal-button" onClick={this.onPrint}><Trans>PrintCode</Trans></button>;
             }
         }
         return (

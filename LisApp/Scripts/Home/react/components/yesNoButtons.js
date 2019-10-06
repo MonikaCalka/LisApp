@@ -18,6 +18,7 @@ class YesNoButtons extends React.Component {
                         onChange={onChange}
                         name={name}
                         disabled={disabled}
+                        className="form-radio"
                     />
                     <Trans>Yes</Trans>
                 </label>
@@ -29,6 +30,7 @@ class YesNoButtons extends React.Component {
                         onChange={onChange}
                         name={name}
                         disabled={disabled}
+                        className="form-radio"
                     />
                     <Trans>No</Trans>
                 </label>

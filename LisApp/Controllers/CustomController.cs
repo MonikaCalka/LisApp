@@ -167,7 +167,7 @@ namespace LisApp.Controllers
 
         protected string createLogin(string firstName, string lastName)
         {
-            string login = firstName[0] + lastName;
+            string login = firstName[0] + lastName.Remove(10);
             login = login.ToLower();
 
             UserModel user = DB.UserDAO.checkLogin(login);

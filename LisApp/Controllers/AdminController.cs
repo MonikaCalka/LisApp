@@ -67,12 +67,13 @@ namespace LisApp.Controllers
                 {
                     long id = (long)DB.EmployeesDAO.InsertEmployee(employee);
 
-                    UserModel user = new UserModel(id, createLogin(employee.FirstName, employee.Surname), 
+                    string login = createLogin(employee.FirstName, employee.Surname);
+                    UserModel user = new UserModel(id, login, 
                         DB.DictionaryDAO.ReadDictionaryById(DictionaryTypesEnum.Positions, employee.IdPosition, "pl").label, null);
 
                     DB.UserDAO.InsertUser(user);
 
-                    return new HttpStatusCodeResult(200);
+                    return Json(login);
                 }
                 catch (Exception)
                 {
@@ -102,7 +103,7 @@ namespace LisApp.Controllers
                     EmployeeModel oldData = DB.EmployeesDAO.ReadEmployeeById(employee.IdEmployee, Lang);
                     DB.EmployeesDAO.InsertHistoryDataOfEmployee(oldData, employeeChanger.FirstName + employeeChanger.Surname);
                     DB.EmployeesDAO.UpdateEmployee(employee);
-                    return new HttpStatusCodeResult(200);
+                    return Json(employee.Login);
                 }
                 catch (Exception)
                 {

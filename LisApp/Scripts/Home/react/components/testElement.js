@@ -29,18 +29,18 @@ class TestElement extends Component {
             const { male, test } = this.props;
             if (male) {
                 if (resultValue < test.NormMinM)
-                    return <img src="/Content/Images/down.jpg" width="45" height="45" />;
+                    return <img src="/Content/Images/down.png" width="45" height="45" className="test-indicator" />;
                 else if (resultValue > test.NormMaxM)
-                    return <img src="/Content/Images/up.jpg" width="45" height="45" />;
+                    return <img src="/Content/Images/up.png" width="45" height="45" className="test-indicator"/>;
                 else
-                    return null;
+                    return <img src="/Content/Images/alert_success.png" width="45" height="45" className="test-indicator"/>;
             } else {
                 if (resultValue < test.NormMinF)
-                    return <img src="/Content/Images/down.jpg" width="45" height="45" />;
+                    return <img src="/Content/Images/down.png" width="45" height="45" className="test-indicator"/>;
                 else if (resultValue > test.NormMaxF)
-                    return <img src="/Content/Images/up.jpg" width="45" height="45" />;
+                    return <img src="/Content/Images/up.png" width="45" height="45" className="test-indicator"/>;
                 else
-                    return null;
+                    return <img src="/Content/Images/alert_success.png" width="45" height="45" className="test-indicator"/>;
             }
         } else {
             return null;
@@ -65,12 +65,12 @@ class TestElement extends Component {
             }
         }
         let required = mode === 'addResult' ? requiredFloat : null;
-        
+
         console.log(test);
         return (
             <div className="row">
                 <div className="col-sm-5">
-                    <CustomInput labeltext={test.Name} onChange={this.handleResultChanged} value={test.Result !== null ? test.Result : ""} name="Result" disabled={disable} {... required} />
+                    <CustomInput labeltext={test.Name} onChange={this.handleResultChanged} value={test.Result !== null ? test.Result : ""} name="Result" disabled={disable} {...required} />
                 </div>
                 <div className="col-sm-2 padding-top-30">
                     <label><Trans>{test.Unit}</Trans></label>

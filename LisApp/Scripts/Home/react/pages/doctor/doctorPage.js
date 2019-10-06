@@ -141,9 +141,11 @@ class DoctorPage extends React.Component {
     addNewOrder = () => {
         postJson("Doctor/AddNewOrder", this.formRef.current.getData(), response => {
             if (response.status === 200) {
-                    this.setOrderList();
-                    this.modalRef.current.closeModal();
-                    this.props.alert.success(<Trans>AddOrderSuccess</Trans>);
+                this.setOrderList();
+                this.modalRef.current.closeModal();
+                response.json().then(responseJson => {
+                    this.props.alert.success(<Trans i18nKey="AddOrderSuccess" values={{ id: responseJson }} />);
+                });
             } else {
                 this.modalRef.current.closeModal();
                 this.props.alert.error(<Trans>AddOrderError</Trans>);
@@ -161,7 +163,9 @@ class DoctorPage extends React.Component {
             if (response.status === 200) {
                 this.setOrderList();
                 this.modalRef.current.closeModal();
-                this.props.alert.success(<Trans>EditOrderSuccess</Trans>);
+                response.json().then(responseJson => {
+                    this.props.alert.success(<Trans i18nKey="EditOrderSuccess" values={{ id: responseJson }} />);
+                });
             } else {
                 this.modalRef.current.closeModal();
                 this.props.alert.error(<Trans>EditOrderError</Trans>);

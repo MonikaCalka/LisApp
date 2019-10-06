@@ -65,7 +65,7 @@ namespace LisApp.Controllers
                         }
                         catch (Exception)
                         {
-                            return null;
+                            return study;
                         }
                     }
                 }
