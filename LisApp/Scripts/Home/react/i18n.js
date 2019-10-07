@@ -148,7 +148,9 @@ const resources = {
             "LIS": "Laboratory Information System",
             "Password": "Password",
             "LoginTo": "Log in",
-            "Add": "Add"
+            "Add": "Add",
+            "LabRepeatName": "Lab repeating the study",
+            "DateOfEnd": "Date of end"
         }
     },
     pl: {
@@ -297,7 +299,9 @@ const resources = {
             "LIS": "Laboratoryjny System Informacyjny",
             "Password": "Hasło",
             "LoginTo": "Zaloguj",
-            "Add": "Dodaj"
+            "Add": "Dodaj",
+            "LabRepeatName": "Laborant ponawiający badanie",
+            "DateOfEnd": "Data zakończenia"
         }
     }
 };
