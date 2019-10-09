@@ -58,7 +58,7 @@ class App extends React.Component {
 
     render() {
         let indexComponent = null;
-        if (localStorage.getItem("userType") === "" || localStorage.getItem("userType") == null) {
+        if (localStorage.getItem("userType") === "" || localStorage.getItem("userType") == null || localStorage.getItem("userType") == "null") {
             indexComponent = LoginPage;
         }
         switch (localStorage.getItem("userType")) {
