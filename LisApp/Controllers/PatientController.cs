@@ -77,11 +77,20 @@ namespace LisApp.Controllers
         [HttpGet]
         public ActionResult GetReport(long id, string lang, string t)
         {
-            ActionResult wrongAuthorization = checkPatient();
-            if (wrongAuthorization != null)
-                return wrongAuthorization;
+            //ActionResult wrongAuthorization = checkPatient();
+            //if (wrongAuthorization != null)
+            //    return wrongAuthorization;
 
-            PatientModel patient = getPatientByUserId();
+            //PatientModel patient = getPatientByUserId();
+
+            string token = t.Replace("xMl3Jkaaswss", "+").Replace("Por21Ld105sE78", "/").Replace("Ml32XXASsd1dd", "=");
+            SessionModel session = DB.SessionsDAO.ReadSessionByToken(token);
+            if (session == null)
+                return throwValidateError();
+
+            PatientModel patient = DB.PatientsDAO.ReadPatientByUserId(session.IdUser);
+            if (patient == null || patient.IdPatient == null)
+                return throwValidateError();
 
             ReportGenerator rg = new ReportGenerator();
 
