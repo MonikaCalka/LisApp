@@ -9,7 +9,7 @@ namespace LisApp.DAO
 {
     public static class BaseDAO
     {
-        private static string cnnString = @"Server=DESKTOP-7D1SCBR;Database=LaboratoryDB;Trusted_Connection=True;";
+        private static string cnnString = @"workstation id=LaboratoryDB.mssql.somee.com;packet size=4096;user id=MonikaCalka_SQLLogin_1;pwd=fu4lqyoujp;data source=LaboratoryDB.mssql.somee.com;persist security info=False;initial catalog=LaboratoryDB";
 
         public static List<T> Select<T>(string query, Func<CustomReader, T> readFunc)
         {

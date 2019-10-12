@@ -46,7 +46,7 @@ namespace LisApp.Controllers
                 return wrongAuthorization;
 
             StudyModel study = DB.StudiesDAO.ReadStudyById(id, Lang);
-            if (study.IdStudy == (long)StatusTypeEnum.Ordered || study.IdStudy == (long)StatusTypeEnum.Ended)
+            if (study.IdStatus == (long)StatusTypeEnum.Ordered || study.IdStatus == (long)StatusTypeEnum.Ended)
             {
                 return null;
             }
