@@ -224,7 +224,6 @@ class LabPage extends React.Component {
                     disableVerify: true
                 });
             } else {
-                this.modalRef.current.closeModal();
                 this.props.alert.error(<Trans>StartStudyError</Trans>);
             }
         });
@@ -245,7 +244,6 @@ class LabPage extends React.Component {
                     this.props.alert.success(<Trans i18nKey="AddResultSuccess" values={{ id: responseJson }} />);
                 });
             } else {
-                this.modalRef.current.closeModal();
                 this.props.alert.error(<Trans>AddResultError</Trans>);
             }
         });
@@ -270,7 +268,6 @@ class LabPage extends React.Component {
                     });
                 });
             } else {
-                this.modalRef.current.closeModal();
                 this.props.alert.error(<Trans>VerifyError</Trans>);
             }
         });
@@ -288,7 +285,6 @@ class LabPage extends React.Component {
                     this.props.alert.success(<Trans i18nKey="RepeatSuccess" values={{ id: responseJson }} />);
                 });
             } else {
-                this.modalRef.current.closeModal();
                 this.props.alert.error(<Trans>VerifyError</Trans>);
             }
         });

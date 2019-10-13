@@ -49,6 +49,7 @@ class CustomModal extends React.Component {
                 style={customStyles}
                 contentLabel="Example Modal"
                 width="200px"
+                shouldCloseOnOverlayClick={false}
             >
                 {this.props.children}
             </Modal>

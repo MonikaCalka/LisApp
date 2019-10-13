@@ -29,8 +29,8 @@ textarea {
 }
 
 .button {
-    color: #138efc;
-    background: #ffffff;
+    background: #138efc;
+    color: #ffffff;
     padding: 10px;
     border: 3px solid #138efc;
     border-radius: 20px;
@@ -46,8 +46,8 @@ textarea {
 }
 
     .button:hover {
-        color: #ffffff !important;
-        background: #138efc;
+        background: #78baf5 !important;
+        color: #ffffff;
         border-color: #138efc;
         transition: all 0.3s ease 0s;
     }
@@ -55,6 +55,15 @@ textarea {
     .button:disabled {
         opacity: 0.6;
         cursor: not-allowed;
+        background: #ffffff !important;
+        color: #138efc;
+    }
+
+   .button:disabled:hover {
+        opacity: 0.6;
+        cursor: not-allowed;
+        background: white;
+        color: #138efc;
     }
 
 .image-button {

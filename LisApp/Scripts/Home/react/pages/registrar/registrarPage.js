@@ -138,7 +138,7 @@ class RegistrarPage extends React.Component {
         postJson("Registrar/AddNewPatient", this.formRef.current.getData(), response => {
             if (response.status === 200) {
                 response.json().then(responseJson => {
-                    this.props.alert.success(<Trans i18nKey="AddPatientSuccess" values={{ login: responseJson }} />);
+                    this.props.alert.success(<Trans i18nKey="AddPatientSuccess" values={{ id: responseJson }} />);
                     getJson("Registrar/GetPatientList", response => {
                         if (response.status === 200) {
                             response.json().then(responseJson => {
@@ -153,7 +153,6 @@ class RegistrarPage extends React.Component {
                     if (responseJson.message === "Wrong pesel")
                         this.props.alert.error(<Trans>WrongPeselOrBirthDay</Trans>);
                     else {
-                        this.modalRef.current.closeModal();
                         this.props.alert.error(<Trans>AddPatientError</Trans>);
                     }
                 });
@@ -169,7 +168,7 @@ class RegistrarPage extends React.Component {
         postJson("Registrar/EditPatient", this.formRef.current.getData(), response => {
             if (response.status === 200) {
                 response.json().then(responseJson => {
-                    this.props.alert.success(<Trans i18nKey="EditPatientSuccess" values={{ login: responseJson }} />);
+                    this.props.alert.success(<Trans i18nKey="EditPatientSuccess" values={{ id: responseJson }} />);
                     getJson("Registrar/GetPatientList", response => {
                         if (response.status === 200) {
                             response.json().then(responseJson => {
@@ -184,7 +183,6 @@ class RegistrarPage extends React.Component {
                     if (responseJson.message === "Wrong pesel")
                         this.props.alert.error(<Trans>WrongPeselOrBirthDay</Trans>);
                     else {
-                        this.modalRef.current.closeModal();
                         this.props.alert.error(<Trans>EditPatientError</Trans>);
                     }
                 });

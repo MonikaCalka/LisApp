@@ -147,7 +147,6 @@ class DoctorPage extends React.Component {
                     this.props.alert.success(<Trans i18nKey="AddOrderSuccess" values={{ id: responseJson }} />);
                 });
             } else {
-                this.modalRef.current.closeModal();
                 this.props.alert.error(<Trans>AddOrderError</Trans>);
             }
         });
@@ -167,7 +166,6 @@ class DoctorPage extends React.Component {
                     this.props.alert.success(<Trans i18nKey="EditOrderSuccess" values={{ id: responseJson }} />);
                 });
             } else {
-                this.modalRef.current.closeModal();
                 this.props.alert.error(<Trans>EditOrderError</Trans>);
             }
         });

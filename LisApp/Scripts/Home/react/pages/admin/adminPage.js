@@ -154,6 +154,7 @@ class AdminPage extends React.Component {
     };
 
     addNewEmployee = () => {
+
         postJson("Admin/AddNewEmployee", this.formRef.current.getData(), response => {
             if (response.status === 200) {
                 response.json().then(responseJson => {
@@ -173,7 +174,6 @@ class AdminPage extends React.Component {
                     if (responseJson.message === "Wrong pesel")
                         this.props.alert.error(<Trans>WrongPesel</Trans>);
                     else {
-                        this.modalRef.current.closeModal();
                         this.props.alert.error(<Trans>AddEmployeeError</Trans>);
                     }
                 });
@@ -205,7 +205,6 @@ class AdminPage extends React.Component {
                     if (responseJson.message === "Wrong pesel")
                         this.props.alert.error(<Trans>WrongPesel</Trans>);
                     else {
-                        this.modalRef.current.closeModal();
                         this.props.alert.error(<Trans>EditEmployeeError</Trans>);
                     }
                 });
@@ -240,7 +239,6 @@ class AdminPage extends React.Component {
                 this.props.alert.success(<Trans>RemoveEmployeeSuccess</Trans>);
 
             } else {
-                this.modalRef.current.closeModal();
                 this.props.alert.error(<Trans>RemoveEmployeeError</Trans>);
             }
         });
