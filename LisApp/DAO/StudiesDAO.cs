@@ -59,6 +59,7 @@ namespace LisApp.DAO
                     and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
                     and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
                     and s.IdStatus != {(long)StatusTypeEnum.ReOrdered}
+                order by o.IdPriority desc, s.IdOrder, s.IdStudy
             ";
 
             return BaseDAO.Select(query, ReadStudyModelForList);
@@ -83,6 +84,7 @@ namespace LisApp.DAO
                     and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
                     and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
                     and s.IdStatus in ({(long)StatusTypeEnum.Ordered}, {(long)StatusTypeEnum.TakenSample})
+                order by o.IdPriority desc, s.IdOrder, s.IdStudy
             ";
 
             return BaseDAO.Select(query, ReadStudyModelForList);
@@ -93,7 +95,7 @@ namespace LisApp.DAO
             string query = $@"
                 select s.IdStudy, s.IdOrder, s.IdStatus, stt.Name as Status, prt.Name as Priority,
                     p.FirstName as PatientName, p.Surname as PatientSurname, o.DateOfOrder, 
-                    pft.Name as Profile
+                    pft.Name as Profile, sam.Code as Sample
                 from Studies s
                 join Orders o on s.IdOrder = o.IdOrder
                 join Patients p on o.IdPatient = p.IdPatient
@@ -103,13 +105,15 @@ namespace LisApp.DAO
                 join PriorityTranslations prt on pr.IdPriority = prt.IdPriority
                 join Profiles pf on s.IdProfile = pf.IdProfile
                 join ProfileTranslations pft on pf.IdProfile = pft.IdProfile
+                left join Samples sam on s.IdStudy = sam.IdStudy
                 where stt.IdLanguage = (select l1.IdLanguage from Languages l1 where l1.Code = '{lang}') 
                     and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
                     and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
                     and s.IdStatus in ({(long)StatusTypeEnum.TakenSample}, {(long)StatusTypeEnum.InProgress}, {(long)StatusTypeEnum.ToVerify})
+                order by o.IdPriority desc, s.IdOrder, s.IdStudy
             ";
 
-            return BaseDAO.Select(query, ReadStudyModelForList);
+            return BaseDAO.Select(query, ReadStudyModelForLabList);
         }
 
         public List<StudyModel> ReadStudiesListForPatient(long idPatient, string lang)
@@ -131,6 +135,7 @@ namespace LisApp.DAO
                     and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
                     and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
                     and o.IdPatient = {idPatient}
+                order by o.IdPriority desc, s.IdOrder, s.IdStudy
             ";
 
             return BaseDAO.Select(query, ReadStudyModelForList);
@@ -271,6 +276,22 @@ namespace LisApp.DAO
                 Patient = reader.GetNullableString("PatientName") + " " + reader.GetNullableString("PatientSurname"),
                 Profile = reader.GetNullableString("Profile"),
                 DateOfOrder = reader.GetDate("DateOfOrder"),
+            };
+        }
+
+        private StudyModel ReadStudyModelForLabList(CustomReader reader)
+        {
+            return new StudyModel()
+            {
+                IdStudy = reader.GetLong("IdStudy"),
+                IdOrder = reader.GetLong("IdOrder"),
+                IdStatus = reader.GetLong("IdStatus"),
+                Status = reader.GetNullableString("Status"),
+                Priority = reader.GetNullableString("Priority"),
+                Patient = reader.GetNullableString("PatientName") + " " + reader.GetNullableString("PatientSurname"),
+                Profile = reader.GetNullableString("Profile"),
+                DateOfOrder = reader.GetDate("DateOfOrder"),
+                SampleCode = reader.GetNullableString("Sample")
             };
         }
     }

@@ -66,6 +66,7 @@ namespace LisApp.DAO
                 where ({idEmployee} = o.IdEmployee or {idEmployee} in (select con.IdEmployee from Consultants con where con.IdOrder = o.IdOrder))
                     and st.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}') 
                     and prt.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
+                order by o.IdPriority desc, o.IdOrder
             ";
 
             return BaseDAO.Select(query, ReadSimpleOrderModel);
@@ -93,7 +94,7 @@ namespace LisApp.DAO
 						from Studies stu
 						where stu.IdStatus in (1, 7) 
 					) 
-                order by IdOrder;
+                order by o.IdPriority desc, o.IdOrder
             ";
 
             return BaseDAO.Select(query, ReadSimpleOrderModel);

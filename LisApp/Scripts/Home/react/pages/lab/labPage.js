@@ -34,6 +34,12 @@ const columns = [
         wrap: true
     },
     {
+        name: <Trans>Sample</Trans>,
+        selector: 'SampleCode',
+        sortable: true,
+        wrap: true
+    },
+    {
         name: <Trans>Status</Trans>,
         selector: 'Status',
         sortable: true,
@@ -49,7 +55,7 @@ const columns = [
 
 const titleOfTable = <Trans>Studies</Trans>;
 
-const searchableColumn = [{ name: "Patient", id: 0 }, { name: "DateOfOrder", id: 1 }, { name: "Profile", id: 2 }, { name: "Status", id: 3 }, { name: "Priority", id: 4 }];
+const searchableColumn = [{ name: "Patient", id: 0 }, { name: "DateOfOrder", id: 1 }, { name: "Profile", id: 2 }, { name: "Status", id: 3 }, { name: "Priority", id: 4 }, {name: "SampleCode", id:5}];
 
 class LabPage extends React.Component {
 

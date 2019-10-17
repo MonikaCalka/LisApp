@@ -112,6 +112,8 @@ class CustomTable extends React.Component {
 
         let filteredData = this.props.data.filter(this.checkSearchValue);
 
+        const noDataString = <Trans>NoDataTable</Trans>;
+
         return (
             <div className="data-table">
                 <DataTable
@@ -127,6 +129,7 @@ class CustomTable extends React.Component {
                     onSort={this.onSort}
                     onChangePage={this.onChangePage}
                     subHeader
+                    noDataComponent={noDataString}
                     subHeaderComponent={<div>
                         <button className="search-button" type="button" onClick={this.showInfo}></button>
                         <input className="form-control custom-form search-input" type="text" value={this.state.searchValue} onChange={this.onChangeSearchValue} name="Search" />

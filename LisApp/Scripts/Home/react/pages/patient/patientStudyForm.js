@@ -76,7 +76,7 @@ class PatientStudyForm extends React.Component {
     render() {
         const { title, mode, onAccept, onCancel, onChangeStudy } = this.props;
         const { actualTabIndex } = this.state;
-        let tabCount = this.state.Actual === true ? 5 : 6;
+        let tabCount = 3;
         let actualTab = null;
         switch (actualTabIndex) {
             case 0:

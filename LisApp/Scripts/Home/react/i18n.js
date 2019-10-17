@@ -142,7 +142,7 @@ const resources = {
             "WrongPeselOrBirthDay": "Please enter a valid pesel or date of birth.",
             "Report": "Report",
             "ListOfOrder": "List of order",
-            "ListOfStudy": "List od study",
+            "ListOfStudy": "List of study",
             "LoginSuccess": "The user has been successfully logged in.",
             "LoginError": "Invalid user or password.",
             "LIS": "Laboratory Information System",
@@ -150,7 +150,10 @@ const resources = {
             "LoginTo": "Log in",
             "Add": "Add",
             "LabRepeatName": "Lab repeating the study",
-            "DateOfEnd": "Date of end"
+            "DateOfEnd": "Date of end",
+            "Logout": "Logout",
+            "NoDataTable": "There are no records to display",
+            "NoOptionSelect": "No options"
         }
     },
     pl: {
@@ -207,8 +210,8 @@ const resources = {
             "IsEmail": "Nieprawidłowy format emaila",
             "Min9": "Minimalna długośc: 9 znaków",
             "RequiredFieldNN": 'Wypełnij pole lub wpisz NN',
-            "IsPesel": 'Podaj pesel lub datę urodzenia',
-            "IsPeselNN": 'Podaj pesel, datę urodzenia lub NN',
+            "IsPesel": 'Podaj pesel lub datę urodzenia (rrrr-mm-dd)',
+            "IsPeselNN": 'Podaj pesel, datę urodzenia (rrrr-mm-dd) lub NN',
             "AddEmployee": "Dodaj pracownika",
             "EditEmployee": "Edytuj pracownika",
             "EmploymentDetails": "Szczegóły zatrudnienia",
@@ -290,7 +293,7 @@ const resources = {
             "DateOfEmployment": "Data zatrudnienia",
             "LicenseNumber": "Numer licencji",
             "WrongPesel": "Wprowadź prawidłowy pesel.",
-            "WrongPeselOrBirthDay": "Wprowadź prawidłowy pesel lub datę urodzenia.",
+            "WrongPeselOrBirthDay": "Wprowadź prawidłowy pesel lub datę urodzenia (rrrr-mm-dd).",
             "Report": "Raport",
             "ListOfOrder": "Lista zleceń",
             "ListOfStudy": "Lista badań",
@@ -301,7 +304,10 @@ const resources = {
             "LoginTo": "Zaloguj",
             "Add": "Dodaj",
             "LabRepeatName": "Laborant ponawiający badanie",
-            "DateOfEnd": "Data zakończenia"
+            "DateOfEnd": "Data zakończenia",
+            "Logout": "Wyloguj",
+            "NoDataTable": "Brak danych do wyświetlenia",
+            "NoOptionSelect": "Brak opcji"
         }
     }
 };

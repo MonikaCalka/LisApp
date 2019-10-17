@@ -23,7 +23,8 @@ namespace LisApp.Controllers
 
                     if (userModel != null)
                     {
-                        string token = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+                        string t = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+                        string token = t.Replace("+", "xj3FFv").Replace("/", "3d66aS").Replace("=", "66Tsdo4").Replace(" ","88rDrf");
 
                         SessionModel session = new SessionModel();
                         session.IdUser = (long)userModel.IdUser;

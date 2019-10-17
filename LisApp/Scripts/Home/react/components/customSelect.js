@@ -18,6 +18,10 @@ class CustomSelect extends ValidatorComponent {
         );
     }
 
+    noOptions = () => {
+        return <Trans>NoOptionSelect</Trans>;
+    }
+
     render() {
         const { errorMessages, validators, requiredError, validatorListener, requiredMark, labeltext, selectOptions, ...rest } = this.props;
         const requiredStar = requiredMark === true ? "*" : "";
@@ -32,6 +36,8 @@ class CustomSelect extends ValidatorComponent {
                         className="custom-select"
                         {...rest}
                         ref={(r) => { this.input = r; }}
+                        captureMenuScroll={false}    
+                        noOptionsMessage={() => <Trans>NoOptionSelect</Trans>}
                     />
                 </div>
                 {this.errorText()}
