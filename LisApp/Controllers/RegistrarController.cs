@@ -59,7 +59,7 @@ namespace LisApp.Controllers
             }
             else
             {
-                ActionResult wrongPesel = checkPesel(peselOrDate, peselOrDate);
+                ActionResult wrongPesel = checkPesel(peselOrDate, sex);
                 if (wrongPesel != null)
                     return wrongPesel;
                 return null;

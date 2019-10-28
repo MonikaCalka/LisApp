@@ -44,12 +44,18 @@ var columns = [
         selector: 'Phone',
         sortable: true,
         wrap: true
+    },
+    {
+        name: <Trans>Login</Trans>,
+        selector: 'Login',
+        sortable: true,
+        wrap: true
     }
 ];
 
 const titleOfTable = <Trans>Patients</Trans>;
 
-const searchableColumn = [{ name: "FirstName", id: 0 }, { name: "Surname", id: 1 }, { name: "Pesel", id: 2 }, { name: "FullAddress", id: 3 }, { name: "Phone", id: 4 }];
+const searchableColumn = [{ name: "FirstName", id: 0 }, { name: "Surname", id: 1 }, { name: "Pesel", id: 2 }, { name: "FullAddress", id: 3 }, { name: "Phone", id: 4 }, { name: "Login", id: 5 }];
 
 
 class RegistrarPage extends React.Component {

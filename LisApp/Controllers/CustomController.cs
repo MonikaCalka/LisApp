@@ -147,7 +147,7 @@ namespace LisApp.Controllers
                 int charWithWeight = (int)Char.GetNumericValue(chars[i]) * weights[i];
                 sum += charWithWeight % 10;
             }
-            int endChar = 10 - (sum % 10);
+            int endChar = (10 - (sum % 10)) % 10;
             if (Char.GetNumericValue(chars[10]) != endChar)
                 return false;
             return true;
