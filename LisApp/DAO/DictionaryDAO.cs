@@ -72,6 +72,7 @@ namespace LisApp.DAO
                         join PositionTranslations t on p.IdPosition = t.IdPosition 
                         join Languages l on t.IdLanguage = l.IdLanguage
                         where l.code = '{lang}'
+                        order by t.Name
                     ";
                     break;
                 case DictionaryTypesEnum.Ward:
@@ -81,6 +82,7 @@ namespace LisApp.DAO
                         join WardTranslations t on p.IdWard = t.IdWard 
                         join Languages l on t.IdLanguage = l.IdLanguage
                         where l.code = '{lang}'
+                        order by t.Name
                     ";
                     break;
                 case DictionaryTypesEnum.Priorities:
@@ -90,6 +92,7 @@ namespace LisApp.DAO
                             join PriorityTranslations t on p.IdPriority = t.IdPriority
                             join Languages l on t.IdLanguage = l.IdLanguage
                             where l.code = '{lang}'
+                            order by t.Name
                         ";
                     break;
                 case DictionaryTypesEnum.Status:
@@ -99,6 +102,7 @@ namespace LisApp.DAO
                             join StatusTranslations t on p.IdStatus = t.IdStatus
                             join Languages l on t.IdLanguage = l.IdLanguage
                             where l.code = '{lang}'
+                            order by t.Name
                         ";
                     break;
             }

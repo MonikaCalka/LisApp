@@ -27,6 +27,7 @@ namespace LisApp.DAO
                 join ProfileTranslations t on p.IdProfile = t.IdProfile
                 join Languages l on t.IdLanguage = l.IdLanguage
                 where l.code = '{lang}'
+                order by t.Name
             ";
 
             return BaseDAO.Select(query, ReadProfileModel);

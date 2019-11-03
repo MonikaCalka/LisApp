@@ -31,6 +31,7 @@ namespace LisApp.DAO
                 join TestTranslations tr on t.IdTest = tr.IdTest
                 join Languages l on tr.IdLanguage = l.IdLanguage
                 where l.code = '{lang}' and t.IdProfile = {idProfile}
+                order by tr.Name
             ";
 
             return BaseDAO.Select(query, ReadSimpleTestModel);

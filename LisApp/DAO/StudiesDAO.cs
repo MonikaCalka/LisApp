@@ -135,6 +135,7 @@ namespace LisApp.DAO
                     and prt.IdLanguage = (select l2.IdLanguage from Languages l2 where l2.Code = '{lang}')
                     and pft.IdLanguage = (select l3.IdLanguage from Languages l3 where l3.Code = '{lang}')
                     and o.IdPatient = {idPatient}
+                    and s.IdStatus != {(long)StatusTypeEnum.ReOrdered}
                 order by o.IdPriority desc, s.IdOrder, s.IdStudy
             ";
 

@@ -92,7 +92,13 @@ class OrderForm extends React.Component {
     }
 
     getData = () => {
-        return this.state;
+        let state = this.state;
+        delete state.wardOptions;
+        delete state.patientOptions;
+        delete state.priorityOptions;
+        delete state.profileOptions;
+        delete state.doctorOptions;
+        return state;
     }
 
     onTabChange = newTabIndex => {
